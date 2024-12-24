@@ -28,9 +28,9 @@ class CultureGuideScreen extends StatelessWidget {
           _buildCultureGuideSection(
             title: '현지 트렌드 리포트',
             items: [
-              '2024 파리 패션 트렌드',
+              '2026 파리 쇼핑 시즌 리포트',
               '밀라노 스트리트 패션 분석',
-              '런던 빈티지 숍 탐방기',
+              '도쿄 한정판 플래그십 가이드',
             ],
           ),
           const SizedBox(height: 24),
