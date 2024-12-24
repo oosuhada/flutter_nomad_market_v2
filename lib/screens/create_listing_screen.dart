@@ -14,19 +14,22 @@ class CreateListingScreen extends StatefulWidget {
 
 class _CreateListingScreenState extends State<CreateListingScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _titleController = TextEditingController(text: '빈티지 필름 카메라 + 35mm 렌즈');
-  final _priceController = TextEditingController(text: '420000');
+  final _titleController = TextEditingController(text: '파리 부티크 한정 실크 스카프');
+  final _priceController = TextEditingController(text: '129000');
   final _descriptionController = TextEditingController(
-    text: '여행 기록용으로 사용했고 최근 전문점에서 점검했습니다. 테스트 필름 결과도 채팅으로 보내드릴게요.',
+    text: '르 마레 부티크에서 직접 확인한 시즌 한정 컬러입니다. 구매 전 실물 사진과 영수증 정보를 채팅으로 공유할 수 있어요.',
   );
-  String _category = '빈티지';
-  String _location = '서울 · 성수동';
+  final _deliveryController =
+      TextEditingController(text: '9월 2일 서울 도착 · 성수/강남 전달 가능');
+  String _category = '럭셔리';
+  String _location = 'Paris · Le Marais';
 
   @override
   void dispose() {
     _titleController.dispose();
     _priceController.dispose();
     _descriptionController.dispose();
+    _deliveryController.dispose();
     super.dispose();
   }
 
@@ -34,7 +37,8 @@ class _CreateListingScreenState extends State<CreateListingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('판매글 작성', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
+        title: const Text('현지 상품 등록',
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
         actions: [
           TextButton(onPressed: _resetDemo, child: const Text('초기화')),
           const SizedBox(width: 8),
@@ -49,32 +53,42 @@ class _CreateListingScreenState extends State<CreateListingScreen> {
             padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
             children: [
               const Text(
-                '어떤 물건을 여행자들과 나눌까요?',
-                style: TextStyle(fontSize: 23, height: 1.25, fontWeight: FontWeight.w800, letterSpacing: -.4),
+                '여행 중 발견한 좋은 물건을\nNomad Market에 소개해보세요',
+                style: TextStyle(
+                    fontSize: 23,
+                    height: 1.25,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: -.4),
               ),
               const SizedBox(height: 6),
               Text(
-                '사진과 거래 정보를 명확하게 적을수록 더 빠르게 연결돼요.',
+                '현지 매장과 한국 이동 일정을 함께 알려주면 구매 요청이 더 정확해져요.',
                 style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
               ),
               const SizedBox(height: 22),
               _buildPhotoPicker(),
               const SizedBox(height: 24),
-              _label('상품명'),
+              _label('현지에서 발견한 상품'),
               TextFormField(
                 controller: _titleController,
                 textInputAction: TextInputAction.next,
-                validator: (value) => (value == null || value.trim().length < 4) ? '상품명을 4자 이상 입력해주세요.' : null,
-                decoration: const InputDecoration(hintText: '상품명을 입력하세요'),
+                validator: (value) => (value == null || value.trim().length < 4)
+                    ? '상품명을 4자 이상 입력해주세요.'
+                    : null,
+                decoration:
+                    const InputDecoration(hintText: '상품 또는 한정판 이름을 입력하세요'),
               ),
               const SizedBox(height: 18),
-              _label('가격'),
+              _label('예상 구매가'),
               TextFormField(
                 controller: _priceController,
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                validator: (value) => (int.tryParse(value ?? '') ?? 0) <= 0 ? '가격을 입력해주세요.' : null,
-                decoration: const InputDecoration(prefixText: '₩  ', hintText: '0'),
+                validator: (value) => (int.tryParse(value ?? '') ?? 0) <= 0
+                    ? '가격을 입력해주세요.'
+                    : null,
+                decoration:
+                    const InputDecoration(prefixText: '₩  ', hintText: '0'),
               ),
               const SizedBox(height: 18),
               _label('카테고리'),
@@ -82,31 +96,56 @@ class _CreateListingScreenState extends State<CreateListingScreen> {
                 value: _category,
                 items: marketplaceCategories
                     .where((category) => category != '전체')
-                    .map((category) => DropdownMenuItem(value: category, child: Text(category)))
+                    .map((category) => DropdownMenuItem(
+                        value: category, child: Text(category)))
                     .toList(),
-                onChanged: (value) => setState(() => _category = value ?? _category),
+                onChanged: (value) =>
+                    setState(() => _category = value ?? _category),
               ),
               const SizedBox(height: 18),
-              _label('거래 위치'),
+              _label('현재 도시 / 구매 장소'),
               DropdownButtonFormField<String>(
                 value: _location,
                 items: const [
-                  '서울 · 성수동',
-                  '서울 · 연남동',
                   'Paris · Le Marais',
                   'Tokyo · Shibuya',
-                ].map((location) => DropdownMenuItem(value: location, child: Text(location))).toList(),
-                onChanged: (value) => setState(() => _location = value ?? _location),
-                decoration: const InputDecoration(prefixIcon: Icon(Icons.location_on_outlined)),
+                  'Milano · Brera',
+                  'London · Shoreditch',
+                  'Seoul · Seongsu',
+                ]
+                    .map((location) => DropdownMenuItem(
+                        value: location, child: Text(location)))
+                    .toList(),
+                onChanged: (value) =>
+                    setState(() => _location = value ?? _location),
+                decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.location_on_outlined)),
               ),
               const SizedBox(height: 18),
-              _label('상품 설명'),
+              _label('한국 이동 / 전달 일정'),
+              TextFormField(
+                controller: _deliveryController,
+                textInputAction: TextInputAction.next,
+                validator: (value) => (value == null || value.trim().length < 6)
+                    ? '이동 또는 전달 일정을 알려주세요.'
+                    : null,
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.flight_land_rounded),
+                  hintText: '예: 9월 2일 서울 도착',
+                ),
+              ),
+              const SizedBox(height: 18),
+              _label('현지 확인 메모'),
               TextFormField(
                 controller: _descriptionController,
                 minLines: 4,
                 maxLines: 6,
-                validator: (value) => (value == null || value.trim().length < 10) ? '상태와 거래 방법을 조금 더 알려주세요.' : null,
-                decoration: const InputDecoration(hintText: '상태, 구매 시기, 거래 방법 등을 알려주세요'),
+                validator: (value) =>
+                    (value == null || value.trim().length < 10)
+                        ? '상태와 거래 방법을 조금 더 알려주세요.'
+                        : null,
+                decoration: const InputDecoration(
+                    hintText: '매장 재고, 한정 여부, 상태, 영수증 제공 여부 등을 알려주세요'),
               ),
               const SizedBox(height: 18),
               Container(
@@ -118,12 +157,14 @@ class _CreateListingScreenState extends State<CreateListingScreen> {
                 child: const Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(Icons.verified_user_outlined, color: NomadTheme.brand, size: 21),
+                    Icon(Icons.verified_user_outlined,
+                        color: NomadTheme.brand, size: 21),
                     SizedBox(width: 10),
                     Expanded(
                       child: Text(
-                        '안전거래를 위해 실제 상품 상태와 위치를 정확하게 알려주세요. 연락처는 공개되지 않습니다.',
-                        style: TextStyle(fontSize: 12, height: 1.45, color: NomadTheme.ink),
+                        '구매 요청을 받기 전 실제 매장 재고와 가격을 다시 확인해주세요. 앱 내 채팅으로 실물 사진과 영수증 정보를 공유할 수 있습니다.',
+                        style: TextStyle(
+                            fontSize: 12, height: 1.45, color: NomadTheme.ink),
                       ),
                     ),
                   ],
@@ -134,10 +175,12 @@ class _CreateListingScreenState extends State<CreateListingScreen> {
                 onPressed: _submit,
                 style: FilledButton.styleFrom(
                   minimumSize: const Size.fromHeight(54),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
                 ),
                 icon: const Icon(Icons.arrow_upward_rounded),
-                label: const Text('Nomad Market에 등록하기', style: TextStyle(fontWeight: FontWeight.w800)),
+                label: const Text('현지 픽 등록하기',
+                    style: TextStyle(fontWeight: FontWeight.w800)),
               ),
             ],
           ),
@@ -147,7 +190,7 @@ class _CreateListingScreenState extends State<CreateListingScreen> {
   }
 
   Widget _buildPhotoPicker() {
-    final sample = demoMarketplaceItems[2];
+    final sample = demoMarketplaceItems.first;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -162,14 +205,23 @@ class _CreateListingScreenState extends State<CreateListingScreen> {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    MarketplaceImage(url: sample.imageUrl, borderRadius: BorderRadius.circular(18)),
+                    MarketplaceImage(
+                        url: sample.imageUrl,
+                        borderRadius: BorderRadius.circular(18)),
                     Positioned(
                       left: 8,
                       bottom: 8,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(color: NomadTheme.ink.withValues(alpha: .84), borderRadius: BorderRadius.circular(999)),
-                        child: const Text('대표', style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w700)),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                            color: NomadTheme.ink.withValues(alpha: .84),
+                            borderRadius: BorderRadius.circular(999)),
+                        child: const Text('대표',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700)),
                       ),
                     ),
                   ],
@@ -205,7 +257,8 @@ class _CreateListingScreenState extends State<CreateListingScreen> {
           children: [
             Icon(Icons.add_photo_alternate_outlined, color: NomadTheme.brand),
             SizedBox(height: 7),
-            Text('사진 추가', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600)),
+            Text('사진 추가',
+                style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600)),
           ],
         ),
       ),
@@ -215,7 +268,8 @@ class _CreateListingScreenState extends State<CreateListingScreen> {
   Widget _label(String text) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
-      child: Text(text, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800)),
+      child: Text(text,
+          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800)),
     );
   }
 
@@ -223,7 +277,9 @@ class _CreateListingScreenState extends State<CreateListingScreen> {
     FocusScope.of(context).unfocus();
     if (!(_formKey.currentState?.validate() ?? false)) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('판매글이 데모 마켓에 등록되었습니다.'), behavior: SnackBarBehavior.floating),
+      const SnackBar(
+          content: Text('현지 상품이 Nomad Market에 등록되었습니다.'),
+          behavior: SnackBarBehavior.floating),
     );
   }
 
@@ -231,9 +287,10 @@ class _CreateListingScreenState extends State<CreateListingScreen> {
     _titleController.text = '';
     _priceController.text = '';
     _descriptionController.text = '';
+    _deliveryController.text = '';
     setState(() {
-      _category = '빈티지';
-      _location = '서울 · 성수동';
+      _category = '럭셔리';
+      _location = 'Paris · Le Marais';
     });
   }
 }
