@@ -33,8 +33,10 @@ class _ChatScreenState extends State<ChatScreen> {
             Container(
               width: 38,
               height: 38,
-              decoration: const BoxDecoration(color: NomadTheme.softGreen, shape: BoxShape.circle),
-              child: const Icon(Icons.person_rounded, color: NomadTheme.brand, size: 22),
+              decoration: const BoxDecoration(
+                  color: NomadTheme.softGreen, shape: BoxShape.circle),
+              child: const Icon(Icons.person_rounded,
+                  color: NomadTheme.brand, size: 22),
             ),
             const SizedBox(width: 10),
             const Expanded(
@@ -43,20 +45,25 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: [
                   Row(
                     children: [
-                      Text('Sarah Kim', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800)),
+                      Text('Sarah Kim',
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w800)),
                       SizedBox(width: 4),
-                      Icon(Icons.verified_rounded, size: 16, color: NomadTheme.brand),
+                      Icon(Icons.verified_rounded,
+                          size: 16, color: NomadTheme.brand),
                     ],
                   ),
                   SizedBox(height: 1),
-                  Text('보통 10분 내 응답', style: TextStyle(fontSize: 10, color: Colors.black54)),
+                  Text('보통 10분 내 응답',
+                      style: TextStyle(fontSize: 10, color: Colors.black54)),
                 ],
               ),
             ),
           ],
         ),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz_rounded)),
+          IconButton(
+              onPressed: () {}, icon: const Icon(Icons.more_horiz_rounded)),
           const SizedBox(width: 6),
         ],
       ),
@@ -80,11 +87,19 @@ class _ChatScreenState extends State<ChatScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(item.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700)),
+                        Text(item.title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.w700)),
                         const SizedBox(height: 4),
-                        Text(item.formattedPrice, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w900)),
+                        Text(item.formattedPrice,
+                            style: const TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w900)),
                         const SizedBox(height: 2),
-                        Text(item.location, style: TextStyle(fontSize: 10, color: Colors.grey.shade600)),
+                        Text(item.location,
+                            style: TextStyle(
+                                fontSize: 10, color: Colors.grey.shade600)),
                       ],
                     ),
                   ),
@@ -99,9 +114,14 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: [
                   Center(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(999)),
-                      child: const Text('오늘 · 안전거래 채팅', style: TextStyle(fontSize: 10, color: Colors.black54)),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 7),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(999)),
+                      child: const Text('오늘 · 안전거래 채팅',
+                          style:
+                              TextStyle(fontSize: 10, color: Colors.black54)),
                     ),
                   ),
                   const SizedBox(height: 18),
@@ -111,7 +131,8 @@ class _ChatScreenState extends State<ChatScreen> {
                     isMine: true,
                   ),
                   const _MessageBubble(
-                    message: '네, 가능해요. 오늘 르 마레에서 상태를 한 번 더 확인했고 내부 오염도 거의 없습니다.',
+                    message:
+                        '네, 가능해요. 오늘 르 마레에서 상태를 한 번 더 확인했고 내부 오염도 거의 없습니다.',
                     time: '오후 2:32',
                     isMine: false,
                   ),
@@ -121,12 +142,14 @@ class _ChatScreenState extends State<ChatScreen> {
                     isMine: true,
                   ),
                   const _MessageBubble(
-                    message: '금요일 저녁 도착 예정이에요. 토요일 오후 성수에서 가능합니다. 원하시면 추가 사진도 보내드릴게요.',
+                    message:
+                        '금요일 저녁 도착 예정이에요. 토요일 오후 성수에서 가능합니다. 원하시면 추가 사진도 보내드릴게요.',
                     time: '오후 2:36',
                     isMine: false,
                   ),
                   ..._sentMessages.map(
-                    (message) => _MessageBubble(message: message, time: '방금', isMine: true),
+                    (message) => _MessageBubble(
+                        message: message, time: '방금', isMine: true),
                   ),
                 ],
               ),
@@ -139,7 +162,10 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               child: Row(
                 children: [
-                  IconButton(onPressed: () {}, icon: const Icon(Icons.add_circle_outline_rounded), color: Colors.black54),
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.add_circle_outline_rounded),
+                      color: Colors.black54),
                   Expanded(
                     child: TextField(
                       controller: _controller,
@@ -158,7 +184,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  IconButton.filled(onPressed: _send, icon: const Icon(Icons.arrow_upward_rounded)),
+                  IconButton.filled(
+                      onPressed: _send,
+                      icon: const Icon(Icons.arrow_upward_rounded)),
                 ],
               ),
             ),
@@ -193,7 +221,8 @@ class _MessageBubble extends StatelessWidget {
     return Align(
       alignment: isMine ? Alignment.centerRight : Alignment.centerLeft,
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width * .76),
+        constraints:
+            BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width * .76),
         child: Container(
           margin: const EdgeInsets.only(bottom: 11),
           padding: const EdgeInsets.fromLTRB(13, 10, 13, 9),
@@ -211,10 +240,16 @@ class _MessageBubble extends StatelessWidget {
             children: [
               Text(
                 message,
-                style: TextStyle(color: isMine ? Colors.white : NomadTheme.ink, fontSize: 13, height: 1.45),
+                style: TextStyle(
+                    color: isMine ? Colors.white : NomadTheme.ink,
+                    fontSize: 13,
+                    height: 1.45),
               ),
               const SizedBox(height: 4),
-              Text(time, style: TextStyle(color: isMine ? Colors.white70 : Colors.black45, fontSize: 9)),
+              Text(time,
+                  style: TextStyle(
+                      color: isMine ? Colors.white70 : Colors.black45,
+                      fontSize: 9)),
             ],
           ),
         ),
