@@ -1,115 +1,111 @@
-// widgets/traveler_profile_card.dart
 import 'package:flutter/material.dart';
 
+import '../theme/nomad_theme.dart';
+
 class TravelerProfileCard extends StatelessWidget {
-  const TravelerProfileCard({super.key});
+  const TravelerProfileCard({
+    super.key,
+    required this.name,
+    required this.route,
+    required this.specialty,
+    required this.trust,
+    required this.deals,
+    required this.onChat,
+  });
+
+  final String name;
+  final String route;
+  final String specialty;
+  final String trust;
+  final int deals;
+  final VoidCallback onChat;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Stack(
+    return Container(
+      width: 260,
+      margin: const EdgeInsets.only(right: 12),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(color: const Color(0xFFE2E8E4)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 48,
+                height: 48,
+                decoration: const BoxDecoration(
+                  color: NomadTheme.softGreen,
+                  shape: BoxShape.circle,
+                ),
+                child:
+                    const Icon(Icons.person_rounded, color: NomadTheme.brand),
+              ),
+              const SizedBox(width: 11),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.grey[200],
-                      radius: 24,
-                    ),
-                    Positioned(
-                      right: 0,
-                      bottom: 0,
-                      child: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(12),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontWeight: FontWeight.w800),
+                          ),
                         ),
-                        child: const Icon(
-                          Icons.verified,
-                          size: 12,
-                          color: Colors.white,
-                        ),
-                      ),
+                        const SizedBox(width: 4),
+                        const Icon(Icons.verified_rounded,
+                            size: 16, color: NomadTheme.brand),
+                      ],
                     ),
+                    const SizedBox(height: 2),
+                    Text(route,
+                        style: TextStyle(
+                            fontSize: 11, color: Colors.grey.shade600)),
                   ],
                 ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Sarah Kim',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        '파리, 프랑스',
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Wrap(
-              spacing: 4,
-              runSpacing: 4,
-              children: [
-                _buildBadge('럭셔리 전문가', Colors.amber),
-                _buildBadge('3년 경력', Colors.blue),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Text(
-              '신뢰도 98%',
-              style: TextStyle(
-                color: Colors.green[600],
-                fontSize: 12,
               ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
+            decoration: BoxDecoration(
+              color: NomadTheme.warm,
+              borderRadius: BorderRadius.circular(999),
             ),
-            const Text(
-              '거래 완료 32건',
-              style: TextStyle(fontSize: 12),
+            child: Text(
+              specialty,
+              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w800),
             ),
-            const Spacer(),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {},
-                child: const Text('채팅하기'),
-              ),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            '신뢰도 $trust · 거래 완료 $deals건',
+            style: const TextStyle(
+              color: NomadTheme.brand,
+              fontSize: 11,
+              fontWeight: FontWeight.w700,
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBadge(String text, MaterialColor color) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 8,
-        vertical: 4,
-      ),
-      decoration: BoxDecoration(
-        color: color[50],
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: color[700],
-          fontSize: 10,
-        ),
+          ),
+          const Spacer(),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: onChat,
+              icon: const Icon(Icons.chat_bubble_outline_rounded, size: 17),
+              label: const Text('구매 요청 상담'),
+            ),
+          ),
+        ],
       ),
     );
   }
