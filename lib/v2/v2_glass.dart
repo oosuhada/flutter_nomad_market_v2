@@ -55,7 +55,8 @@ class V2GlassTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: Colors.white.withValues(alpha: .82),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(18),
           borderSide: BorderSide(color: ink.withValues(alpha: .08)),
@@ -66,13 +67,15 @@ class V2GlassTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(18),
-          borderSide: BorderSide(color: seed.withValues(alpha: .72), width: 1.3),
+          borderSide:
+              BorderSide(color: seed.withValues(alpha: .72), width: 1.3),
         ),
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           minimumSize: const Size(48, 50),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
           textStyle: const TextStyle(fontWeight: FontWeight.w800),
         ),
       ),
@@ -245,7 +248,8 @@ class AppGlassNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final reduceMotion = MediaQuery.maybeOf(context)?.disableAnimations ?? false;
+    final reduceMotion =
+        MediaQuery.maybeOf(context)?.disableAnimations ?? false;
     final scheme = Theme.of(context).colorScheme;
 
     return SafeArea(
@@ -270,10 +274,13 @@ class AppGlassNavigationBar extends StatelessWidget {
                     borderRadius: BorderRadius.circular(24),
                     onTap: () => onSelected(index),
                     child: AnimatedContainer(
-                      duration: reduceMotion ? Duration.zero : const Duration(milliseconds: 240),
+                      duration: reduceMotion
+                          ? Duration.zero
+                          : const Duration(milliseconds: 240),
                       curve: Curves.easeOutCubic,
                       constraints: const BoxConstraints(minHeight: 54),
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 7),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6, vertical: 7),
                       decoration: BoxDecoration(
                         color: selected
                             ? scheme.primary.withValues(alpha: .11)
@@ -284,9 +291,13 @@ class AppGlassNavigationBar extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
-                            selected ? (item.selectedIcon ?? item.icon) : item.icon,
+                            selected
+                                ? (item.selectedIcon ?? item.icon)
+                                : item.icon,
                             size: 22,
-                            color: selected ? scheme.primary : scheme.onSurfaceVariant,
+                            color: selected
+                                ? scheme.primary
+                                : scheme.onSurfaceVariant,
                           ),
                           const SizedBox(height: 3),
                           Text(
@@ -295,8 +306,11 @@ class AppGlassNavigationBar extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 10.5,
-                              fontWeight: selected ? FontWeight.w800 : FontWeight.w600,
-                              color: selected ? scheme.primary : scheme.onSurfaceVariant,
+                              fontWeight:
+                                  selected ? FontWeight.w800 : FontWeight.w600,
+                              color: selected
+                                  ? scheme.primary
+                                  : scheme.onSurfaceVariant,
                             ),
                           ),
                         ],
@@ -335,7 +349,8 @@ class AppGlassActionButton extends StatelessWidget {
       semanticLabel: semanticLabel ?? label,
       borderRadius: BorderRadius.circular(24),
       blurSigma: 18,
-      padding: EdgeInsets.symmetric(horizontal: label == null ? 16 : 18, vertical: 14),
+      padding: EdgeInsets.symmetric(
+          horizontal: label == null ? 16 : 18, vertical: 14),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
