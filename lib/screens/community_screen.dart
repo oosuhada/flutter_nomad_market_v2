@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data/demo_marketplace_data.dart';
 import '../theme/nomad_theme.dart';
+import '../v2/v2_glass.dart';
 import '../widgets/marketplace_image.dart';
 
 class CommunityScreen extends StatelessWidget {
@@ -29,11 +30,27 @@ class CommunityScreen extends StatelessWidget {
             IconButton(onPressed: () {}, icon: const Icon(Icons.edit_square)),
             const SizedBox(width: 8),
           ],
-          bottom: const TabBar(
-            tabs: [Tab(text: 'LIVE'), Tab(text: '스토리'), Tab(text: '로컬 팁')],
-            dividerHeight: 1,
-            indicatorSize: TabBarIndicatorSize.label,
-            labelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(54),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 6),
+              child: AppGlassSurface(
+                borderRadius: BorderRadius.circular(20),
+                blurSigma: 12,
+                padding: const EdgeInsets.symmetric(horizontal: 6),
+                child: const TabBar(
+                  tabs: [
+                    Tab(text: 'LIVE'),
+                    Tab(text: '스토리'),
+                    Tab(text: '로컬 팁')
+                  ],
+                  dividerHeight: 0,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  labelStyle:
+                      TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
+                ),
+              ),
+            ),
           ),
         ),
         body: TabBarView(
@@ -231,10 +248,10 @@ class _TipsTab extends StatelessWidget {
       separatorBuilder: (_, __) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
         final tip = tips[index];
-        return Container(
+        return AppGlassSurface(
+          borderRadius: BorderRadius.circular(18),
+          blurSigma: 10,
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(18)),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
