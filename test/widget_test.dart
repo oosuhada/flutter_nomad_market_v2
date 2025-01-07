@@ -1,30 +1,30 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
+import 'package:flutter_nomad_market_v2/main.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:flutter_nomad_market_v2/main.dart';
-
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+  testWidgets('shows the Nomad Market marketplace home', (tester) async {
+    await tester.pumpWidget(const NomadMarketApp());
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('NOMAD MARKET'), findsOneWidget);
+    expect(find.text('서울 · 성수동'), findsOneWidget);
+    expect(find.text('지금 뜨는 로컬 픽'), findsOneWidget);
+    expect(find.byIcon(Icons.search_rounded), findsWidgets);
+  });
+
+  testWidgets('bottom navigation opens search and sell flows', (tester) async {
+    await tester.pumpWidget(const NomadMarketApp());
+    await tester.pump();
+
+    await tester.tap(find.text('탐색'));
+    await tester.pumpAndSettle();
+    expect(find.text('DEMO CATALOG'), findsOneWidget);
+    expect(find.textContaining('개의 로컬 아이템'), findsOneWidget);
+
+    await tester.tap(find.text('판매'));
+    await tester.pumpAndSettle();
+    expect(find.text('판매글 작성'), findsOneWidget);
+    expect(find.text('빈티지 필름 카메라 + 35mm 렌즈'), findsOneWidget);
   });
 }
