@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../data/demo_marketplace_data.dart';
+import '../theme/nomad_theme.dart';
+import '../widgets/marketplace_image.dart';
+
 class CommunityScreen extends StatelessWidget {
   const CommunityScreen({super.key});
 
@@ -8,352 +12,186 @@ class CommunityScreen extends StatelessWidget {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        backgroundColor: Colors.grey[50],
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          title: const Text(
-            '커뮤니티',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          bottom: TabBar(
-            labelColor: Colors.blue,
-            unselectedLabelColor: Colors.grey,
-            indicatorColor: Colors.blue,
-            indicatorWeight: 3,
-            labelStyle: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-            unselectedLabelStyle: const TextStyle(
-              fontSize: 16,
-            ),
-            tabs: const [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0),
-                child: Text('실시간 방송'),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0),
-                child: Text('스토리'),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0),
-                child: Text('현지 정보'),
-              ),
+          title: const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('커뮤니티', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
+              Text('여행자와 현지인의 진짜 로컬 정보', style: TextStyle(fontSize: 10, color: Colors.black54, fontWeight: FontWeight.w400)),
             ],
+          ),
+          actions: [
+            IconButton(onPressed: () {}, icon: const Icon(Icons.edit_square)),
+            const SizedBox(width: 8),
+          ],
+          bottom: const TabBar(
+            tabs: [Tab(text: 'LIVE'), Tab(text: '스토리'), Tab(text: '로컬 팁')],
+            dividerHeight: 1,
+            indicatorSize: TabBarIndicatorSize.label,
+            labelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
           ),
         ),
-        body: SafeArea(
-          child: TabBarView(
-            children: [
-              _buildLiveStreamTab(),
-              _buildStoriesTab(),
-              _buildLocalInfoTab(),
-            ],
-          ),
+        body: TabBarView(
+          children: [
+            _LiveTab(),
+            _StoriesTab(),
+            _TipsTab(),
+          ],
         ),
       ),
     );
   }
+}
 
-  Widget _buildLiveStreamTab() {
+class _LiveTab extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final items = demoMarketplaceItems.take(4).toList();
     return GridView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(20),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 0.65, // 비율 조정
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
+        crossAxisSpacing: 14,
+        mainAxisSpacing: 18,
+        childAspectRatio: .72,
       ),
-      itemCount: 6,
+      itemCount: items.length,
       itemBuilder: (context, index) {
-        return _buildLiveStreamCard();
-      },
-    );
-  }
-
-  Widget _buildLiveStreamCard() {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      elevation: 2,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // 이미지 영역
-          AspectRatio(
-            aspectRatio: 1.2,
-            child: Stack(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(12),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 8,
-                  left: 8,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.live_tv,
-                          color: Colors.white,
-                          size: 16,
-                        ),
-                        SizedBox(width: 4),
-                        Text(
-                          'LIVE',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // 텍스트 영역
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
+        final item = items[index];
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Stack(
+                fit: StackFit.expand,
                 children: [
-                  // 제목
-                  const Text(
-                    '파리 명품 아울렛 쇼핑',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                  MarketplaceImage(url: item.imageUrl, borderRadius: BorderRadius.circular(18)),
+                  Positioned(
+                    top: 10,
+                    left: 10,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                      decoration: BoxDecoration(color: Colors.redAccent, borderRadius: BorderRadius.circular(999)),
+                      child: const Text('● LIVE', style: TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.w900)),
                     ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4),
-                  // 부제목
-                  Text(
-                    '현지 쇼핑 전문가 Sarah',
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 12,
+                  Positioned(
+                    left: 10,
+                    right: 10,
+                    bottom: 10,
+                    child: Text(
+                      index.isEven ? '파리 빈티지 숍 같이 둘러봐요' : '도쿄 한정 제품 실물 체크',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(color: Colors.white, fontSize: 13, height: 1.2, fontWeight: FontWeight.w800, shadows: [Shadow(blurRadius: 8, color: Colors.black)]),
                     ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const Spacer(),
-                  // 조회수
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.remove_red_eye,
-                        size: 16,
-                        color: Colors.grey[600],
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        '1.2K',
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Stories 탭과 LocalInfo 탭은 기존 코드 유지
-  Widget _buildStoriesTab() {
-    return ListView.builder(
-      padding: const EdgeInsets.all(16),
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        return _buildStoryCard();
+            const SizedBox(height: 8),
+            Text(item.location, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 10, color: NomadTheme.brand, fontWeight: FontWeight.w700)),
+            const SizedBox(height: 2),
+            Text('${350 + index * 187}명 시청 중', style: TextStyle(fontSize: 10, color: Colors.grey.shade600)),
+          ],
+        );
       },
     );
   }
+}
 
-  Widget _buildStoryCard() {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Colors.grey[200],
-            ),
-            title: const Text(
-              'John Doe',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            subtitle: const Text('파리, 프랑스'),
-            trailing: IconButton(
-              icon: const Icon(Icons.more_horiz),
-              onPressed: () {},
-            ),
-          ),
-          Container(
-            height: 240,
-            color: Colors.grey[200],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  '파리의 숨은 쇼핑 명소를 소개합니다',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  '현지인들만 아는 특별한 장소, 세련된 부티크부터 빈티지 숍까지...',
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Row(
+class _StoriesTab extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    const stories = [
+      ('파리에서 빈티지를 살 때 꼭 보는 세 가지', 'Sarah Kim · Paris', 0),
+      ('성수 카메라 골목, 필름 여행자를 위한 지도', 'Joon Lee · Seoul', 2),
+      ('밀라노 편집숍 세일 시즌 체크리스트', 'Luca Han · Milano', 3),
+    ];
+    return ListView.separated(
+      padding: const EdgeInsets.fromLTRB(20, 18, 20, 28),
+      itemCount: stories.length,
+      separatorBuilder: (_, __) => const SizedBox(height: 14),
+      itemBuilder: (context, index) {
+        final story = stories[index];
+        final item = demoMarketplaceItems[story.$3];
+        return Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+          child: Row(
+            children: [
+              MarketplaceImage(url: item.imageUrl, width: 102, height: 118, borderRadius: BorderRadius.circular(15)),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    IconButton(
-                      icon: const Icon(Icons.favorite_border),
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.chat_bubble_outline),
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.share),
-                      onPressed: () {},
+                    const Text('LOCAL STORY', style: TextStyle(fontSize: 9, letterSpacing: .8, fontWeight: FontWeight.w900, color: NomadTheme.brand)),
+                    const SizedBox(height: 7),
+                    Text(story.$1, style: const TextStyle(fontSize: 16, height: 1.3, fontWeight: FontWeight.w800)),
+                    const SizedBox(height: 10),
+                    Text(story.$2, style: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
+                    const SizedBox(height: 8),
+                    const Row(
+                      children: [
+                        Icon(Icons.favorite_border_rounded, size: 15),
+                        SizedBox(width: 4),
+                        Text('좋아요 84', style: TextStyle(fontSize: 10)),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildLocalInfoTab() {
-    return ListView.builder(
-      padding: const EdgeInsets.all(16),
-      itemCount: 8,
-      itemBuilder: (context, index) {
-        return _buildLocalInfoCard();
+        );
       },
     );
   }
+}
 
-  Widget _buildLocalInfoCard() {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 16),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.blue[50],
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Text(
-                    '쇼핑 팁',
-                    style: TextStyle(
-                      color: Colors.blue[700],
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-                const Spacer(),
-                Text(
-                  '2시간 전',
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            const Text(
-              '파리 명품 쇼핑 시즌 세일 가이드',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
+class _TipsTab extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    const tips = [
+      (Icons.currency_exchange_rounded, '환율보다 먼저 확인할 것', '카드 수수료와 택스 리펀드 조건을 같이 비교하세요.'),
+      (Icons.inventory_2_outlined, '기내 반입 체크', '전자기기와 액체류는 판매 전에 운송 조건을 확인하면 좋아요.'),
+      (Icons.verified_user_outlined, '안전한 직거래 장소', '사람이 많은 공개 장소에서 상품 상태를 함께 확인하세요.'),
+      (Icons.translate_rounded, '현지 판매자와 대화하기', '가격보다 상태·구성품·구매 시점을 먼저 확인해보세요.'),
+    ];
+    return ListView.separated(
+      padding: const EdgeInsets.all(20),
+      itemCount: tips.length,
+      separatorBuilder: (_, __) => const SizedBox(height: 12),
+      itemBuilder: (context, index) {
+        final tip = tips[index];
+        return Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(18)),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 44,
+                height: 44,
+                decoration: const BoxDecoration(color: NomadTheme.softGreen, shape: BoxShape.circle),
+                child: Icon(tip.$1, color: NomadTheme.brand, size: 21),
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              '2024 S/S 시즌 세일이 시작되었습니다. 브랜드별 할인율과 꿀팁을 공유합니다.',
-              style: TextStyle(
-                color: Colors.grey[600],
+              const SizedBox(width: 13),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(tip.$2, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800)),
+                    const SizedBox(height: 5),
+                    Text(tip.$3, style: TextStyle(fontSize: 12, height: 1.5, color: Colors.grey.shade700)),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                CircleAvatar(
-                  backgroundColor: Colors.grey[200],
-                  radius: 16,
-                ),
-                const SizedBox(width: 8),
-                const Text(
-                  'Sarah Kim',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                const Spacer(),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text('자세히 보기'),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
