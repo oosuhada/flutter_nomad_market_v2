@@ -1,368 +1,241 @@
-// screens/my_page_screen.dart
 import 'package:flutter/material.dart';
+
+import '../data/demo_marketplace_data.dart';
+import '../theme/nomad_theme.dart';
+import '../widgets/marketplace_image.dart';
+import 'chat_list_screen.dart';
 
 class MyPageScreen extends StatelessWidget {
   const MyPageScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        _buildProfileSection(),
-        _buildStatusSection(),
-        const Divider(height: 1),
-        _buildMenuSection(),
-        const SizedBox(height: 8),
-        _buildSafetySection(),
-        const SizedBox(height: 8),
-        _buildSettingsSection(),
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('마이 마켓', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.settings_outlined)),
+          const SizedBox(width: 8),
+        ],
+      ),
+      body: SafeArea(
+        top: false,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(20, 10, 20, 30),
+          children: [
+            _profileCard(),
+            const SizedBox(height: 14),
+            _tradeSummary(),
+            const SizedBox(height: 28),
+            _sectionTitle('내 판매글', action: '전체 보기'),
+            const SizedBox(height: 12),
+            _myListings(),
+            const SizedBox(height: 28),
+            _sectionTitle('내 Nomad Market'),
+            const SizedBox(height: 10),
+            _menuTile(
+              context,
+              icon: Icons.favorite_border_rounded,
+              title: '관심 상품',
+              subtitle: '저장한 로컬 아이템 12개',
+              badge: '12',
+            ),
+            _menuTile(
+              context,
+              icon: Icons.chat_bubble_outline_rounded,
+              title: '거래 메시지',
+              subtitle: '판매자와 나눈 문의를 이어보세요',
+              badge: '3',
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => Scaffold(
+                    appBar: AppBar(title: const Text('거래 메시지', style: TextStyle(fontWeight: FontWeight.w800))),
+                    body: const ChatListScreen(),
+                  ),
+                ),
+              ),
+            ),
+            _menuTile(
+              context,
+              icon: Icons.public_rounded,
+              title: '여행 & 문화 가이드',
+              subtitle: '현지에서 알아두면 좋은 거래 문화',
+              onTap: () => Navigator.of(context).pushNamed('/culture-guide'),
+            ),
+            _menuTile(
+              context,
+              icon: Icons.verified_user_outlined,
+              title: '안전 거래 센터',
+              subtitle: '거래 보호 원칙과 도움말',
+              onTap: () => Navigator.of(context).pushNamed('/safety-center'),
+            ),
+            const SizedBox(height: 16),
+            Center(
+              child: Text(
+                'Portfolio demo data · no account required',
+                style: TextStyle(fontSize: 10, color: Colors.grey.shade500),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
-  Widget _buildProfileSection() {
+  Widget _profileCard() {
     return Container(
-      padding: const EdgeInsets.all(16),
-      color: Colors.white,
-      child: Column(
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(color: NomadTheme.ink, borderRadius: BorderRadius.circular(24)),
+      child: Row(
         children: [
-          Row(
-            children: [
-              Stack(
+          Container(
+            width: 68,
+            height: 68,
+            decoration: const BoxDecoration(color: NomadTheme.brand, shape: BoxShape.circle),
+            child: const Icon(Icons.person_rounded, color: Colors.white, size: 34),
+          ),
+          const SizedBox(width: 14),
+          const Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text('Sarah Kim', overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800)),
+                    ),
+                    SizedBox(width: 5),
+                    Icon(Icons.verified_rounded, color: Color(0xFF8DD2C4), size: 19),
+                  ],
+                ),
+                SizedBox(height: 4),
+                Text('Paris ↔ Seoul · 로컬 쇼핑 큐레이터', style: TextStyle(color: Colors.white70, fontSize: 11)),
+                SizedBox(height: 9),
+                Text('신뢰도 98%  ·  ★ 4.9  ·  거래 32회', style: TextStyle(color: Color(0xFF8DD2C4), fontSize: 11, fontWeight: FontWeight.w700)),
+              ],
+            ),
+          ),
+          const Icon(Icons.chevron_right_rounded, color: Colors.white70),
+        ],
+      ),
+    );
+  }
+
+  Widget _tradeSummary() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 15),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+      child: const Row(
+        children: [
+          Expanded(child: _Stat(value: '3', label: '판매중')),
+          SizedBox(height: 34, child: VerticalDivider()),
+          Expanded(child: _Stat(value: '12', label: '관심')),
+          SizedBox(height: 34, child: VerticalDivider()),
+          Expanded(child: _Stat(value: '2', label: '거래중')),
+          SizedBox(height: 34, child: VerticalDivider()),
+          Expanded(child: _Stat(value: '32', label: '완료')),
+        ],
+      ),
+    );
+  }
+
+  Widget _myListings() {
+    final items = [demoMarketplaceItems[0], demoMarketplaceItems[2]];
+    return SizedBox(
+      height: 126,
+      child: Row(
+        children: items.map((item) {
+          return Expanded(
+            child: Container(
+              margin: EdgeInsets.only(right: item == items.first ? 10 : 0),
+              padding: const EdgeInsets.all(9),
+              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(18)),
+              child: Row(
                 children: [
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundColor: Colors.grey[200],
-                    child: const Icon(Icons.person, size: 40),
-                  ),
-                  Positioned(
-                    right: 0,
-                    bottom: 0,
-                    child: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: const BoxDecoration(
-                        color: Colors.blue,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                        size: 16,
-                      ),
+                  MarketplaceImage(url: item.imageUrl, width: 78, height: 106, borderRadius: BorderRadius.circular(13)),
+                  const SizedBox(width: 9),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                          decoration: BoxDecoration(color: NomadTheme.softGreen, borderRadius: BorderRadius.circular(999)),
+                          child: const Text('판매중', style: TextStyle(fontSize: 8, color: NomadTheme.brand, fontWeight: FontWeight.w800)),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(item.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 11, height: 1.25, fontWeight: FontWeight.w700)),
+                        const SizedBox(height: 5),
+                        Text(item.formattedPrice, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w900)),
+                      ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Row(
-                      children: [
-                        Text(
-                          'Sarah Kim',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(width: 8),
-                        Icon(Icons.verified, color: Colors.blue, size: 20),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '파리, 프랑스',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 16,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.blue[50],
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        '럭셔리 쇼핑 전문가',
-                        style: TextStyle(
-                          color: Colors.blue[700],
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          IntrinsicHeight(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildProfileStat('거래 완료', '32'),
-                const VerticalDivider(thickness: 1),
-                _buildProfileStat('신뢰도', '98%'),
-                const VerticalDivider(thickness: 1),
-                _buildProfileStat('리뷰', '28'),
-              ],
             ),
-          ),
-        ],
+          );
+        }).toList(),
       ),
     );
   }
 
-  Widget _buildProfileStat(String label, String value) {
-    return Column(
+  Widget _sectionTitle(String title, {String? action}) {
+    return Row(
       children: [
-        Text(
-          value,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(
-            color: Colors.grey[600],
-            fontSize: 14,
-          ),
-        ),
+        Expanded(child: Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800))),
+        if (action != null) Text(action, style: const TextStyle(fontSize: 11, color: NomadTheme.brand, fontWeight: FontWeight.w700)),
       ],
     );
   }
 
-  Widget _buildStatusSection() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            '현재 진행중',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                child: _buildStatusItem(
-                  icon: Icons.shopping_bag,
-                  title: '구매 요청',
-                  count: '2',
-                  color: Colors.blue,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: _buildStatusItem(
-                  icon: Icons.local_shipping,
-                  title: '배송중',
-                  count: '1',
-                  color: Colors.green,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: _buildStatusItem(
-                  icon: Icons.chat_bubble,
-                  title: '채팅',
-                  count: '5',
-                  color: Colors.orange,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildStatusItem({
-    required IconData icon,
-    required String title,
-    required String count,
-    required MaterialColor color,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: color[50],
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        children: [
-          Icon(icon, color: color[700]),
-          const SizedBox(height: 8),
-          Text(
-            title,
-            style: TextStyle(
-              color: color[700],
-              fontSize: 14,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            count,
-            style: TextStyle(
-              color: color[700],
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMenuSection() {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        children: [
-          _buildMenuItem(
-            icon: Icons.shopping_bag_outlined,
-            title: '구매 내역',
-            subtitle: '진행중인 구매와 과거 거래 내역',
-          ),
-          _buildMenuItem(
-            icon: Icons.favorite_border,
-            title: '관심 상품',
-            subtitle: '찜한 상품 모아보기',
-            badgeCount: '12',
-          ),
-          _buildMenuItem(
-            icon: Icons.calendar_today,
-            title: '여행 일정',
-            subtitle: '구매 요청 및 픽업 일정 관리',
-          ),
-          _buildMenuItem(
-            icon: Icons.card_giftcard,
-            title: '리워드',
-            subtitle: '포인트 및 쿠폰 확인',
-            isNew: true,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSafetySection() {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        children: [
-          _buildMenuItem(
-            icon: Icons.verified_user_outlined,
-            title: '안전 거래 센터',
-            subtitle: '거래 보호 및 분쟁 해결',
-            showDivider: false,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSettingsSection() {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        children: [
-          _buildMenuItem(
-            icon: Icons.settings_outlined,
-            title: '설정',
-            subtitle: '앱 설정 및 개인정보 관리',
-            showDivider: false,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMenuItem({
+  Widget _menuTile(
+    BuildContext context, {
     required IconData icon,
     required String title,
     required String subtitle,
-    String? badgeCount,
-    bool isNew = false,
-    bool showDivider = true,
+    String? badge,
+    VoidCallback? onTap,
   }) {
-    return Column(
-      children: [
-        ListTile(
-          leading: Icon(icon, color: Colors.black87),
-          title: Row(
-            children: [
-              Text(title),
-              const SizedBox(width: 8),
-              if (isNew)
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 6,
-                    vertical: 2,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.red[50],
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    'NEW',
-                    style: TextStyle(
-                      color: Colors.red[700],
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              if (badgeCount != null)
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 6,
-                    vertical: 2,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.blue[50],
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    badgeCount,
-                    style: TextStyle(
-                      color: Colors.blue[700],
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-            ],
-          ),
-          subtitle: Text(
-            subtitle,
-            style: TextStyle(
-              color: Colors.grey[600],
-              fontSize: 12,
-            ),
-          ),
-          trailing:
-              Icon(Icons.arrow_forward_ios, color: Colors.grey[400], size: 16),
-          onTap: () {
-            // 각 메뉴 아이템별 네비게이션 처리
-          },
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
+      child: ListTile(
+        onTap: onTap ?? () {},
+        leading: Container(
+          width: 42,
+          height: 42,
+          decoration: const BoxDecoration(color: NomadTheme.softGreen, shape: BoxShape.circle),
+          child: Icon(icon, color: NomadTheme.brand, size: 20),
         ),
-        if (showDivider) const Divider(height: 1),
+        title: Text(title, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800)),
+        subtitle: Text(subtitle, style: TextStyle(fontSize: 10, color: Colors.grey.shade600)),
+        trailing: badge != null
+            ? Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                decoration: BoxDecoration(color: NomadTheme.warm, borderRadius: BorderRadius.circular(999)),
+                child: Text(badge, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w800)),
+              )
+            : const Icon(Icons.chevron_right_rounded, color: Colors.black38),
+      ),
+    );
+  }
+}
+
+class _Stat extends StatelessWidget {
+  const _Stat({required this.value, required this.label});
+
+  final String value;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(value, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w900)),
+        const SizedBox(height: 2),
+        Text(label, style: const TextStyle(fontSize: 9, color: Colors.black54)),
       ],
     );
   }
