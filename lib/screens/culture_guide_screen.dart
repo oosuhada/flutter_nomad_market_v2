@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../theme/nomad_theme.dart';
+import '../v2/v2_glass.dart';
+
 class CultureGuideScreen extends StatelessWidget {
   const CultureGuideScreen({super.key});
 
@@ -7,10 +10,9 @@ class CultureGuideScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
         title: const Text(
           '문화 가이드',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(fontWeight: FontWeight.w800),
         ),
       ),
       body: ListView(
@@ -61,12 +63,25 @@ class CultureGuideScreen extends StatelessWidget {
   }
 
   Widget _buildGuideItem(String title) {
-    return Card(
+    return AppGlassSurface(
+      surfaceOpacity: .64,
+      blurSigma: 15,
+      borderRadius: BorderRadius.circular(18),
       margin: const EdgeInsets.only(bottom: 12),
       child: ListTile(
         contentPadding: const EdgeInsets.all(16),
-        title: Text(title),
-        trailing: const Icon(Icons.arrow_forward_ios),
+        leading: Container(
+          width: 38,
+          height: 38,
+          decoration: BoxDecoration(
+            color: NomadTheme.softGreen.withValues(alpha: .74),
+            shape: BoxShape.circle,
+          ),
+          child: const Icon(Icons.public_rounded,
+              color: NomadTheme.brand, size: 19),
+        ),
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w700)),
+        trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 16),
         onTap: () {},
       ),
     );
@@ -84,30 +99,31 @@ class CultureGuideScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                _buildCalendarItem(
-                  month: '12월',
-                  title: '연말 시즌 세일',
-                  description: '유럽 주요 도시 크리스마스 마켓',
-                ),
-                const Divider(),
-                _buildCalendarItem(
-                  month: '1월',
-                  title: '겨울 시즌 세일',
-                  description: '프랑스 솔드 시즌',
-                ),
-                const Divider(),
-                _buildCalendarItem(
-                  month: '2월',
-                  title: '밸런타인 특집',
-                  description: '초콜릿 & 주얼리 프로모션',
-                ),
-              ],
-            ),
+        AppGlassSurface(
+          surfaceOpacity: .66,
+          blurSigma: 16,
+          borderRadius: BorderRadius.circular(22),
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              _buildCalendarItem(
+                month: '12월',
+                title: '연말 시즌 세일',
+                description: '유럽 주요 도시 크리스마스 마켓',
+              ),
+              const Divider(),
+              _buildCalendarItem(
+                month: '1월',
+                title: '겨울 시즌 세일',
+                description: '프랑스 솔드 시즌',
+              ),
+              const Divider(),
+              _buildCalendarItem(
+                month: '2월',
+                title: '밸런타인 특집',
+                description: '초콜릿 & 주얼리 프로모션',
+              ),
+            ],
           ),
         ),
       ],
@@ -123,19 +139,21 @@ class CultureGuideScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: 48,
             height: 48,
-            decoration: BoxDecoration(
-              color: Colors.blue[50],
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Center(
-              child: Text(
-                month,
-                style: TextStyle(
-                  color: Colors.blue[700],
-                  fontWeight: FontWeight.bold,
+            child: AppGlassSurface(
+              tint: NomadTheme.softGreen,
+              surfaceOpacity: .7,
+              blurSigma: 10,
+              borderRadius: BorderRadius.circular(12),
+              child: Center(
+                child: Text(
+                  month,
+                  style: const TextStyle(
+                    color: NomadTheme.brand,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),

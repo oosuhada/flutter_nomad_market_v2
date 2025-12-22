@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../data/demo_marketplace_data.dart';
 import '../models/marketplace_item.dart';
 import '../theme/nomad_theme.dart';
+import '../v2/v2_glass.dart';
 import '../widgets/product_card.dart';
 import 'product_detail_screen.dart';
 
@@ -65,27 +66,37 @@ class _SearchScreenState extends State<SearchScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 12),
-              child: TextField(
-                controller: _controller,
-                onChanged: (_) => setState(() {}),
-                textInputAction: TextInputAction.search,
-                decoration: InputDecoration(
-                  hintText: '예: 파리, 한정판, K-뷰티',
-                  prefixIcon: const Icon(Icons.search_rounded),
-                  suffixIcon: _controller.text.isEmpty
-                      ? const Icon(Icons.tune_rounded, size: 20)
-                      : IconButton(
-                          onPressed: () {
-                            _controller.clear();
-                            setState(() {});
-                          },
-                          icon: const Icon(Icons.close_rounded),
-                        ),
+              child: AppGlassSurface(
+                surfaceOpacity: .68,
+                blurSigma: 18,
+                borderRadius: BorderRadius.circular(22),
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: TextField(
+                  controller: _controller,
+                  onChanged: (_) => setState(() {}),
+                  textInputAction: TextInputAction.search,
+                  decoration: InputDecoration(
+                    hintText: '예: 파리, 한정판, K-뷰티',
+                    prefixIcon: const Icon(Icons.search_rounded),
+                    filled: false,
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    suffixIcon: _controller.text.isEmpty
+                        ? const Icon(Icons.tune_rounded, size: 20)
+                        : IconButton(
+                            onPressed: () {
+                              _controller.clear();
+                              setState(() {});
+                            },
+                            icon: const Icon(Icons.close_rounded),
+                          ),
+                  ),
                 ),
               ),
             ),
             SizedBox(
-              height: 44,
+              height: 48,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -93,20 +104,10 @@ class _SearchScreenState extends State<SearchScreen> {
                 separatorBuilder: (_, __) => const SizedBox(width: 8),
                 itemBuilder: (context, index) {
                   final category = marketplaceCategories[index];
-                  return ChoiceChip(
-                    label: Text(category),
+                  return AppGlassChip(
+                    label: category,
                     selected: category == _category,
-                    onSelected: (_) => setState(() => _category = category),
-                    showCheckmark: false,
-                    side: BorderSide.none,
-                    selectedColor: NomadTheme.ink,
-                    backgroundColor: Colors.white,
-                    labelStyle: TextStyle(
-                      color:
-                          category == _category ? Colors.white : NomadTheme.ink,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    onTap: () => setState(() => _category = category),
                   );
                 },
               ),
@@ -122,26 +123,31 @@ class _SearchScreenState extends State<SearchScreen> {
                           fontSize: 15, fontWeight: FontWeight.w800),
                     ),
                   ),
-                  PopupMenuButton<String>(
-                    initialValue: _sort,
-                    onSelected: (value) => setState(() => _sort = value),
-                    itemBuilder: (_) => const [
-                      PopupMenuItem(value: '추천순', child: Text('추천순')),
-                      PopupMenuItem(value: '낮은 가격', child: Text('낮은 가격')),
-                      PopupMenuItem(value: '관심 많은 순', child: Text('관심 많은 순')),
-                    ],
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 10),
-                      child: Row(
-                        children: [
-                          Text(_sort,
-                              style: const TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.w600)),
-                          const SizedBox(width: 2),
-                          const Icon(Icons.keyboard_arrow_down_rounded,
-                              size: 19),
-                        ],
+                  AppGlassSurface(
+                    surfaceOpacity: .6,
+                    blurSigma: 12,
+                    borderRadius: BorderRadius.circular(999),
+                    child: PopupMenuButton<String>(
+                      initialValue: _sort,
+                      onSelected: (value) => setState(() => _sort = value),
+                      itemBuilder: (_) => const [
+                        PopupMenuItem(value: '추천순', child: Text('추천순')),
+                        PopupMenuItem(value: '낮은 가격', child: Text('낮은 가격')),
+                        PopupMenuItem(value: '관심 많은 순', child: Text('관심 많은 순')),
+                      ],
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 9),
+                        child: Row(
+                          children: [
+                            Text(_sort,
+                                style: const TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.w700)),
+                            const SizedBox(width: 2),
+                            const Icon(Icons.keyboard_arrow_down_rounded,
+                                size: 19),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -183,38 +189,44 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget _buildEmptyState() {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 72,
-              height: 72,
-              decoration: const BoxDecoration(
-                color: NomadTheme.softGreen,
-                shape: BoxShape.circle,
+        padding: const EdgeInsets.all(28),
+        child: AppGlassSurface(
+          surfaceOpacity: .68,
+          blurSigma: 18,
+          borderRadius: BorderRadius.circular(26),
+          padding: const EdgeInsets.fromLTRB(28, 30, 28, 24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 72,
+                height: 72,
+                decoration: const BoxDecoration(
+                  color: NomadTheme.softGreen,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.travel_explore_rounded,
+                    color: NomadTheme.brand, size: 34),
               ),
-              child: const Icon(Icons.travel_explore_rounded,
-                  color: NomadTheme.brand, size: 34),
-            ),
-            const SizedBox(height: 18),
-            const Text('아직 맞는 현지 픽이 없어요',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
-            const SizedBox(height: 7),
-            Text(
-              '다른 도시, 카테고리 또는 여행자 키워드로 찾아보세요.',
-              style: TextStyle(color: Colors.grey.shade600),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 18),
-            TextButton(
-              onPressed: () {
-                _controller.clear();
-                setState(() => _category = '전체');
-              },
-              child: const Text('필터 초기화'),
-            ),
-          ],
+              const SizedBox(height: 18),
+              const Text('아직 맞는 현지 픽이 없어요',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
+              const SizedBox(height: 7),
+              Text(
+                '다른 도시, 카테고리 또는 여행자 키워드로 찾아보세요.',
+                style: TextStyle(color: Colors.grey.shade600),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 18),
+              TextButton(
+                onPressed: () {
+                  _controller.clear();
+                  setState(() => _category = '전체');
+                },
+                child: const Text('필터 초기화'),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -166,10 +166,11 @@ class _StoriesTab extends StatelessWidget {
       itemBuilder: (context, index) {
         final story = stories[index];
         final item = demoMarketplaceItems[story.$3];
-        return Container(
+        return AppGlassSurface(
+          surfaceOpacity: .64,
+          blurSigma: 15,
+          borderRadius: BorderRadius.circular(20),
           padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(20)),
           child: Row(
             children: [
               MarketplaceImage(

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 /// Shared v2 visual language.
 ///
-/// Liquid Glass is intentionally limited to controls and navigation. Content
-/// surfaces remain solid so hierarchy, legibility, and rendering cost stay
-/// predictable across iOS and Android.
+/// Liquid Glass is used as a hierarchy system rather than a single global
+/// opacity. Photos stay photographic, while controls and supporting content
+/// surfaces share blur, tint, edge light and shallow depth.
 class V2GlassTheme {
   const V2GlassTheme._();
 
@@ -54,16 +54,16 @@ class V2GlassTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: Colors.white.withValues(alpha: .48),
+        fillColor: Colors.white.withValues(alpha: .22),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(18),
-          borderSide: BorderSide(color: ink.withValues(alpha: .08)),
+          borderSide: BorderSide(color: Colors.white.withValues(alpha: .72)),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(18),
-          borderSide: BorderSide(color: ink.withValues(alpha: .08)),
+          borderSide: BorderSide(color: Colors.white.withValues(alpha: .72)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(18),
@@ -471,6 +471,95 @@ class AppGlassSearchButton extends StatelessWidget {
             trailing!,
           ],
         ],
+      ),
+    );
+  }
+}
+
+class AppGlassChip extends StatelessWidget {
+  const AppGlassChip({
+    super.key,
+    required this.label,
+    required this.onTap,
+    this.selected = false,
+    this.icon,
+  });
+
+  final String label;
+  final VoidCallback onTap;
+  final bool selected;
+  final IconData? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return AppGlassSurface(
+      onTap: onTap,
+      semanticLabel: label,
+      tint: selected ? scheme.primary : null,
+      surfaceOpacity: selected ? .76 : .58,
+      blurSigma: 14,
+      borderRadius: BorderRadius.circular(999),
+      padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 9),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (icon != null) ...[
+            Icon(
+              icon,
+              size: 16,
+              color: selected ? scheme.onPrimary : scheme.primary,
+            ),
+            const SizedBox(width: 6),
+          ],
+          Text(
+            label,
+            style: TextStyle(
+              color: selected ? scheme.onPrimary : scheme.onSurface,
+              fontSize: 12,
+              fontWeight: selected ? FontWeight.w800 : FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AppGlassIconButton extends StatelessWidget {
+  const AppGlassIconButton({
+    super.key,
+    required this.icon,
+    required this.onPressed,
+    this.semanticLabel,
+    this.iconColor,
+    this.size = 42,
+  });
+
+  final IconData icon;
+  final VoidCallback onPressed;
+  final String? semanticLabel;
+  final Color? iconColor;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: size,
+      height: size,
+      child: AppGlassSurface(
+        onTap: onPressed,
+        semanticLabel: semanticLabel,
+        surfaceOpacity: .62,
+        blurSigma: 14,
+        borderRadius: BorderRadius.circular(size / 2),
+        child: Center(
+          child: Icon(
+            icon,
+            size: size * .48,
+            color: iconColor ?? Theme.of(context).colorScheme.onSurface,
+          ),
+        ),
       ),
     );
   }

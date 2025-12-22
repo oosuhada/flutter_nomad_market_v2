@@ -31,7 +31,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           SliverAppBar(
             pinned: true,
             expandedHeight: 390,
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.transparent,
             foregroundColor: NomadTheme.ink,
             leading: _roundAppBarButton(
               icon: Icons.arrow_back_rounded,
@@ -57,13 +57,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   Positioned(
                     left: 20,
                     bottom: 18,
-                    child: Container(
+                    child: AppGlassSurface(
+                      tint: NomadTheme.ink,
+                      surfaceOpacity: .7,
+                      blurSigma: 12,
+                      borderRadius: BorderRadius.circular(999),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: NomadTheme.ink.withValues(alpha: .82),
-                        borderRadius: BorderRadius.circular(999),
-                      ),
                       child: const Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -93,13 +93,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 children: [
                   Row(
                     children: [
-                      Container(
+                      AppGlassSurface(
+                        tint: NomadTheme.softGreen,
+                        surfaceOpacity: .68,
+                        blurSigma: 10,
+                        borderRadius: BorderRadius.circular(999),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 9, vertical: 5),
-                        decoration: BoxDecoration(
-                          color: NomadTheme.softGreen,
-                          borderRadius: BorderRadius.circular(999),
-                        ),
                         child: Text(
                           item.category,
                           style: const TextStyle(
@@ -297,17 +297,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }) {
     return Padding(
       padding: const EdgeInsets.all(7),
-      child: Material(
-        color: Colors.white.withValues(alpha: .92),
-        shape: const CircleBorder(),
-        child: InkWell(
-          onTap: onTap,
-          customBorder: const CircleBorder(),
-          child: SizedBox(
-              width: 42,
-              height: 42,
-              child: Icon(icon, color: iconColor, size: 21)),
-        ),
+      child: AppGlassIconButton(
+        icon: icon,
+        iconColor: iconColor,
+        onPressed: onTap,
+        size: 42,
       ),
     );
   }
@@ -369,10 +363,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   Widget _buildTag(String text) {
-    return Container(
+    return AppGlassSurface(
+      tint: NomadTheme.warm,
+      surfaceOpacity: .58,
+      blurSigma: 10,
+      borderRadius: BorderRadius.circular(999),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-      decoration: BoxDecoration(
-          color: NomadTheme.warm, borderRadius: BorderRadius.circular(10)),
       child: Text(text,
           style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700)),
     );
@@ -422,11 +418,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       fontSize: 12, height: 1.45, color: Colors.grey.shade700),
                 ),
                 const SizedBox(height: 18),
-                Container(
+                AppGlassSurface(
+                  tint: NomadTheme.canvas,
+                  surfaceOpacity: .7,
+                  blurSigma: 14,
+                  borderRadius: BorderRadius.circular(16),
                   padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                      color: NomadTheme.canvas,
-                      borderRadius: BorderRadius.circular(16)),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

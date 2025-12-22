@@ -88,7 +88,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: NomadTheme.canvas,
       body: SafeArea(
         child: Stack(
           children: [
@@ -132,7 +132,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 top: false,
                 minimum: const EdgeInsets.fromLTRB(18, 0, 18, 10),
                 child: AppGlassSurface(
+                  surfaceOpacity: .68,
                   borderRadius: BorderRadius.circular(28),
+                  blurSigma: 18,
                   padding: const EdgeInsets.fromLTRB(24, 12, 24, 16),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -276,6 +278,7 @@ class _LanguageMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppGlassSurface(
+      surfaceOpacity: .64,
       borderRadius: BorderRadius.circular(16),
       blurSigma: 14,
       child: PopupMenuButton<String>(

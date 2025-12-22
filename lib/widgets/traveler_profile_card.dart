@@ -29,7 +29,8 @@ class TravelerProfileCard extends StatelessWidget {
         width: 260,
         child: AppGlassSurface(
           borderRadius: BorderRadius.circular(22),
-          blurSigma: 10,
+          surfaceOpacity: .64,
+          blurSigma: 15,
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,12 +78,12 @@ class TravelerProfileCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 14),
-              Container(
+              AppGlassSurface(
+                tint: NomadTheme.warm,
+                surfaceOpacity: .58,
+                blurSigma: 10,
+                borderRadius: BorderRadius.circular(999),
                 padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
-                decoration: BoxDecoration(
-                  color: NomadTheme.warm,
-                  borderRadius: BorderRadius.circular(999),
-                ),
                 child: Text(
                   specialty,
                   style: const TextStyle(
