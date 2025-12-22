@@ -144,6 +144,8 @@ class AppGlassSurface extends StatelessWidget {
     this.borderRadius = const BorderRadius.all(Radius.circular(28)),
     this.blurSigma = 18,
     this.tint,
+    this.surfaceOpacity,
+    this.margin,
     this.onTap,
     this.semanticLabel,
   });
@@ -153,6 +155,8 @@ class AppGlassSurface extends StatelessWidget {
   final BorderRadius borderRadius;
   final double blurSigma;
   final Color? tint;
+  final double? surfaceOpacity;
+  final EdgeInsetsGeometry? margin;
   final VoidCallback? onTap;
   final String? semanticLabel;
 
@@ -163,10 +167,22 @@ class AppGlassSurface extends StatelessWidget {
     final theme = Theme.of(context);
     final dark = theme.brightness == Brightness.dark;
     final baseTint = tint ?? (dark ? const Color(0xFF25262B) : Colors.white);
-    final accentTint = Color.lerp(baseTint, theme.colorScheme.primary, dark ? .16 : .10)!;
-    final topAlpha = highContrast ? (dark ? .96 : .98) : (dark ? .60 : .48);
-    final middleAlpha = highContrast ? (dark ? .94 : .96) : (dark ? .50 : .36);
-    final bottomAlpha = highContrast ? (dark ? .92 : .94) : (dark ? .42 : .28);
+    final accentTint =
+        Color.lerp(baseTint, theme.colorScheme.primary, dark ? .16 : .10)!;
+    final requestedOpacity = surfaceOpacity?.clamp(.0, 1.0);
+    final middleAlpha = highContrast
+        ? (dark ? .94 : .96)
+        : requestedOpacity ?? (dark ? .50 : .36);
+    final topAlpha = highContrast
+        ? (dark ? .96 : .98)
+        : requestedOpacity == null
+            ? (dark ? .60 : .48)
+            : (middleAlpha + .10).clamp(.0, 1.0);
+    final bottomAlpha = highContrast
+        ? (dark ? .92 : .94)
+        : requestedOpacity == null
+            ? (dark ? .42 : .28)
+            : (middleAlpha - .08).clamp(.0, 1.0);
     final edge = dark
         ? Colors.white.withValues(alpha: highContrast ? .32 : .28)
         : Colors.white.withValues(alpha: highContrast ? .96 : .78);
@@ -259,8 +275,11 @@ class AppGlassSurface extends StatelessWidget {
       child: clipped,
     );
 
-    if (semanticLabel == null) return glass;
-    return Semantics(label: semanticLabel, button: onTap != null, child: glass);
+    final result = semanticLabel == null
+        ? glass
+        : Semantics(label: semanticLabel, button: onTap != null, child: glass);
+    if (margin == null) return result;
+    return Padding(padding: margin!, child: result);
   }
 }
 

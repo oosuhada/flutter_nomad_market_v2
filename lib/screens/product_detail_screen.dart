@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/marketplace_item.dart';
 import '../theme/nomad_theme.dart';
+import '../v2/v2_glass.dart';
 import '../widgets/marketplace_image.dart';
 import 'chat_screen.dart';
 
@@ -24,7 +25,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget build(BuildContext context) {
     final item = widget.item;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: NomadTheme.canvas,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -161,12 +162,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ],
                   ),
                   const SizedBox(height: 18),
-                  Container(
+                  AppGlassSurface(
+                    tint: NomadTheme.warm,
+                    surfaceOpacity: .72,
+                    blurSigma: 14,
+                    borderRadius: BorderRadius.circular(18),
                     padding: const EdgeInsets.all(14),
-                    decoration: BoxDecoration(
-                      color: NomadTheme.warm,
-                      borderRadius: BorderRadius.circular(18),
-                    ),
                     child: Column(
                       children: [
                         _infoRow(Icons.storefront_outlined, '현지 소싱',
@@ -202,20 +203,28 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
                   const SizedBox(height: 14),
-                  const Row(
-                    children: [
-                      Expanded(
-                          child: _TrustPoint(
-                              icon: Icons.photo_camera_back_outlined,
-                              label: '현지 실물 확인')),
-                      Expanded(
-                          child: _TrustPoint(
-                              icon: Icons.receipt_long_outlined,
-                              label: '구매 정보 공유')),
-                      Expanded(
-                          child: _TrustPoint(
-                              icon: Icons.luggage_outlined, label: '이동 일정 연결')),
-                    ],
+                  AppGlassSurface(
+                    tint: NomadTheme.softGreen,
+                    surfaceOpacity: .68,
+                    blurSigma: 12,
+                    borderRadius: BorderRadius.circular(20),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    child: const Row(
+                      children: [
+                        Expanded(
+                            child: _TrustPoint(
+                                icon: Icons.photo_camera_back_outlined,
+                                label: '현지 실물 확인')),
+                        Expanded(
+                            child: _TrustPoint(
+                                icon: Icons.receipt_long_outlined,
+                                label: '구매 정보 공유')),
+                        Expanded(
+                            child: _TrustPoint(
+                                icon: Icons.luggage_outlined,
+                                label: '이동 일정 연결')),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -225,53 +234,56 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       ),
       bottomNavigationBar: SafeArea(
         top: false,
-        child: Container(
-          padding: const EdgeInsets.fromLTRB(16, 11, 16, 12),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border(top: BorderSide(color: Colors.grey.shade200)),
-          ),
-          child: Row(
-            children: [
-              IconButton.filledTonal(
-                onPressed: () => setState(() => _favorite = !_favorite),
-                icon: Icon(_favorite
-                    ? Icons.favorite_rounded
-                    : Icons.favorite_border_rounded),
-                style: IconButton.styleFrom(minimumSize: const Size(52, 52)),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: OutlinedButton.icon(
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => const ChatScreen()),
-                  ),
-                  icon: const Icon(Icons.chat_bubble_outline_rounded, size: 19),
-                  label: const Text('채팅',
-                      style: TextStyle(fontWeight: FontWeight.w800)),
-                  style: OutlinedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(52),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+          child: AppGlassSurface(
+            surfaceOpacity: .80,
+            blurSigma: 18,
+            borderRadius: BorderRadius.circular(24),
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              children: [
+                IconButton.filledTonal(
+                  onPressed: () => setState(() => _favorite = !_favorite),
+                  icon: Icon(_favorite
+                      ? Icons.favorite_rounded
+                      : Icons.favorite_border_rounded),
+                  style: IconButton.styleFrom(minimumSize: const Size(52, 52)),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const ChatScreen()),
+                    ),
+                    icon:
+                        const Icon(Icons.chat_bubble_outline_rounded, size: 19),
+                    label: const Text('채팅',
+                        style: TextStyle(fontWeight: FontWeight.w800)),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(52),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16)),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                flex: 2,
-                child: FilledButton.icon(
-                  onPressed: () => _showPurchaseRequest(context, item),
-                  icon: const Icon(Icons.luggage_rounded, size: 19),
-                  label: const Text('구매 요청하기',
-                      style: TextStyle(fontWeight: FontWeight.w800)),
-                  style: FilledButton.styleFrom(
-                    minimumSize: const Size.fromHeight(52),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)),
+                const SizedBox(width: 8),
+                Expanded(
+                  flex: 2,
+                  child: FilledButton.icon(
+                    onPressed: () => _showPurchaseRequest(context, item),
+                    icon: const Icon(Icons.luggage_rounded, size: 19),
+                    label: const Text('구매 요청하기',
+                        style: TextStyle(fontWeight: FontWeight.w800)),
+                    style: FilledButton.styleFrom(
+                      minimumSize: const Size.fromHeight(52),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16)),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -301,13 +313,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   Widget _sellerCard(MarketplaceItem item) {
-    return Container(
+    return AppGlassSurface(
+      tint: NomadTheme.canvas,
+      surfaceOpacity: .74,
+      blurSigma: 16,
+      borderRadius: BorderRadius.circular(20),
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: NomadTheme.canvas,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFE4E8E5)),
-      ),
       child: Row(
         children: [
           Container(
