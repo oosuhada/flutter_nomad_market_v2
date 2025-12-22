@@ -270,16 +270,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 const SizedBox(width: 8),
                 Expanded(
                   flex: 2,
-                  child: FilledButton.icon(
+                  child: AppGlassPrimaryButton(
                     onPressed: () => _showPurchaseRequest(context, item),
-                    icon: const Icon(Icons.luggage_rounded, size: 19),
-                    label: const Text('구매 요청하기',
-                        style: TextStyle(fontWeight: FontWeight.w800)),
-                    style: FilledButton.styleFrom(
-                      minimumSize: const Size.fromHeight(52),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)),
-                    ),
+                    icon: Icons.luggage_rounded,
+                    label: '구매 요청하기',
+                    tint: NomadTheme.brand,
                   ),
                 ),
               ],
@@ -376,7 +371,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   Widget _infoRow(IconData icon, String label, String value) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Icon(icon, color: NomadTheme.brand, size: 19),
         const SizedBox(width: 9),
@@ -388,8 +383,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         ),
         const SizedBox(width: 4),
         Expanded(
-            child:
-                Text(value, style: const TextStyle(fontSize: 11, height: 1.4))),
+          child: Text(
+            value,
+            style: const TextStyle(fontSize: 11, height: 1.4),
+          ),
+        ),
       ],
     );
   }
@@ -441,12 +439,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                 ),
                 const SizedBox(height: 18),
-                FilledButton.icon(
+                AppGlassPrimaryButton(
                   onPressed: () => Navigator.of(sheetContext).pop(true),
-                  icon: const Icon(Icons.send_rounded),
-                  label: Text('${item.sellerName}에게 요청 보내기'),
-                  style: FilledButton.styleFrom(
-                      minimumSize: const Size.fromHeight(52)),
+                  icon: Icons.send_rounded,
+                  label: '${item.sellerName}에게 요청 보내기',
+                  tint: NomadTheme.brand,
                 ),
               ],
             ),

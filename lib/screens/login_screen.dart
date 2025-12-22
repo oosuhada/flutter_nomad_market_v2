@@ -26,6 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final tallLayout = MediaQuery.sizeOf(context).height > 700;
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: NomadTheme.canvas,
@@ -181,48 +182,52 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: const Text('비밀번호를 잊으셨나요?')),
                       ),
                       const SizedBox(height: 10),
-                      FilledButton(
+                      AppGlassPrimaryButton(
                         key: const Key('login-submit'),
                         onPressed: _enterMarket,
-                        style: FilledButton.styleFrom(
-                          minimumSize: const Size.fromHeight(54),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15)),
-                        ),
-                        child: const Text('로그인',
-                            style: TextStyle(fontWeight: FontWeight.w800)),
+                        label: '로그인',
+                        tint: NomadTheme.brand,
+                        minHeight: 54,
                       ),
+                      if (tallLayout) ...[
+                        const SizedBox(height: 14),
+                        _signupPrompt(context),
+                      ],
                     ],
                   ),
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(18, 0, 18, 10),
-              child: AppGlassSurface(
-                surfaceOpacity: .68,
-                borderRadius: BorderRadius.circular(22),
-                blurSigma: 16,
-                padding: const EdgeInsets.fromLTRB(18, 8, 18, 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('아직 계정이 없으신가요?', style: TextStyle(fontSize: 12)),
-                    TextButton(
-                      key: const Key('open-signup'),
-                      onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (_) => const SignupFlowScreen()),
-                      ),
-                      child: const Text('회원가입',
-                          style: TextStyle(fontWeight: FontWeight.w800)),
-                    ),
-                  ],
-                ),
+            if (!tallLayout)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+                child: _signupPrompt(context),
               ),
-            ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _signupPrompt(BuildContext context) {
+    return AppGlassSurface(
+      surfaceOpacity: .46,
+      borderRadius: BorderRadius.circular(18),
+      blurSigma: 16,
+      padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text('아직 계정이 없으신가요?', style: TextStyle(fontSize: 12)),
+          TextButton(
+            key: const Key('open-signup'),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const SignupFlowScreen()),
+            ),
+            child: const Text('회원가입',
+                style: TextStyle(fontWeight: FontWeight.w800)),
+          ),
+        ],
       ),
     );
   }

@@ -378,45 +378,34 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
   Widget _progressAndButton(VoidCallback onNext) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(18, 0, 18, 10),
-      child: AppGlassSurface(
-        surfaceOpacity: .68,
-        borderRadius: BorderRadius.circular(24),
-        blurSigma: 18,
-        padding: const EdgeInsets.fromLTRB(16, 10, 16, 14),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                _stepCount,
-                (index) => Container(
-                  width: index == _step ? 18 : 6,
-                  height: 6,
-                  margin: const EdgeInsets.symmetric(horizontal: 3),
-                  decoration: BoxDecoration(
-                    color: index <= _step
-                        ? NomadTheme.brand
-                        : const Color(0xFFD9DEDC),
-                    borderRadius: BorderRadius.circular(99),
-                  ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              _stepCount,
+              (index) => Container(
+                width: index == _step ? 18 : 6,
+                height: 6,
+                margin: const EdgeInsets.symmetric(horizontal: 3),
+                decoration: BoxDecoration(
+                  color: index <= _step
+                      ? NomadTheme.brand
+                      : const Color(0xFFD9DEDC),
+                  borderRadius: BorderRadius.circular(99),
                 ),
               ),
             ),
-            const SizedBox(height: 14),
-            FilledButton(
-              key: Key('signup-next-$_step'),
-              onPressed: onNext,
-              style: FilledButton.styleFrom(
-                minimumSize: const Size.fromHeight(52),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
-              ),
-              child: const Text('다음',
-                  style: TextStyle(fontWeight: FontWeight.w800)),
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 14),
+          AppGlassPrimaryButton(
+            key: Key('signup-next-$_step'),
+            onPressed: onNext,
+            label: '다음',
+            tint: NomadTheme.brand,
+          ),
+        ],
       ),
     );
   }
@@ -473,21 +462,16 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
             ),
           ),
           const Spacer(),
-          FilledButton(
+          AppGlassPrimaryButton(
             key: const Key('signup-complete'),
             onPressed: () => Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (_) => const HomeScreen()),
               (route) => false,
             ),
-            style: FilledButton.styleFrom(
-              backgroundColor: Colors.white,
-              foregroundColor: NomadTheme.ink,
-              minimumSize: const Size.fromHeight(54),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-            ),
-            child: const Text('시작하기',
-                style: TextStyle(fontWeight: FontWeight.w900)),
+            label: '시작하기',
+            tint: Colors.white,
+            foregroundColor: NomadTheme.ink,
+            minHeight: 54,
           ),
         ],
       ),

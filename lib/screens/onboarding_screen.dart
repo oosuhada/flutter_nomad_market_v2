@@ -131,60 +131,44 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: SafeArea(
                 top: false,
                 minimum: const EdgeInsets.fromLTRB(18, 0, 18, 10),
-                child: AppGlassSurface(
-                  surfaceOpacity: .68,
-                  borderRadius: BorderRadius.circular(28),
-                  blurSigma: 18,
-                  padding: const EdgeInsets.fromLTRB(24, 12, 24, 16),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(
-                          _contents.length,
-                          (index) => AnimatedContainer(
-                            duration: const Duration(milliseconds: 220),
-                            width: index == _page ? 22 : 7,
-                            height: 7,
-                            margin: const EdgeInsets.symmetric(horizontal: 4),
-                            decoration: BoxDecoration(
-                              color: index == _page
-                                  ? NomadTheme.brand
-                                  : const Color(0xFFD8DEDB),
-                              borderRadius: BorderRadius.circular(99),
-                            ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        _contents.length,
+                        (index) => AnimatedContainer(
+                          duration: const Duration(milliseconds: 220),
+                          width: index == _page ? 22 : 7,
+                          height: 7,
+                          margin: const EdgeInsets.symmetric(horizontal: 4),
+                          decoration: BoxDecoration(
+                            color: index == _page
+                                ? NomadTheme.brand
+                                : const Color(0xFFD8DEDB),
+                            borderRadius: BorderRadius.circular(99),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 16),
-                      SizedBox(
-                        width: 300,
-                        child: FilledButton(
-                          onPressed: _next,
-                          style: FilledButton.styleFrom(
-                            minimumSize: const Size.fromHeight(52),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15)),
-                          ),
-                          child: Text(
-                            _page == _contents.length - 1
-                                ? (_language == 'ko'
-                                    ? '시작하기'
-                                    : _language == 'ja'
-                                        ? '始める'
-                                        : 'Get started')
-                                : (_language == 'ko'
-                                    ? '다음'
-                                    : _language == 'ja'
-                                        ? '次へ'
-                                        : 'Next'),
-                            style: const TextStyle(fontWeight: FontWeight.w800),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 14),
+                    AppGlassPrimaryButton(
+                      onPressed: _next,
+                      label: _page == _contents.length - 1
+                          ? (_language == 'ko'
+                              ? '시작하기'
+                              : _language == 'ja'
+                                  ? '始める'
+                                  : 'Get started')
+                          : (_language == 'ko'
+                              ? '다음'
+                              : _language == 'ja'
+                                  ? '次へ'
+                                  : 'Next'),
+                      tint: NomadTheme.brand,
+                    ),
+                  ],
                 ),
               ),
             ),

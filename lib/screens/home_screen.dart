@@ -134,11 +134,12 @@ class MarketplaceHomeScreen extends StatelessWidget {
 
   Widget _header(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 12, 12, 14),
+      padding: const EdgeInsets.fromLTRB(20, 16, 12, 16),
       child: AppGlassSurface(
         borderRadius: BorderRadius.circular(22),
-        blurSigma: 12,
-        padding: const EdgeInsets.fromLTRB(14, 10, 8, 10),
+        blurSigma: 16,
+        surfaceOpacity: .48,
+        padding: const EdgeInsets.fromLTRB(18, 14, 10, 14),
         child: Row(
           children: [
             Expanded(
@@ -203,10 +204,12 @@ class MarketplaceHomeScreen extends StatelessWidget {
   Widget _hero(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-            color: NomadTheme.ink, borderRadius: BorderRadius.circular(24)),
+      child: AppGlassSurface(
+        tint: NomadTheme.ink,
+        surfaceOpacity: .82,
+        blurSigma: 22,
+        borderRadius: BorderRadius.circular(24),
+        padding: const EdgeInsets.all(22),
         child: Row(
           children: [
             const Expanded(
@@ -224,16 +227,26 @@ class MarketplaceHomeScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 9),
                   Text(
-                    '여행지에서만 만나는 물건,\n현지 전문가에게 부탁하세요',
+                    '현지인처럼 쇼핑하세요',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 21,
+                      fontSize: 22,
                       height: 1.28,
                       fontWeight: FontWeight.w800,
                       letterSpacing: -.4,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 6),
+                  Text(
+                    '세계 여행자를 내 퍼스널 쇼퍼로',
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 13,
+                      height: 1.35,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  SizedBox(height: 10),
                   Text(
                     '실물 확인 · 구매 요청 · 이동 일정 · 안전거래',
                     style: TextStyle(color: Colors.white70, fontSize: 11),
@@ -242,13 +255,17 @@ class MarketplaceHomeScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 12),
-            Container(
+            SizedBox(
               width: 72,
               height: 72,
-              decoration: const BoxDecoration(
-                  color: NomadTheme.brand, shape: BoxShape.circle),
-              child: const Icon(Icons.luggage_rounded,
-                  color: Colors.white, size: 34),
+              child: AppGlassSurface(
+                tint: NomadTheme.brand,
+                surfaceOpacity: .78,
+                blurSigma: 16,
+                borderRadius: BorderRadius.circular(36),
+                child: const Icon(Icons.luggage_rounded,
+                    color: Colors.white, size: 34),
+              ),
             ),
           ],
         ),

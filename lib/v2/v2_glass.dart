@@ -316,15 +316,13 @@ class AppGlassNavigationBar extends StatelessWidget {
     return SafeArea(
       top: false,
       minimum: const EdgeInsets.fromLTRB(16, 0, 16, 10),
-      child: AppGlassSurface(
-        borderRadius: BorderRadius.circular(30),
-        blurSigma: 20,
-        padding: const EdgeInsets.all(6),
-        child: Row(
-          children: List.generate(items.length, (index) {
-            final item = items[index];
-            final selected = index == selectedIndex;
-            return Expanded(
+      child: Row(
+        children: List.generate(items.length, (index) {
+          final item = items[index];
+          final selected = index == selectedIndex;
+          return Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 3),
               child: Semantics(
                 selected: selected,
                 button: true,
@@ -332,21 +330,25 @@ class AppGlassNavigationBar extends StatelessWidget {
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    borderRadius: BorderRadius.circular(24),
+                    borderRadius: BorderRadius.circular(22),
                     onTap: () => onSelected(index),
                     child: AnimatedContainer(
                       duration: reduceMotion
                           ? Duration.zero
                           : const Duration(milliseconds: 240),
                       curve: Curves.easeOutCubic,
-                      constraints: const BoxConstraints(minHeight: 54),
+                      constraints: const BoxConstraints(minHeight: 58),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 6, vertical: 7),
+                          horizontal: 6, vertical: 8),
                       decoration: BoxDecoration(
                         color: selected
-                            ? scheme.primary.withValues(alpha: .11)
+                            ? Colors.white.withValues(alpha: .54)
                             : Colors.transparent,
-                        borderRadius: BorderRadius.circular(24),
+                        border: selected
+                            ? Border.all(
+                                color: Colors.white.withValues(alpha: .72))
+                            : null,
+                        borderRadius: BorderRadius.circular(22),
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -355,7 +357,7 @@ class AppGlassNavigationBar extends StatelessWidget {
                             selected
                                 ? (item.selectedIcon ?? item.icon)
                                 : item.icon,
-                            size: 22,
+                            size: 21,
                             color: selected
                                 ? scheme.primary
                                 : scheme.onSurfaceVariant,
@@ -380,9 +382,9 @@ class AppGlassNavigationBar extends StatelessWidget {
                   ),
                 ),
               ),
-            );
-          }),
-        ),
+            ),
+          );
+        }),
       ),
     );
   }
@@ -499,7 +501,7 @@ class AppGlassChip extends StatelessWidget {
       tint: selected ? scheme.primary : null,
       surfaceOpacity: selected ? .76 : .58,
       blurSigma: 14,
-      borderRadius: BorderRadius.circular(999),
+      borderRadius: BorderRadius.circular(16),
       padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 9),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -521,6 +523,66 @@ class AppGlassChip extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class AppGlassPrimaryButton extends StatelessWidget {
+  const AppGlassPrimaryButton({
+    super.key,
+    required this.label,
+    required this.onPressed,
+    this.icon,
+    this.tint,
+    this.foregroundColor,
+    this.minHeight = 52,
+    this.borderRadius = 17,
+  });
+
+  final String label;
+  final VoidCallback? onPressed;
+  final IconData? icon;
+  final Color? tint;
+  final Color? foregroundColor;
+  final double minHeight;
+  final double borderRadius;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final enabled = onPressed != null;
+    final foreground = foregroundColor ?? Colors.white;
+    return Opacity(
+      opacity: enabled ? 1 : .44,
+      child: SizedBox(
+        width: double.infinity,
+        height: minHeight,
+        child: AppGlassSurface(
+          onTap: onPressed,
+          semanticLabel: label,
+          tint: tint ?? scheme.primary,
+          surfaceOpacity: .74,
+          blurSigma: 20,
+          borderRadius: BorderRadius.circular(borderRadius),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (icon != null) ...[
+                Icon(icon, size: 19, color: foreground),
+                const SizedBox(width: 8),
+              ],
+              Text(
+                label,
+                style: TextStyle(
+                  color: foreground,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

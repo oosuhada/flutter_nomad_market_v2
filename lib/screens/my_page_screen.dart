@@ -90,13 +90,17 @@ class MyPageScreen extends StatelessWidget {
       padding: const EdgeInsets.all(18),
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: 68,
             height: 68,
-            decoration: const BoxDecoration(
-                color: NomadTheme.brand, shape: BoxShape.circle),
-            child:
-                const Icon(Icons.person_rounded, color: Colors.white, size: 34),
+            child: AppGlassSurface(
+              tint: NomadTheme.brand,
+              surfaceOpacity: .76,
+              blurSigma: 16,
+              borderRadius: BorderRadius.circular(34),
+              child: const Icon(Icons.person_rounded,
+                  color: Colors.white, size: 34),
+            ),
           ),
           const SizedBox(width: 14),
           const Expanded(
