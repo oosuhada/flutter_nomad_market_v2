@@ -210,25 +210,32 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _signupPrompt(BuildContext context) {
-    return AppGlassSurface(
-      surfaceOpacity: .46,
-      borderRadius: BorderRadius.circular(18),
-      blurSigma: 16,
-      padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text('아직 계정이 없으신가요?', style: TextStyle(fontSize: 12)),
-          TextButton(
-            key: const Key('open-signup'),
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const SignupFlowScreen()),
-            ),
-            child: const Text('회원가입',
-                style: TextStyle(fontWeight: FontWeight.w800)),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Text(
+          '아직 계정이 없으신가요?',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 12),
+        ),
+        const SizedBox(height: 8),
+        AppGlassSurface(
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const SignupFlowScreen()),
           ),
-        ],
-      ),
+          semanticLabel: '회원가입',
+          surfaceOpacity: .48,
+          borderRadius: BorderRadius.circular(16),
+          blurSigma: 18,
+          padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 12),
+          child: const Text(
+            '회원가입',
+            key: Key('open-signup'),
+            textAlign: TextAlign.center,
+            style: TextStyle(fontWeight: FontWeight.w800),
+          ),
+        ),
+      ],
     );
   }
 
