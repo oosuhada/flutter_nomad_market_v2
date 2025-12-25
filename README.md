@@ -10,56 +10,52 @@ The product is intentionally built around traveler movement, local culture, and 
 
 ## Preview / 사용자 흐름
 
-The preview follows the same order a first-time user would experience the service.
-
-처음 서비스를 사용하는 사용자가 실제로 경험하는 순서대로 화면을 정리했습니다.
-
 ### 1. Getting Started / 시작하기
 
-<table>
+<table cellpadding="12">
   <tr>
-    <td width="50%" align="center">
+    <td width="50%" align="center" bgcolor="#ffffff">
       <img src=".github/assets/portfolio/08-onboarding-welcome.png" width="86%" alt="Nomad Market onboarding welcome" /><br />
       <b>1. Welcome Onboarding / 첫 온보딩</b><br />
       <sub>Introduces the traveler-to-buyer marketplace concept.<br />여행자와 구매자를 연결하는 Nomad Market의 핵심 컨셉을 소개합니다.</sub>
     </td>
-    <td width="50%" align="center">
+    <td width="50%" align="center" bgcolor="#ffffff">
       <img src=".github/assets/portfolio/09-onboarding-local-shopping.png" width="86%" alt="Nomad Market local shopping onboarding" /><br />
       <b>2. Local Shopping Concept / 글로벌 로컬 쇼핑</b><br />
       <sub>Explains how travelers become local personal shoppers.<br />여행자가 현지에서 상품을 확인하고 퍼스널 쇼퍼처럼 연결되는 방식을 설명합니다.</sub>
     </td>
   </tr>
   <tr>
-    <td width="50%" align="center">
+    <td width="50%" align="center" bgcolor="#ffffff">
       <img src=".github/assets/portfolio/10-login.png" width="86%" alt="Nomad Market login with Google Facebook Apple" /><br />
       <b>3. Login / 로그인</b><br />
       <sub>Google, Facebook, and Apple are presented consistently as logo + text buttons, alongside email login and multilingual access.<br />Google · Facebook · Apple 소셜 로그인을 모두 로고 + 텍스트 버튼으로 통일하고, 이메일 로그인과 다국어 진입점도 함께 제공합니다.</sub>
     </td>
-    <td width="50%" align="center">
+    <td width="50%" align="center" bgcolor="#ffffff">
       <img src=".github/assets/portfolio/11-signup-basic-info.png" width="86%" alt="Nomad Market signup basic information" /><br />
       <b>4. Basic Account Info / 회원가입 기본정보</b><br />
       <sub>Starts the seven-step account setup flow.<br />이메일과 비밀번호를 시작으로 7단계 회원가입 흐름을 시작합니다.</sub>
     </td>
   </tr>
   <tr>
-    <td width="50%" align="center">
+    <td width="50%" align="center" bgcolor="#ffffff">
       <img src=".github/assets/portfolio/12-signup-profile.png" width="86%" alt="Nomad Market signup profile" /><br />
       <b>5. Traveler Profile / 프로필 설정</b><br />
       <sub>Creates the identity other buyers and travelers will see.<br />다른 사용자에게 보여질 프로필 사진과 닉네임을 설정합니다.</sub>
     </td>
-    <td width="50%" align="center">
+    <td width="50%" align="center" bgcolor="#ffffff">
       <img src=".github/assets/portfolio/15-signup-region.png" width="86%" alt="Nomad Market signup activity region" /><br />
       <b>6. Activity Region / 활동 지역</b><br />
       <sub>Selects the region, country, and city used for traveler matching and recommendations.<br />여행자 매칭과 상품 추천에 활용할 지역·국가·도시를 선택합니다.</sub>
     </td>
   </tr>
   <tr>
-    <td width="50%" align="center">
+    <td width="50%" align="center" bgcolor="#ffffff">
       <img src=".github/assets/portfolio/13-signup-mode.png" width="86%" alt="Nomad Market signup mode" /><br />
       <b>7. Currency & User Mode / 통화와 이용 모드</b><br />
       <sub>Selects preferred currencies and Buyer / Seller intent.<br />선호 통화와 Buyer / Seller 이용 목적을 선택합니다.</sub>
     </td>
-    <td width="50%" align="center">
+    <td width="50%" align="center" bgcolor="#ffffff">
       <img src=".github/assets/portfolio/14-signup-complete.png" width="86%" alt="Nomad Market signup complete" /><br />
       <b>8. Signup Complete / 가입 완료</b><br />
       <sub>Summarizes region, languages, currencies, and user mode before entering the marketplace.<br />활동 지역, 언어, 통화, 이용 모드를 확인한 뒤 마켓으로 진입합니다.</sub>
@@ -69,38 +65,38 @@ The preview follows the same order a first-time user would experience the servic
 
 ### 2. Discover & Request / 탐색과 구매 요청
 
-<table>
+<table cellpadding="12">
   <tr>
-    <td width="50%" align="center">
+    <td width="50%" align="center" bgcolor="#ffffff">
       <img src=".github/assets/portfolio/01-marketplace.png" width="86%" alt="Nomad Market global shopping home" /><br />
       <b>9. Global Shopping Home / 글로벌 쇼핑 홈</b><br />
       <sub>Shows the active trip context, local picks, categories, and traveler-powered discovery.<br />현재 여행 동선, 현지 픽, 카테고리와 여행자 기반 상품 탐색을 보여줍니다.</sub>
     </td>
-    <td width="50%" align="center">
+    <td width="50%" align="center" bgcolor="#ffffff">
       <img src=".github/assets/portfolio/02-search-or-category.png" width="86%" alt="Nomad Market search and category" /><br />
       <b>10. Search & Category / 검색과 카테고리</b><br />
       <sub>Searches by city, limited goods, K-beauty, and original Nomad categories.<br />도시, 한정판, K-뷰티 등 Nomad Market 특화 카테고리로 상품을 탐색합니다.</sub>
     </td>
   </tr>
   <tr>
-    <td width="50%" align="center">
+    <td width="50%" align="center" bgcolor="#ffffff">
       <img src=".github/assets/portfolio/18-local-experts.png" width="86%" alt="Nomad Market local experts and local trends" /><br />
       <b>11. Local Experts / 현지 전문가</b><br />
       <sub>Connects live local trends with trusted travelers who can source and verify products.<br />실시간 현지 트렌드와 상품을 직접 확인해 줄 신뢰도 높은 여행자를 연결합니다.</sub>
     </td>
-    <td width="50%" align="center">
+    <td width="50%" align="center" bgcolor="#ffffff">
       <img src=".github/assets/portfolio/03-product-detail.png" width="86%" alt="Nomad Market product detail" /><br />
       <b>12. Product Detail / 상품 상세</b><br />
       <sub>Combines sourcing location, seller trust, arrival schedule, condition, and purchase context.<br />소싱 지역, 판매자 신뢰도, 도착 일정, 상품 상태와 구매 맥락을 함께 제공합니다.</sub>
     </td>
   </tr>
   <tr>
-    <td width="50%" align="center">
+    <td width="50%" align="center" bgcolor="#ffffff">
       <img src=".github/assets/portfolio/08-purchase-request.png" width="86%" alt="Nomad Market purchase request" /><br />
       <b>13. Purchase Request / 구매 요청</b><br />
       <sub>Turns product discovery into a concrete request to a local expert or traveler.<br />탐색한 상품을 현지 전문가 또는 여행자에게 실제 구매 요청으로 연결합니다.</sub>
     </td>
-    <td width="50%" align="center">
+    <td width="50%" align="center" bgcolor="#ffffff">
       <img src=".github/assets/portfolio/06-chat.png" width="86%" alt="Nomad Market request chat" /><br />
       <b>14. Request Chat / 구매 요청 채팅</b><br />
       <sub>Continues price, condition, pickup, and arrival-schedule discussion inside the app.<br />가격, 상태, 픽업 방법, 입국 일정을 앱 내 채팅에서 이어서 협의합니다.</sub>
@@ -110,36 +106,32 @@ The preview follows the same order a first-time user would experience the servic
 
 ### 3. Sell & Manage / 등록과 관리
 
-<table>
+<table cellpadding="12">
   <tr>
-    <td width="50%" align="center">
+    <td width="50%" align="center" bgcolor="#ffffff">
       <img src=".github/assets/portfolio/04-create-listing.png" width="86%" alt="Nomad Market local find registration" /><br />
       <b>15. Local Find Registration / 현지 상품 등록</b><br />
       <sub>Lets travelers register items found during a trip with city, price, schedule, and notes.<br />여행자가 현지에서 발견한 상품을 도시, 가격, 이동 일정과 함께 등록합니다.</sub>
     </td>
-    <td width="50%" align="center">
+    <td width="50%" align="center" bgcolor="#ffffff">
       <img src=".github/assets/portfolio/05-profile-or-seller.png" width="86%" alt="Nomad Market My Nomad" /><br />
       <b>16. My Nomad / 마이 노마드</b><br />
       <sub>Summarizes trust, active listings, saved items, messages, and upcoming travel routes.<br />신뢰도, 판매글, 관심 상품, 메시지와 다음 여행 일정을 한곳에서 관리합니다.</sub>
     </td>
   </tr>
   <tr>
-    <td width="50%" align="center">
+    <td width="50%" align="center" bgcolor="#ffffff">
       <img src=".github/assets/portfolio/17-community-live.png" width="86%" alt="Nomad Market community live" /><br />
       <b>17. Community & LIVE / 커뮤니티와 LIVE</b><br />
       <sub>Extends shopping into local stories, real-time product checks, and cultural exchange.<br />로컬 스토리, 실시간 상품 확인, 문화 교류로 쇼핑 경험을 확장합니다.</sub>
     </td>
-    <td width="50%" align="center">
+    <td width="50%" align="center" bgcolor="#ffffff">
       <img src=".github/assets/portfolio/16-community-local-tips.png" width="86%" alt="Nomad Market community local tips" /><br />
       <b>18. Local Tips / 로컬 팁</b><br />
       <sub>Collects practical travel-commerce guidance on fees, carry-on rules, safe meetups, and local communication.<br />수수료, 기내 반입, 안전한 직거래, 현지 판매자와의 대화처럼 실제 거래에 필요한 팁을 제공합니다.</sub>
     </td>
   </tr>
 </table>
-
-All screenshots were captured from the real Android app on an Android 15 / API 35 emulator at **1080 × 2400**.
-
-모든 이미지는 **Android 15 / API 35 / 1080 × 2400** 에뮬레이터에서 실제 앱을 직접 조작해 캡처했습니다.
 
 ## What it does / 주요 기능
 
@@ -191,7 +183,6 @@ lib/
 - Stateful Flutter UI
 - Local deterministic sample data
 - Bundled marketplace / onboarding / auth assets
-- Android Emulator validation on API 35
 
 ## Demo Mode / 데모 모드
 
