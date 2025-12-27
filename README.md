@@ -201,6 +201,13 @@ flutter pub get
 flutter run -d <android-device-id>
 ```
 
-## Topics
+## Architecture & Topics / 아키텍처 및 주제
 
-[`cross-border-commerce`](https://github.com/topics/cross-border-commerce) · [`dart`](https://github.com/topics/dart) · [`ecommerce`](https://github.com/topics/ecommerce) · [`flutter`](https://github.com/topics/flutter) · [`marketplace`](https://github.com/topics/marketplace) · [`mobile-app`](https://github.com/topics/mobile-app) · [`travel-tech`](https://github.com/topics/travel-tech) · [`flutter-app`](https://github.com/topics/flutter-app) · [`shopping`](https://github.com/topics/shopping) · [`cross-platform`](https://github.com/topics/cross-platform) · [`travel-app`](https://github.com/topics/travel-app) · [`ui-design`](https://github.com/topics/ui-design) · [`marketplace-app`](https://github.com/topics/marketplace-app) · [`shopping-app`](https://github.com/topics/shopping-app) · [`flutter-development`](https://github.com/topics/flutter-development)
+**Architecture / 아키텍처**<br>
+[`feature-first-architecture`](https://github.com/topics/feature-first-architecture) · [`reactive-state-management`](https://github.com/topics/reactive-state-management) · [`unidirectional-data-flow`](https://github.com/topics/unidirectional-data-flow) · [`component-based-ui`](https://github.com/topics/component-based-ui) · [`declarative-navigation`](https://github.com/topics/declarative-navigation) · [`client-side-state`](https://github.com/topics/client-side-state)
+
+**Project context / 프로젝트 맥락**<br>
+[`cross-border-commerce`](https://github.com/topics/cross-border-commerce) · [`cross-platform`](https://github.com/topics/cross-platform) · [`ecommerce`](https://github.com/topics/ecommerce) · [`flutter-app`](https://github.com/topics/flutter-app) · [`flutter-development`](https://github.com/topics/flutter-development) · [`marketplace`](https://github.com/topics/marketplace) · [`marketplace-app`](https://github.com/topics/marketplace-app) · [`mobile-app`](https://github.com/topics/mobile-app) · [`shopping`](https://github.com/topics/shopping) · [`shopping-app`](https://github.com/topics/shopping-app) · [`travel-app`](https://github.com/topics/travel-app) · [`travel-tech`](https://github.com/topics/travel-tech) · [`ui-design`](https://github.com/topics/ui-design)
+
+**Implementation stack / 구현 스택**<br>
+[`dart`](https://github.com/topics/dart) · [`flutter`](https://github.com/topics/flutter)
