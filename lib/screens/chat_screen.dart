@@ -1,281 +1,224 @@
 import 'package:flutter/material.dart';
 
-class ChatScreen extends StatelessWidget {
+import '../data/demo_marketplace_data.dart';
+import '../theme/nomad_theme.dart';
+import '../widgets/marketplace_image.dart';
+
+class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
 
   @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  final _controller = TextEditingController();
+  final List<String> _sentMessages = [];
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final item = demoMarketplaceItems.first;
     return Scaffold(
+      backgroundColor: NomadTheme.canvas,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 1,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
+        titleSpacing: 0,
         title: Row(
           children: [
-            CircleAvatar(
-              backgroundColor: Colors.grey[200],
-              radius: 16,
+            Container(
+              width: 38,
+              height: 38,
+              decoration: const BoxDecoration(color: NomadTheme.softGreen, shape: BoxShape.circle),
+              child: const Icon(Icons.person_rounded, color: NomadTheme.brand, size: 22),
             ),
-            const SizedBox(width: 8),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Sarah Kim',
-                  style: TextStyle(fontSize: 16),
-                ),
-                Text(
-                  '파리, 프랑스',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey[600],
+            const SizedBox(width: 10),
+            const Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text('Sarah Kim', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800)),
+                      SizedBox(width: 4),
+                      Icon(Icons.verified_rounded, size: 16, color: NomadTheme.brand),
+                    ],
                   ),
-                ),
-              ],
+                  SizedBox(height: 1),
+                  Text('보통 10분 내 응답', style: TextStyle(fontSize: 10, color: Colors.black54)),
+                ],
+              ),
             ),
           ],
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.more_vert),
-            onPressed: () {},
-          ),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz_rounded)),
+          const SizedBox(width: 6),
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.all(16),
-              children: [
-                // System Message
-                Center(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Text(
-                      '안전한 거래를 위해 채팅 내용이 기록됩니다',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-
-                // Product Info
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              '파리 백화점 한정판 상품',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              '₩279,000',
-                              style: TextStyle(
-                                color: Colors.grey[600],
-                                fontSize: 12,
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {},
-                              child: const Text('상품 상세 보기'),
-                              style: TextButton.styleFrom(
-                                padding: EdgeInsets.zero,
-                                minimumSize: const Size(0, 0),
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 16),
-
-                // Chat Messages
-                const ReceivedMessage(
-                  message: '안녕하세요! 해당 상품 구매 가능한가요?',
-                  time: '오후 2:30',
-                ),
-                const SizedBox(height: 16),
-                const SentMessage(
-                  message: '네, 현재 구매 가능합니다. 12월 28일 한국 도착 예정입니다.',
-                  time: '오후 2:32',
-                ),
-              ],
-            ),
-          ),
-
-          // Input Area
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
+      body: SafeArea(
+        top: false,
+        child: Column(
+          children: [
+            Container(
               color: Colors.white,
-              border: Border(
-                top: BorderSide(color: Colors.grey[300]!),
+              padding: const EdgeInsets.fromLTRB(16, 10, 16, 12),
+              child: Row(
+                children: [
+                  MarketplaceImage(
+                    url: item.imageUrl,
+                    width: 58,
+                    height: 58,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(item.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700)),
+                        const SizedBox(height: 4),
+                        Text(item.formattedPrice, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w900)),
+                        const SizedBox(height: 2),
+                        Text(item.location, style: TextStyle(fontSize: 10, color: Colors.grey.shade600)),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  TextButton(onPressed: () {}, child: const Text('거래 제안')),
+                ],
               ),
             ),
-            child: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.image_outlined),
-                  onPressed: () {},
-                  color: Colors.grey[600],
-                ),
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: '메시지를 입력하세요',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(24),
-                        borderSide: BorderSide.none,
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey[100],
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
+                children: [
+                  Center(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(999)),
+                      child: const Text('오늘 · 안전거래 채팅', style: TextStyle(fontSize: 10, color: Colors.black54)),
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+                  const _MessageBubble(
+                    message: '안녕하세요! 사진 속 레더 토트 아직 거래 가능한가요?',
+                    time: '오후 2:30',
+                    isMine: true,
+                  ),
+                  const _MessageBubble(
+                    message: '네, 가능해요. 오늘 르 마레에서 상태를 한 번 더 확인했고 내부 오염도 거의 없습니다.',
+                    time: '오후 2:32',
+                    isMine: false,
+                  ),
+                  const _MessageBubble(
+                    message: '서울 도착은 언제쯤이세요? 성수에서 직거래하고 싶어요.',
+                    time: '오후 2:34',
+                    isMine: true,
+                  ),
+                  const _MessageBubble(
+                    message: '금요일 저녁 도착 예정이에요. 토요일 오후 성수에서 가능합니다. 원하시면 추가 사진도 보내드릴게요.',
+                    time: '오후 2:36',
+                    isMine: false,
+                  ),
+                  ..._sentMessages.map(
+                    (message) => _MessageBubble(message: message, time: '방금', isMine: true),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(top: BorderSide(color: Colors.grey.shade200)),
+              ),
+              child: Row(
+                children: [
+                  IconButton(onPressed: () {}, icon: const Icon(Icons.add_circle_outline_rounded), color: Colors.black54),
+                  Expanded(
+                    child: TextField(
+                      controller: _controller,
+                      minLines: 1,
+                      maxLines: 4,
+                      textInputAction: TextInputAction.send,
+                      onSubmitted: (_) => _send(),
+                      decoration: const InputDecoration(
+                        hintText: '메시지를 입력하세요',
+                        isDense: true,
+                        border: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        fillColor: Color(0xFFF2F4F2),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                CircleAvatar(
-                  backgroundColor: Colors.blue,
-                  child: IconButton(
-                    icon: const Icon(Icons.send),
-                    onPressed: () {},
-                    color: Colors.white,
-                  ),
-                ),
-              ],
+                  const SizedBox(width: 8),
+                  IconButton.filled(onPressed: _send, icon: const Icon(Icons.arrow_upward_rounded)),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
-}
 
-class ReceivedMessage extends StatelessWidget {
-  final String message;
-  final String time;
-
-  const ReceivedMessage({
-    super.key,
-    required this.message,
-    required this.time,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CircleAvatar(
-          backgroundColor: Colors.grey[200],
-          radius: 16,
-        ),
-        const SizedBox(width: 8),
-        Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(message),
-              const SizedBox(height: 4),
-              Text(
-                time,
-                style: TextStyle(
-                  fontSize: 10,
-                  color: Colors.grey[600],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
+  void _send() {
+    final message = _controller.text.trim();
+    if (message.isEmpty) return;
+    setState(() => _sentMessages.add(message));
+    _controller.clear();
+    FocusScope.of(context).unfocus();
   }
 }
 
-class SentMessage extends StatelessWidget {
-  final String message;
-  final String time;
-
-  const SentMessage({
-    super.key,
+class _MessageBubble extends StatelessWidget {
+  const _MessageBubble({
     required this.message,
     required this.time,
+    required this.isMine,
   });
+
+  final String message;
+  final String time;
+  final bool isMine;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(12),
+    return Align(
+      alignment: isMine ? Alignment.centerRight : Alignment.centerLeft,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width * .76),
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 11),
+          padding: const EdgeInsets.fromLTRB(13, 10, 13, 9),
           decoration: BoxDecoration(
-            color: Colors.blue,
-            borderRadius: BorderRadius.circular(12),
+            color: isMine ? NomadTheme.brand : Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: const Radius.circular(17),
+              topRight: const Radius.circular(17),
+              bottomLeft: Radius.circular(isMine ? 17 : 5),
+              bottomRight: Radius.circular(isMine ? 5 : 17),
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
                 message,
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(color: isMine ? Colors.white : NomadTheme.ink, fontSize: 13, height: 1.45),
               ),
               const SizedBox(height: 4),
-              Text(
-                time,
-                style: const TextStyle(
-                  fontSize: 10,
-                  color: Colors.white70,
-                ),
-              ),
+              Text(time, style: TextStyle(color: isMine ? Colors.white70 : Colors.black45, fontSize: 9)),
             ],
           ),
         ),
-      ],
+      ),
     );
   }
 }

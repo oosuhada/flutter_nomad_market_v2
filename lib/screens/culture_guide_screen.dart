@@ -55,7 +55,7 @@ class CultureGuideScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        ...items.map((item) => _buildGuideItem(item)).toList(),
+        ...items.map((item) => _buildGuideItem(item)),
       ],
     );
   }
