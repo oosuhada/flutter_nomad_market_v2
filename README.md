@@ -31,7 +31,7 @@ The preview follows the same order a first-time user would experience the servic
   </tr>
   <tr>
     <td width="50%" align="center">
-      <img src="https://raw.githubusercontent.com/oosuhada/flutter_nomad_market_v2/main/.github/assets/portfolio/10-login.png?refresh=e880981" width="86%" alt="Nomad Market login with Google Facebook Apple" /><br />
+      <img src="https://raw.githubusercontent.com/oosuhada/flutter_nomad_market_v2/e880981962eca5746ec5ee20df3e0e21feb44c7b/.github/assets/portfolio/10-login.png" width="86%" alt="Nomad Market login with Google Facebook Apple" /><br />
       <b>3. Login / 로그인</b><br />
       <sub>Google, Facebook, and Apple are presented consistently as logo + text buttons, alongside email login and multilingual access.<br />Google · Facebook · Apple 소셜 로그인을 모두 로고 + 텍스트 버튼으로 통일하고, 이메일 로그인과 다국어 진입점도 함께 제공합니다.</sub>
     </td>
