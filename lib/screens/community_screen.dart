@@ -53,10 +53,10 @@ class _LiveTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final items = demoMarketplaceItems.take(4).toList();
     const liveTitles = [
-      '파리 한정 백화점 컬러 실물 체크',
-      '도쿄 플래그십 한정판 재고 확인',
-      '성수 K-뷰티 쇼룸 신상 같이 보기',
-      '밀라노 리미티드 월렛 현장 체크',
+      '파리 백화점 한정 컬러\n실물 체크',
+      '도쿄 플래그십 한정판\n재고 확인',
+      '성수 K-뷰티 쇼룸\n신상 같이 보기',
+      '밀라노 리미티드 월렛\n현장 체크',
     ];
     return GridView.builder(
       padding: const EdgeInsets.all(20),
