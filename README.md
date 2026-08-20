@@ -17,6 +17,13 @@ The original v2 already revolved around **Shopping / Community / Chat / My**, tr
   <img src=".github/assets/portfolio/05-profile-or-seller.png" width="31%" alt="Nomad Market My Market profile" />
 </p>
 
+<p align="center">
+  <img src=".github/assets/portfolio/08-onboarding-welcome.png" width="23%" alt="Nomad Market onboarding" />
+  <img src=".github/assets/portfolio/10-login.png" width="23%" alt="Nomad Market login" />
+  <img src=".github/assets/portfolio/13-signup-mode.png" width="23%" alt="Nomad Market signup mode selection" />
+  <img src=".github/assets/portfolio/14-signup-complete.png" width="23%" alt="Nomad Market signup complete" />
+</p>
+
 All preview images above were captured from an Android 15 emulator at **1080 × 2400** after navigating the real app.
 
 ## Product experience
@@ -27,6 +34,7 @@ All preview images above were captured from an Android 15 emulator at **1080 × 
 - **Local Find Registration** — travelers can register an item they found locally with photo, expected purchase price, city/store, Korea arrival schedule, notes, validation, and keyboard-safe scrolling.
 - **My Nomad** — traveler trust profile, active cities, next `Paris → Seoul` itinerary, local picks, saved finds, purchase-request messages, culture guide, and safety center.
 - **Community & Chat** — the original LIVE / Story / Local Tip direction remains central, while the Chat tab is explicitly organized around requests to verified local experts.
+- **Onboarding & Account Setup** — the earlier Nomad Market lineage's six onboarding illustrations, multilingual intro, social/email login, and seven-stage signup flow are restored and connected before the marketplace. Signup covers email verification, traveler profile, activity region, languages, currencies, and Buyer / Seller intent.
 
 ## Original v2 DNA preserved
 
@@ -34,6 +42,7 @@ All preview images above were captured from an Android 15 emulator at **1080 × 
 - `TravelerProfileCard`, `LocalTrendCard`, and `CulturalInsightCard` remain product concepts and are upgraded into data-driven, interactive portfolio components instead of being removed.
 - `CultureGuideScreen`, `SafetyCenterScreen`, `ChatListScreen`, `ChatScreen`, and the traveler trust model remain connected to the core shopping flow.
 - The marketplace is intentionally about **city-specific sourcing and traveler movement**, not a generic local C2C feed.
+- The polished onboarding/auth experience from the earlier Nomad Market repositories is restored with its original six onboarding artworks and account-setup concepts instead of being replaced by a generic splash/login template.
 
 ## Architecture & tech stack
 
@@ -41,7 +50,7 @@ All preview images above were captured from an Android 15 emulator at **1080 × 
 lib/
 ├── data/       # deterministic demo marketplace catalog
 ├── models/     # marketplace item domain model
-├── screens/    # marketplace, search, listing, detail, chat, community, profile
+├── screens/    # onboarding, auth, marketplace, search, listing, detail, chat, community, profile
 ├── theme/      # Material 3 design tokens and shared visual language
 ├── widgets/    # resilient imagery and reusable marketplace cards
 └── main.dart
@@ -52,12 +61,13 @@ lib/
 - Stateful interactive UI for favorites, filters, form validation, and chat
 - Responsive scrolling / SafeArea handling for modern Android screens
 - Six portfolio product photos are bundled under `assets/marketplace/` so the core experience does not depend on a remote image service; `MarketplaceImage` still supports a resilient network fallback path.
+- Original onboarding artwork and account visuals are bundled under `assets/onboarding/` and `assets/auth/` so the restored first-run experience is deterministic as well.
 
 ### Demo data
 
-This repository does not require Firebase credentials, API keys, or an account to demonstrate the product. The current v2 codebase uses a deterministic local catalog plus bundled marketplace imagery so every portfolio flow remains navigable without backend credentials.
+This repository does not require Firebase credentials, API keys, or an account to demonstrate the product. The current v2 codebase uses a deterministic local catalog plus bundled marketplace imagery so every portfolio flow remains navigable without backend credentials. The account setup flow is fully navigable as UI/state in the portfolio build, while production cloud authentication is not claimed.
 
-The current repository does **not** claim a production backend, authentication system, or cloud image upload that is not present in the source.
+The current repository does **not** claim a production backend, production cloud authentication, escrow implementation, or cloud image upload that is not present in the source.
 
 ## Run
 
@@ -76,7 +86,7 @@ flutter test
 flutter build apk --debug
 ```
 
-The representative flows were also exercised on an Android 15 / API 35 Medium Phone emulator, including global shopping Home, search/category results, product sourcing detail, purchase-request interaction, chat, local-find registration, My Nomad itinerary state, and Community LIVE.
+The representative flows were also exercised on an Android 15 / API 35 Medium Phone emulator, including restored onboarding, login, signup progression, global shopping Home, search/category results, product sourcing detail, purchase-request interaction, chat, local-find registration, My Nomad itinerary state, and Community LIVE.
 
 Additional interaction/state captures are available in:
 
@@ -84,3 +94,10 @@ Additional interaction/state captures are available in:
 - `.github/assets/portfolio/07-community.png` — LIVE local shopping / product verification
 - `.github/assets/portfolio/08-purchase-request.png` — interactive local purchase-request sheet
 - `.github/assets/portfolio/09-local-experts.png` — local trends, recommended travelers, and cultural insight sections
+- `.github/assets/portfolio/08-onboarding-welcome.png` — restored first onboarding page using the original Nomad artwork
+- `.github/assets/portfolio/09-onboarding-local-shopping.png` — original local-shopping onboarding concept
+- `.github/assets/portfolio/10-login.png` — multilingual/social/email login surface
+- `.github/assets/portfolio/11-signup-basic-info.png` — signup basic information step
+- `.github/assets/portfolio/12-signup-profile.png` — traveler profile setup
+- `.github/assets/portfolio/13-signup-mode.png` — currency and Buyer / Seller intent setup
+- `.github/assets/portfolio/14-signup-complete.png` — completed account summary before entering Nomad Market
