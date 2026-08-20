@@ -84,17 +84,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 42),
                       Row(
                         children: [
-                          Expanded(child: _socialButton('assets/auth/google.png', 'Google')),
+                          Expanded(child: _socialAssetButton('assets/auth/google.png', 'Google')),
                           const SizedBox(width: 10),
-                          Expanded(child: _socialButton('assets/auth/facebook.png', 'Facebook')),
+                          Expanded(child: _socialAssetButton('assets/auth/facebook.png', 'Facebook')),
                           const SizedBox(width: 10),
-                          Expanded(
-                            child: OutlinedButton(
-                              onPressed: _enterMarket,
-                              style: _socialStyle(),
-                              child: const Icon(Icons.apple_rounded, color: Colors.black, size: 25),
-                            ),
-                          ),
+                          Expanded(child: _socialIconButton(Icons.apple_rounded, 'Apple')),
                         ],
                       ),
                       const SizedBox(height: 28),
@@ -179,16 +173,51 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _socialButton(String asset, String label) {
+  Widget _socialAssetButton(String asset, String label) {
     return OutlinedButton(
       onPressed: _enterMarket,
       style: _socialStyle(),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(asset, width: 22, height: 22),
+          SizedBox(
+            width: 24,
+            height: 24,
+            child: Image.asset(
+              asset,
+              fit: BoxFit.contain,
+              errorBuilder: (_, __, ___) => const Icon(Icons.public_rounded, size: 20, color: Colors.black87),
+            ),
+          ),
           const SizedBox(width: 7),
-          Flexible(child: Text(label, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.black, fontSize: 11))),
+          Flexible(
+            child: Text(
+              label,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(color: Colors.black, fontSize: 11, fontWeight: FontWeight.w700),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _socialIconButton(IconData icon, String label) {
+    return OutlinedButton(
+      onPressed: _enterMarket,
+      style: _socialStyle(),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: Colors.black, size: 24),
+          const SizedBox(width: 7),
+          Flexible(
+            child: Text(
+              label,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(color: Colors.black, fontSize: 11, fontWeight: FontWeight.w700),
+            ),
+          ),
         ],
       ),
     );
