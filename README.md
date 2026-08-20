@@ -18,15 +18,18 @@ The original v2 already revolved around **Shopping / Community / Chat / My**, tr
 </p>
 
 <p align="center">
-  <img src=".github/assets/portfolio/08-onboarding-welcome.png" width="23%" alt="Nomad Market onboarding" />
-  <img src=".github/assets/portfolio/10-login.png" width="23%" alt="Nomad Market login" />
-  <img src=".github/assets/portfolio/13-signup-mode.png" width="23%" alt="Nomad Market signup mode selection" />
-  <img src=".github/assets/portfolio/14-signup-complete.png" width="23%" alt="Nomad Market signup complete" />
+  <img src=".github/assets/portfolio/08-onboarding-welcome.png" width="38%" alt="Nomad Market onboarding" />
+  <img src=".github/assets/portfolio/09-onboarding-local-shopping.png" width="38%" alt="Nomad Market local shopping onboarding" />
+</p>
+
+<p align="center">
+  <img src=".github/assets/portfolio/10-login.png" width="38%" alt="Nomad Market login" />
+  <img src=".github/assets/portfolio/13-signup-mode.png" width="38%" alt="Nomad Market signup mode selection" />
 </p>
 
 All preview images above were captured from an Android 15 emulator at **1080 × 2400** after navigating the real app.
 
-## Product experience
+## What it does
 
 - **Global Shopping Home** — `Paris → Seoul` trip context, luxury / limited / K-beauty categories, traveler-verified local picks, local trends, recommended experts, and cultural insight.
 - **Search & Category** — city/product search, original Nomad-oriented categories, result counts, sorting, and a dedicated empty state.
@@ -44,7 +47,7 @@ All preview images above were captured from an Android 15 emulator at **1080 × 
 - The marketplace is intentionally about **city-specific sourcing and traveler movement**, not a generic local C2C feed.
 - The polished onboarding/auth experience from the earlier Nomad Market repositories is restored with its original six onboarding artworks and account-setup concepts instead of being replaced by a generic splash/login template.
 
-## Architecture & tech stack
+## Architecture
 
 ```text
 lib/
@@ -56,12 +59,19 @@ lib/
 └── main.dart
 ```
 
+- `main.dart` connects the restored onboarding/auth flow to the marketplace without requiring backend credentials.
+- `models/` and `data/` provide the deterministic marketplace state used by the portfolio flow.
+- `theme/` and reusable `widgets/` keep the marketplace, auth, and community screens visually consistent.
+- Product imagery, onboarding artwork, and account visuals are bundled locally so the representative flow is deterministic.
+
+## Tech Stack
+
 - Flutter 3.27 / Dart 3.6
 - Material 3
-- Stateful interactive UI for favorites, filters, form validation, and chat
-- Responsive scrolling / SafeArea handling for modern Android screens
-- Six portfolio product photos are bundled under `assets/marketplace/` so the core experience does not depend on a remote image service; `MarketplaceImage` still supports a resilient network fallback path.
-- Original onboarding artwork and account visuals are bundled under `assets/onboarding/` and `assets/auth/` so the restored first-run experience is deterministic as well.
+- Stateful Flutter UI for favorites, filters, validation, chat, onboarding, and signup progression
+- SafeArea / responsive scrolling for modern Android screens
+- Local deterministic sample data for portfolio browsing
+- Android Emulator validation on API 35
 
 ### Demo data
 
