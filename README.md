@@ -209,23 +209,3 @@ This repository does **not** claim production cloud authentication, a production
 flutter pub get
 flutter run -d <android-device-id>
 ```
-
-## Validation / 검증
-
-The portfolio build was validated with:
-
-포트폴리오 빌드는 다음 명령으로 검증했습니다.
-
-```bash
-flutter analyze
-flutter test
-flutter build apk --debug
-```
-
-- `flutter analyze` — **No issues found**
-- `flutter test` — **3 / 3 passed**
-- Android debug APK build — **passed**
-- Android Emulator — **Android 15 / API 35 / 1080 × 2400**
-- Manual QA — onboarding, login, signup progression, shopping Home, search, product detail, purchase request, chat, local-find registration, My Nomad, and Community LIVE
-
-수동 QA에서는 온보딩, 로그인, 회원가입 단계, 쇼핑 홈, 검색, 상품 상세, 구매 요청, 채팅, 현지 상품 등록, My Nomad, Community LIVE까지 실제로 탐색했습니다.
