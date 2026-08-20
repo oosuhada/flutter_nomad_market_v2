@@ -7,7 +7,9 @@ import '../widgets/product_card.dart';
 import 'product_detail_screen.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key});
+  const SearchScreen({super.key, this.initialCategory});
+
+  final String? initialCategory;
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -19,6 +21,15 @@ class _SearchScreenState extends State<SearchScreen> {
   String _sort = '추천순';
 
   @override
+  void initState() {
+    super.initState();
+    final initial = widget.initialCategory;
+    if (initial != null && marketplaceCategories.contains(initial)) {
+      _category = initial;
+    }
+  }
+
+  @override
   void dispose() {
     _controller.dispose();
     super.dispose();
@@ -28,7 +39,9 @@ class _SearchScreenState extends State<SearchScreen> {
     final query = _controller.text.trim().toLowerCase();
     final result = demoMarketplaceItems.where((item) {
       final matchesCategory = _category == '전체' || item.category == _category;
-      final haystack = '${item.title} ${item.location} ${item.category}'.toLowerCase();
+      final haystack =
+          '${item.title} ${item.location} ${item.category} ${item.sourceLabel} ${item.tags.join(' ')} ${item.sellerName}'
+              .toLowerCase();
       return matchesCategory && (query.isEmpty || haystack.contains(query));
     }).toList();
     if (_sort == '낮은 가격') result.sort((a, b) => a.price.compareTo(b.price));
@@ -42,28 +55,9 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          '탐색',
+          '현지 상품 찾기',
           style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
         ),
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 16),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            decoration: BoxDecoration(
-              color: NomadTheme.softGreen,
-              borderRadius: BorderRadius.circular(999),
-            ),
-            child: const Text(
-              'DEMO CATALOG',
-              style: TextStyle(
-                color: NomadTheme.brand,
-                fontSize: 9,
-                fontWeight: FontWeight.w800,
-                letterSpacing: .7,
-              ),
-            ),
-          ),
-        ],
       ),
       body: SafeArea(
         top: false,
@@ -76,7 +70,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 onChanged: (_) => setState(() {}),
                 textInputAction: TextInputAction.search,
                 decoration: InputDecoration(
-                  hintText: '예: 파리, 카메라, 패션',
+                  hintText: '예: 파리, 한정판, K-뷰티',
                   prefixIcon: const Icon(Icons.search_rounded),
                   suffixIcon: _controller.text.isEmpty
                       ? const Icon(Icons.tune_rounded, size: 20)
@@ -108,7 +102,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     selectedColor: NomadTheme.ink,
                     backgroundColor: Colors.white,
                     labelStyle: TextStyle(
-                      color: category == _category ? Colors.white : NomadTheme.ink,
+                      color:
+                          category == _category ? Colors.white : NomadTheme.ink,
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                     ),
@@ -122,8 +117,9 @@ class _SearchScreenState extends State<SearchScreen> {
                 children: [
                   Expanded(
                     child: Text(
-                      '${results.length}개의 로컬 아이템',
-                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
+                      '${results.length}개의 현지 픽',
+                      style: const TextStyle(
+                          fontSize: 15, fontWeight: FontWeight.w800),
                     ),
                   ),
                   PopupMenuButton<String>(
@@ -135,12 +131,16 @@ class _SearchScreenState extends State<SearchScreen> {
                       PopupMenuItem(value: '관심 많은 순', child: Text('관심 많은 순')),
                     ],
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 10),
                       child: Row(
                         children: [
-                          Text(_sort, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+                          Text(_sort,
+                              style: const TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.w600)),
                           const SizedBox(width: 2),
-                          const Icon(Icons.keyboard_arrow_down_rounded, size: 19),
+                          const Icon(Icons.keyboard_arrow_down_rounded,
+                              size: 19),
                         ],
                       ),
                     ),
@@ -149,7 +149,8 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             ),
             Expanded(
-              child: results.isEmpty ? _buildEmptyState() : _buildResults(results),
+              child:
+                  results.isEmpty ? _buildEmptyState() : _buildResults(results),
             ),
           ],
         ),
@@ -193,13 +194,15 @@ class _SearchScreenState extends State<SearchScreen> {
                 color: NomadTheme.softGreen,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.travel_explore_rounded, color: NomadTheme.brand, size: 34),
+              child: const Icon(Icons.travel_explore_rounded,
+                  color: NomadTheme.brand, size: 34),
             ),
             const SizedBox(height: 18),
-            const Text('아직 맞는 아이템이 없어요', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
+            const Text('아직 맞는 현지 픽이 없어요',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
             const SizedBox(height: 7),
             Text(
-              '다른 도시나 카테고리로 검색해보세요.',
+              '다른 도시, 카테고리 또는 여행자 키워드로 찾아보세요.',
               style: TextStyle(color: Colors.grey.shade600),
               textAlign: TextAlign.center,
             ),

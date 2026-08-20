@@ -20,18 +20,27 @@ class MarketplaceImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final image = Image.network(
-      url,
-      width: width,
-      height: height,
-      fit: fit,
-      filterQuality: FilterQuality.medium,
-      loadingBuilder: (context, child, progress) {
-        if (progress == null) return child;
-        return _fallback(isLoading: true);
-      },
-      errorBuilder: (_, __, ___) => _fallback(),
-    );
+    final image = url.startsWith('assets/')
+        ? Image.asset(
+            url,
+            width: width,
+            height: height,
+            fit: fit,
+            filterQuality: FilterQuality.medium,
+            errorBuilder: (_, __, ___) => _fallback(),
+          )
+        : Image.network(
+            url,
+            width: width,
+            height: height,
+            fit: fit,
+            filterQuality: FilterQuality.medium,
+            loadingBuilder: (context, child, progress) {
+              if (progress == null) return child;
+              return _fallback(isLoading: true);
+            },
+            errorBuilder: (_, __, ___) => _fallback(),
+          );
 
     if (borderRadius == null) return image;
     return ClipRRect(borderRadius: borderRadius!, child: image);

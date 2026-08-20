@@ -66,7 +66,8 @@ class _ProductCardState extends State<ProductCard> {
                     left: 10,
                     bottom: 10,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 9, vertical: 5),
                       decoration: BoxDecoration(
                         color: NomadTheme.ink.withValues(alpha: 0.86),
                         borderRadius: BorderRadius.circular(999),

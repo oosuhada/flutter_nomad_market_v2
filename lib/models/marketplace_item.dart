@@ -14,6 +14,9 @@ class MarketplaceItem {
     required this.sellerRating,
     required this.sellerDeals,
     required this.tags,
+    required this.sourceLabel,
+    required this.deliveryNote,
+    this.requestable = false,
     this.isFeatured = false,
   });
 
@@ -31,6 +34,9 @@ class MarketplaceItem {
   final double sellerRating;
   final int sellerDeals;
   final List<String> tags;
+  final String sourceLabel;
+  final String deliveryNote;
+  final bool requestable;
   final bool isFeatured;
 
   String get formattedPrice {
