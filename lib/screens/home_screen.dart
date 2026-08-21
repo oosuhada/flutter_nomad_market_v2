@@ -135,47 +135,52 @@ class MarketplaceHomeScreen extends StatelessWidget {
   Widget _header(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 12, 12, 14),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'NOMAD MARKET',
-                  style: TextStyle(
-                    color: NomadTheme.brand,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 1.4,
+      child: AppGlassSurface(
+        borderRadius: BorderRadius.circular(22),
+        blurSigma: 12,
+        padding: const EdgeInsets.fromLTRB(14, 10, 8, 10),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'NOMAD MARKET',
+                    style: TextStyle(
+                      color: NomadTheme.brand,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 1.4,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  children: [
-                    const Icon(Icons.flight_rounded,
-                        size: 18, color: NomadTheme.ink),
-                    const SizedBox(width: 6),
-                    Text('Paris → Seoul',
-                        style: Theme.of(context).textTheme.titleLarge),
-                    const SizedBox(width: 5),
-                    const Icon(Icons.keyboard_arrow_down_rounded, size: 20),
-                  ],
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  '이번 주 한국에 들어오는 여행자 18명',
-                  style: TextStyle(fontSize: 10, color: Colors.grey.shade600),
-                ),
-              ],
+                  const SizedBox(height: 5),
+                  Row(
+                    children: [
+                      const Icon(Icons.flight_rounded,
+                          size: 18, color: NomadTheme.ink),
+                      const SizedBox(width: 6),
+                      Text('Paris → Seoul',
+                          style: Theme.of(context).textTheme.titleLarge),
+                      const SizedBox(width: 5),
+                      const Icon(Icons.keyboard_arrow_down_rounded, size: 20),
+                    ],
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    '이번 주 한국에 들어오는 여행자 18명',
+                    style: TextStyle(fontSize: 10, color: Colors.grey.shade600),
+                  ),
+                ],
+              ),
             ),
-          ),
-          IconButton.filledTonal(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications_none_rounded),
-            tooltip: '알림',
-          ),
-        ],
+            IconButton.filledTonal(
+              onPressed: () {},
+              icon: const Icon(Icons.notifications_none_rounded),
+              tooltip: '알림',
+            ),
+          ],
+        ),
       ),
     );
   }

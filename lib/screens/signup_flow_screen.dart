@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/nomad_theme.dart';
+import '../v2/v2_glass.dart';
 import 'home_screen.dart';
 
 class SignupFlowScreen extends StatefulWidget {
@@ -66,7 +67,8 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
           transitionBuilder: (child, animation) => FadeTransition(
             opacity: animation,
             child: SlideTransition(
-              position: Tween(begin: const Offset(.06, 0), end: Offset.zero).animate(animation),
+              position: Tween(begin: const Offset(.06, 0), end: Offset.zero)
+                  .animate(animation),
               child: child,
             ),
           ),
@@ -116,22 +118,28 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
           title: '이메일을 확인해주세요',
           subtitle: '입력한 이메일로 보낸 인증번호를 확인해주세요.\n포트폴리오 데모에서는 인증 흐름을 로컬에서 완료합니다.',
           children: [
-            Container(
+            AppGlassSurface(
+              borderRadius: BorderRadius.circular(18),
+              blurSigma: 10,
               padding: const EdgeInsets.all(18),
-              decoration: BoxDecoration(color: const Color(0xFFF5F7F6), borderRadius: BorderRadius.circular(18)),
               child: Row(
                 children: [
-                  const Icon(Icons.mark_email_read_outlined, color: NomadTheme.brand),
+                  const Icon(Icons.mark_email_read_outlined,
+                      color: NomadTheme.brand),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: Text(_email.text.isEmpty ? 'traveler@nomadmarket.app' : _email.text,
+                    child: Text(
+                        _email.text.isEmpty
+                            ? 'traveler@nomadmarket.app'
+                            : _email.text,
                         style: const TextStyle(fontWeight: FontWeight.w800)),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 30),
-            const Text('인증번호', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800)),
+            const Text('인증번호',
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800)),
             const SizedBox(height: 10),
             Row(
               children: '120521'.split('').map((digit) {
@@ -144,13 +152,16 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
                       borderRadius: BorderRadius.circular(13),
                     ),
                     alignment: Alignment.center,
-                    child: Text(digit, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
+                    child: Text(digit,
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w800)),
                   ),
                 );
               }).toList(),
             ),
             const SizedBox(height: 14),
-            const Text('00:58 안에 입력해주세요', style: TextStyle(fontSize: 11, color: Colors.black45)),
+            const Text('00:58 안에 입력해주세요',
+                style: TextStyle(fontSize: 11, color: Colors.black45)),
           ],
         );
       case 2:
@@ -164,7 +175,8 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
                   CircleAvatar(
                     radius: 64,
                     backgroundColor: const Color(0xFFF1F4F2),
-                    backgroundImage: const AssetImage('assets/auth/profile-traveller.png'),
+                    backgroundImage:
+                        const AssetImage('assets/auth/profile-traveller.png'),
                   ),
                   Positioned(
                     right: 0,
@@ -172,8 +184,10 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
                     child: Container(
                       width: 38,
                       height: 38,
-                      decoration: const BoxDecoration(color: NomadTheme.brand, shape: BoxShape.circle),
-                      child: const Icon(Icons.camera_alt_rounded, color: Colors.white, size: 19),
+                      decoration: const BoxDecoration(
+                          color: NomadTheme.brand, shape: BoxShape.circle),
+                      child: const Icon(Icons.camera_alt_rounded,
+                          color: Colors.white, size: 19),
                     ),
                   ),
                 ],
@@ -198,13 +212,16 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
           subtitle: '주로 여행하거나 거래하는 지역을 선택해주세요.\n추천 상품과 여행자 매칭에 활용됩니다.',
           children: [
             _selectionTitle('지역'),
-            _choiceWrap(['아시아', '유럽', '북미'], _region, (value) => setState(() => _region = value)),
+            _choiceWrap(['아시아', '유럽', '북미'], _region,
+                (value) => setState(() => _region = value)),
             const SizedBox(height: 28),
             _selectionTitle('국가'),
-            _choiceWrap(['대한민국', '프랑스', '일본', '이탈리아'], _country, (value) => setState(() => _country = value)),
+            _choiceWrap(['대한민국', '프랑스', '일본', '이탈리아'], _country,
+                (value) => setState(() => _country = value)),
             const SizedBox(height: 28),
             _selectionTitle('도시'),
-            _choiceWrap(['서울', '파리', '도쿄', '밀라노'], _city, (value) => setState(() => _city = value)),
+            _choiceWrap(['서울', '파리', '도쿄', '밀라노'], _city,
+                (value) => setState(() => _city = value)),
           ],
         );
       case 4:
@@ -230,7 +247,8 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
                   }),
                   showCheckmark: false,
                   selectedColor: NomadTheme.ink,
-                  labelStyle: TextStyle(color: selected ? Colors.white : NomadTheme.ink),
+                  labelStyle: TextStyle(
+                      color: selected ? Colors.white : NomadTheme.ink),
                 );
               }).toList(),
             ),
@@ -270,7 +288,8 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
                   }),
                   showCheckmark: false,
                   selectedColor: NomadTheme.ink,
-                  labelStyle: TextStyle(color: selected ? Colors.white : NomadTheme.ink),
+                  labelStyle: TextStyle(
+                      color: selected ? Colors.white : NomadTheme.ink),
                 );
               }).toList(),
             ),
@@ -278,9 +297,13 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
             _selectionTitle('이용 모드'),
             Row(
               children: [
-                Expanded(child: _modeCard('Buyer', Icons.shopping_bag_outlined, '해외 상품을 부탁하고\n여행자와 연결돼요')),
+                Expanded(
+                    child: _modeCard('Buyer', Icons.shopping_bag_outlined,
+                        '해외 상품을 부탁하고\n여행자와 연결돼요')),
                 const SizedBox(width: 12),
-                Expanded(child: _modeCard('Seller', Icons.flight_takeoff_rounded, '여행 중 현지 상품을\n등록하고 연결해요')),
+                Expanded(
+                    child: _modeCard('Seller', Icons.flight_takeoff_rounded,
+                        '여행 중 현지 상품을\n등록하고 연결해요')),
               ],
             ),
             if (_mode == 'Buyer') ...[
@@ -328,9 +351,16 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: const TextStyle(fontSize: 25, height: 1.25, fontWeight: FontWeight.w900, letterSpacing: -.5)),
+                Text(title,
+                    style: const TextStyle(
+                        fontSize: 25,
+                        height: 1.25,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: -.5)),
                 const SizedBox(height: 9),
-                Text(subtitle, style: const TextStyle(fontSize: 13, height: 1.55, color: Colors.black54)),
+                Text(subtitle,
+                    style: const TextStyle(
+                        fontSize: 13, height: 1.55, color: Colors.black54)),
                 const SizedBox(height: 38),
                 ...children,
               ],
@@ -343,44 +373,53 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
   }
 
   Widget _progressAndButton(VoidCallback onNext) {
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.fromLTRB(24, 8, 24, 20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-              _stepCount,
-              (index) => Container(
-                width: index == _step ? 18 : 6,
-                height: 6,
-                margin: const EdgeInsets.symmetric(horizontal: 3),
-                decoration: BoxDecoration(
-                  color: index <= _step ? NomadTheme.brand : const Color(0xFFD9DEDC),
-                  borderRadius: BorderRadius.circular(99),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(18, 0, 18, 10),
+      child: AppGlassSurface(
+        borderRadius: BorderRadius.circular(24),
+        blurSigma: 14,
+        padding: const EdgeInsets.fromLTRB(16, 10, 16, 14),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                _stepCount,
+                (index) => Container(
+                  width: index == _step ? 18 : 6,
+                  height: 6,
+                  margin: const EdgeInsets.symmetric(horizontal: 3),
+                  decoration: BoxDecoration(
+                    color: index <= _step
+                        ? NomadTheme.brand
+                        : const Color(0xFFD9DEDC),
+                    borderRadius: BorderRadius.circular(99),
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 14),
-          FilledButton(
-            key: Key('signup-next-$_step'),
-            onPressed: onNext,
-            style: FilledButton.styleFrom(
-              minimumSize: const Size.fromHeight(52),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            const SizedBox(height: 14),
+            FilledButton(
+              key: Key('signup-next-$_step'),
+              onPressed: onNext,
+              style: FilledButton.styleFrom(
+                minimumSize: const Size.fromHeight(52),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
+              ),
+              child: const Text('다음',
+                  style: TextStyle(fontWeight: FontWeight.w800)),
             ),
-            child: const Text('다음', style: TextStyle(fontWeight: FontWeight.w800)),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
   Widget _completeStep() {
-    final nickname = _nickname.text.trim().isEmpty ? 'Nomad' : _nickname.text.trim();
+    final nickname =
+        _nickname.text.trim().isEmpty ? 'Nomad' : _nickname.text.trim();
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 22, 24, 24),
       child: Column(
@@ -390,29 +429,40 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
           Container(
             width: 66,
             height: 66,
-            decoration: BoxDecoration(color: NomadTheme.brand.withValues(alpha: .15), shape: BoxShape.circle),
-            child: const Icon(Icons.check_circle_outline_rounded, color: Color(0xFF77D9C8), size: 38),
+            decoration: BoxDecoration(
+                color: NomadTheme.brand.withValues(alpha: .15),
+                shape: BoxShape.circle),
+            child: const Icon(Icons.check_circle_outline_rounded,
+                color: Color(0xFF77D9C8), size: 38),
           ),
           const SizedBox(height: 30),
-          Text('축하드립니다, $nickname님', style: const TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w900)),
+          Text('축하드립니다, $nickname님',
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                  fontWeight: FontWeight.w900)),
           const SizedBox(height: 7),
-          const Text('회원가입이 완료되었습니다!', style: TextStyle(color: Colors.white60, fontSize: 18)),
+          const Text('회원가입이 완료되었습니다!',
+              style: TextStyle(color: Colors.white60, fontSize: 18)),
           const SizedBox(height: 30),
-          Container(
-            width: double.infinity,
+          AppGlassSurface(
+            tint: const Color(0xFF1C2422),
+            borderRadius: BorderRadius.circular(20),
+            blurSigma: 12,
             padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(color: const Color(0xFF1C2422), borderRadius: BorderRadius.circular(20)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _summary('활동 지역', '$_country · $_city'),
                 _summary('소통 언어', _languages.join(' · ')),
                 _summary('선호 통화', _currencies.join(' · ')),
-                _summary('이용 모드', _mode == 'Buyer' ? '구매자 · 퍼스널 쇼핑 요청' : '여행자 · 현지 상품 연결'),
+                _summary('이용 모드',
+                    _mode == 'Buyer' ? '구매자 · 퍼스널 쇼핑 요청' : '여행자 · 현지 상품 연결'),
                 const SizedBox(height: 6),
                 const Text(
                   '노마드마켓을 이용함으로써 이용약관과 개인정보처리방침에 동의하는 것으로 간주됩니다.',
-                  style: TextStyle(fontSize: 10, height: 1.5, color: Colors.white38),
+                  style: TextStyle(
+                      fontSize: 10, height: 1.5, color: Colors.white38),
                 ),
               ],
             ),
@@ -428,9 +478,11 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
               backgroundColor: Colors.white,
               foregroundColor: NomadTheme.ink,
               minimumSize: const Size.fromHeight(54),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
             ),
-            child: const Text('시작하기', style: TextStyle(fontWeight: FontWeight.w900)),
+            child: const Text('시작하기',
+                style: TextStyle(fontWeight: FontWeight.w900)),
           ),
         ],
       ),
@@ -442,24 +494,32 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: const TextStyle(color: Colors.white54, fontSize: 10)),
+            Text(title,
+                style: const TextStyle(color: Colors.white54, fontSize: 10)),
             const SizedBox(height: 5),
-            Text(value, style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w800)),
+            Text(value,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w800)),
           ],
         ),
       );
 
   Widget _fieldLabel(String text) => Padding(
         padding: const EdgeInsets.only(bottom: 8),
-        child: Text(text, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w800)),
+        child: Text(text,
+            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w800)),
       );
 
   Widget _selectionTitle(String text) => Padding(
         padding: const EdgeInsets.only(bottom: 12),
-        child: Text(text, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
+        child: Text(text,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
       );
 
-  Widget _choiceWrap(List<String> values, String selected, ValueChanged<String> onSelected) {
+  Widget _choiceWrap(
+      List<String> values, String selected, ValueChanged<String> onSelected) {
     return Wrap(
       spacing: 9,
       runSpacing: 9,
@@ -488,16 +548,26 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
         decoration: BoxDecoration(
           color: selected ? NomadTheme.ink : const Color(0xFFF5F7F6),
           borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: selected ? NomadTheme.ink : const Color(0xFFDDE3DF)),
+          border: Border.all(
+              color: selected ? NomadTheme.ink : const Color(0xFFDDE3DF)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(icon, color: selected ? const Color(0xFF8DD2C4) : NomadTheme.brand),
+            Icon(icon,
+                color: selected ? const Color(0xFF8DD2C4) : NomadTheme.brand),
             const SizedBox(height: 20),
-            Text(mode, style: TextStyle(color: selected ? Colors.white : NomadTheme.ink, fontSize: 17, fontWeight: FontWeight.w900)),
+            Text(mode,
+                style: TextStyle(
+                    color: selected ? Colors.white : NomadTheme.ink,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w900)),
             const SizedBox(height: 7),
-            Text(detail, style: TextStyle(color: selected ? Colors.white60 : Colors.black54, fontSize: 10, height: 1.45)),
+            Text(detail,
+                style: TextStyle(
+                    color: selected ? Colors.white60 : Colors.black54,
+                    fontSize: 10,
+                    height: 1.45)),
           ],
         ),
       ),
@@ -512,8 +582,10 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
       _next();
       return;
     }
-    final emailValid = RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(_email.text.trim());
-    final passwordValid = _password.text.length >= 8 && _password.text == _confirmPassword.text;
+    final emailValid =
+        RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(_email.text.trim());
+    final passwordValid =
+        _password.text.length >= 8 && _password.text == _confirmPassword.text;
     if (!emailValid || !passwordValid) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('이메일 형식과 8자 이상 동일한 비밀번호를 확인해주세요.')),
@@ -541,14 +613,19 @@ class _LevelCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
+      child: AppGlassSurface(
+        borderRadius: BorderRadius.circular(14),
+        blurSigma: 8,
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 14),
-        decoration: BoxDecoration(color: const Color(0xFFF5F7F6), borderRadius: BorderRadius.circular(14)),
         child: Column(
           children: [
-            Text(label, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w900)),
+            Text(label,
+                style:
+                    const TextStyle(fontSize: 11, fontWeight: FontWeight.w900)),
             const SizedBox(height: 5),
-            Text(detail, textAlign: TextAlign.center, style: const TextStyle(fontSize: 8, color: Colors.black45)),
+            Text(detail,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 8, color: Colors.black45)),
           ],
         ),
       ),

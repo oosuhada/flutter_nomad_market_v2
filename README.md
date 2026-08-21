@@ -2,9 +2,9 @@
 
 > **2024 → 2026 UX renewal** · [`v1` original portfolio version](https://github.com/oosuhada/flutter_nomad_market_v2/tree/v1) · [`main` v2 renewal](https://github.com/oosuhada/flutter_nomad_market_v2)
 
-The original project focused on restoring and connecting a broad marketplace feature set. The 2026 renewal keeps that product DNA while revisiting **content/control hierarchy, motion, accessibility, platform conventions, and rendering cost**. Product imagery and marketplace information stay solid; search, navigation, language, onboarding actions, and compact primary actions become the floating adaptive control layer.
+The original project focused on restoring and connecting a broad marketplace feature set. The 2026 renewal keeps that product DNA while revisiting **content/control hierarchy, motion, accessibility, platform conventions, and rendering cost**. Product imagery stays sharp while search/navigation plus route, trend, expert, profile, community, and account-flow summary surfaces form a layered adaptive glass system.
 
-초기 버전에서는 다양한 마켓 기능을 화면과 흐름으로 연결하는 데 집중했다면, 2026 v2에서는 기존 제품 정체성을 유지한 채 **content/control hierarchy, motion, accessibility, platform convention, rendering cost**를 기준으로 다시 설계했습니다. 상품 이미지와 거래 정보는 solid content로 유지하고 검색, navigation, 언어, onboarding action, 핵심 CTA만 떠 있는 adaptive glass control로 분리했습니다.
+초기 버전에서는 다양한 마켓 기능을 화면과 흐름으로 연결하는 데 집중했다면, 2026 v2에서는 기존 제품 정체성을 유지한 채 **content/control hierarchy, motion, accessibility, platform convention, rendering cost**를 기준으로 다시 설계했습니다. 상품 이미지와 핵심 거래 콘텐츠는 선명하게 유지하고 검색·navigation뿐 아니라 이동 경로, 현지 트렌드, 전문가, 프로필, 커뮤니티, 회원가입 요약 surface에도 강도를 달리한 glass-themed hierarchy를 적용했습니다.
 
 ## v1 → v2 / 성장 과정
 
@@ -16,7 +16,7 @@ The original project focused on restoring and connecting a broad marketplace fea
 | Search / CTA | Opaque search + Material FAB | Glass search control + floating local-find CTA |
 | Onboarding | Illustration + fixed opaque CTA area | Content stays plain; language/action layer floats separately |
 | Accessibility | Material defaults | High-contrast opacity fallback, reduced-motion transitions, selected semantics |
-| Rendering | Visual styling first | Blur restricted to compact controls, never product grids |
+| Rendering | Visual styling first | Glass-themed surface hierarchy for compact controls and contextual summaries; product grids/images remain foreground content |
 
 **Nomad Market** is a cross-border local-shopping marketplace where travelers and local experts discover city-specific products, verify them in person, and connect purchase requests with upcoming trips.
 

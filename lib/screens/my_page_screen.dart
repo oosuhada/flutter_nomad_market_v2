@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data/demo_marketplace_data.dart';
 import '../theme/nomad_theme.dart';
+import '../v2/v2_glass.dart';
 import '../widgets/marketplace_image.dart';
 import 'chat_list_screen.dart';
 
@@ -82,10 +83,11 @@ class MyPageScreen extends StatelessWidget {
   }
 
   Widget _profileCard() {
-    return Container(
+    return AppGlassSurface(
+      tint: NomadTheme.ink,
+      borderRadius: BorderRadius.circular(24),
+      blurSigma: 14,
       padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-          color: NomadTheme.ink, borderRadius: BorderRadius.circular(24)),
       child: Row(
         children: [
           Container(
@@ -135,10 +137,10 @@ class MyPageScreen extends StatelessWidget {
   }
 
   Widget _tradeSummary() {
-    return Container(
+    return AppGlassSurface(
+      borderRadius: BorderRadius.circular(20),
+      blurSigma: 12,
       padding: const EdgeInsets.symmetric(vertical: 15),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(20)),
       child: const Row(
         children: [
           Expanded(child: _Stat(value: '4', label: '활동 도시')),
@@ -154,10 +156,11 @@ class MyPageScreen extends StatelessWidget {
   }
 
   Widget _nextTripCard() {
-    return Container(
+    return AppGlassSurface(
+      tint: NomadTheme.warm,
+      borderRadius: BorderRadius.circular(20),
+      blurSigma: 10,
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-          color: NomadTheme.warm, borderRadius: BorderRadius.circular(20)),
       child: const Row(
         children: [
           SizedBox(
