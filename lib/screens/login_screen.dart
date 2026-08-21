@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: Colors.white,
+      backgroundColor: NomadTheme.canvas,
       body: SafeArea(
         child: Column(
           children: [
@@ -53,8 +53,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           AppGlassSurface(
+                            surfaceOpacity: .62,
                             borderRadius: BorderRadius.circular(14),
-                            blurSigma: 10,
+                            blurSigma: 14,
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 11, vertical: 8),
                             child: const Row(
@@ -125,29 +126,50 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 24),
                       _label('이메일'),
-                      TextField(
-                        key: const Key('login-email'),
-                        controller: _email,
-                        keyboardType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.next,
-                        decoration: const InputDecoration(
-                            hintText: 'hello@nomadmarket.app'),
+                      AppGlassSurface(
+                        surfaceOpacity: .66,
+                        blurSigma: 16,
+                        borderRadius: BorderRadius.circular(18),
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: TextField(
+                          key: const Key('login-email'),
+                          controller: _email,
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.next,
+                          decoration: const InputDecoration(
+                            hintText: 'hello@nomadmarket.app',
+                            filled: false,
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 16),
                       _label('비밀번호'),
-                      TextField(
-                        key: const Key('login-password'),
-                        controller: _password,
-                        obscureText: _obscure,
-                        textInputAction: TextInputAction.done,
-                        decoration: InputDecoration(
-                          hintText: '비밀번호를 입력하세요',
-                          suffixIcon: IconButton(
-                            onPressed: () =>
-                                setState(() => _obscure = !_obscure),
-                            icon: Icon(_obscure
-                                ? Icons.visibility_off_outlined
-                                : Icons.visibility_outlined),
+                      AppGlassSurface(
+                        surfaceOpacity: .66,
+                        blurSigma: 16,
+                        borderRadius: BorderRadius.circular(18),
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: TextField(
+                          key: const Key('login-password'),
+                          controller: _password,
+                          obscureText: _obscure,
+                          textInputAction: TextInputAction.done,
+                          decoration: InputDecoration(
+                            hintText: '비밀번호를 입력하세요',
+                            filled: false,
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            suffixIcon: IconButton(
+                              onPressed: () =>
+                                  setState(() => _obscure = !_obscure),
+                              icon: Icon(_obscure
+                                  ? Icons.visibility_off_outlined
+                                  : Icons.visibility_outlined),
+                            ),
                           ),
                         ),
                       ),
@@ -178,8 +200,9 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(18, 0, 18, 10),
               child: AppGlassSurface(
+                surfaceOpacity: .68,
                 borderRadius: BorderRadius.circular(22),
-                blurSigma: 14,
+                blurSigma: 16,
                 padding: const EdgeInsets.fromLTRB(18, 8, 18, 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -205,9 +228,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _socialAssetButton(String asset, String label) {
-    return OutlinedButton(
-      onPressed: _enterMarket,
-      style: _socialStyle(),
+    return AppGlassSurface(
+      onTap: _enterMarket,
+      semanticLabel: '$label 로그인',
+      surfaceOpacity: .62,
+      blurSigma: 14,
+      borderRadius: BorderRadius.circular(14),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -238,9 +265,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _socialIconButton(IconData icon, String label) {
-    return OutlinedButton(
-      onPressed: _enterMarket,
-      style: _socialStyle(),
+    return AppGlassSurface(
+      onTap: _enterMarket,
+      semanticLabel: '$label 로그인',
+      surfaceOpacity: .62,
+      blurSigma: 14,
+      borderRadius: BorderRadius.circular(14),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -260,13 +291,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
-  ButtonStyle _socialStyle() => OutlinedButton.styleFrom(
-        minimumSize: const Size.fromHeight(50),
-        side: const BorderSide(color: Color(0xFFDDE3DF)),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-      );
 
   Widget _label(String text) => Padding(
         padding: const EdgeInsets.only(bottom: 8),

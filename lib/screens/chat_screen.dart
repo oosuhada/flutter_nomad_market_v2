@@ -183,10 +183,10 @@ class _ChatScreenState extends State<ChatScreen> {
                         decoration: const InputDecoration(
                           hintText: '메시지를 입력하세요',
                           isDense: true,
+                          filled: false,
                           border: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,
-                          fillColor: Color(0xFFF2F4F2),
                         ),
                       ),
                     ),

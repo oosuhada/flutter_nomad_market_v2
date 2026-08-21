@@ -26,7 +26,8 @@ class LocalTrendCard extends StatelessWidget {
         width: 230,
         child: AppGlassSurface(
           borderRadius: BorderRadius.circular(20),
-          blurSigma: 10,
+          surfaceOpacity: .62,
+          blurSigma: 15,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Column(

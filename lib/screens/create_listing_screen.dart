@@ -210,74 +210,99 @@ class _CreateListingScreenState extends State<CreateListingScreen> {
 
   Widget _buildPhotoPicker() {
     final sample = demoMarketplaceItems.first;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _label('사진  1/5'),
-        SizedBox(
-          height: 112,
-          child: Row(
+    return AppGlassSurface(
+      tint: NomadTheme.softGreen,
+      surfaceOpacity: .62,
+      blurSigma: 18,
+      borderRadius: BorderRadius.circular(24),
+      padding: const EdgeInsets.fromLTRB(14, 13, 14, 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
             children: [
-              SizedBox(
-                width: 112,
-                height: 112,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    MarketplaceImage(
-                        url: sample.imageUrl,
-                        borderRadius: BorderRadius.circular(18)),
-                    Positioned(
-                      left: 8,
-                      bottom: 8,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                            color: NomadTheme.ink.withValues(alpha: .84),
-                            borderRadius: BorderRadius.circular(999)),
-                        child: const Text('대표',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 10,
-                                fontWeight: FontWeight.w700)),
-                      ),
-                    ),
-                  ],
+              const Expanded(
+                child: Text(
+                  '사진 · 실물 확인',
+                  style: TextStyle(
+                    color: NomadTheme.brand,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: .5,
+                  ),
                 ),
               ),
-              const SizedBox(width: 10),
-              _photoAddButton(),
-              const SizedBox(width: 10),
-              _photoAddButton(),
+              AppGlassChip(
+                label: '1 / 5',
+                onTap: () {},
+              ),
             ],
           ),
-        ),
-      ],
+          const SizedBox(height: 12),
+          SizedBox(
+            height: 112,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 112,
+                  height: 112,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      MarketplaceImage(
+                          url: sample.imageUrl,
+                          borderRadius: BorderRadius.circular(18)),
+                      Positioned(
+                        left: 8,
+                        bottom: 8,
+                        child: AppGlassSurface(
+                          tint: NomadTheme.ink,
+                          surfaceOpacity: .72,
+                          blurSigma: 10,
+                          borderRadius: BorderRadius.circular(999),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
+                          child: const Text('대표',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w800)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 10),
+                _photoAddButton(),
+                const SizedBox(width: 10),
+                _photoAddButton(),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _photoAddButton() {
-    return InkWell(
-      onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('데모 모드에서는 대표 사진 미리보기를 사용합니다.')),
-      ),
-      borderRadius: BorderRadius.circular(18),
-      child: Container(
-        width: 82,
-        height: 112,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: const Color(0xFFDDE3DF)),
+    return SizedBox(
+      width: 82,
+      height: 112,
+      child: AppGlassSurface(
+        onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('데모 모드에서는 대표 사진 미리보기를 사용합니다.')),
         ),
+        semanticLabel: '사진 추가',
+        surfaceOpacity: .58,
+        blurSigma: 14,
+        borderRadius: BorderRadius.circular(18),
         child: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.add_photo_alternate_outlined, color: NomadTheme.brand),
             SizedBox(height: 7),
             Text('사진 추가',
-                style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600)),
+                style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700)),
           ],
         ),
       ),

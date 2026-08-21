@@ -41,9 +41,10 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
   Widget build(BuildContext context) {
     final complete = _step == _stepCount - 1;
     return Scaffold(
-      backgroundColor: complete ? const Color(0xFF101615) : Colors.white,
+      backgroundColor: complete ? const Color(0xFF101615) : NomadTheme.canvas,
       appBar: AppBar(
-        backgroundColor: complete ? const Color(0xFF101615) : Colors.white,
+        backgroundColor:
+            complete ? const Color(0xFF101615) : Colors.transparent,
         foregroundColor: complete ? Colors.white : NomadTheme.ink,
         leading: IconButton(
           onPressed: () {
@@ -86,29 +87,35 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
           subtitle: '안전하고 편리한 서비스 이용을 위해\n이메일과 비밀번호를 설정해주세요.',
           children: [
             _fieldLabel('이메일'),
-            TextField(
-              key: const Key('signup-email'),
-              controller: _email,
-              keyboardType: TextInputType.emailAddress,
-              textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(hintText: 'Enter your email'),
+            _glassInput(
+              TextField(
+                key: const Key('signup-email'),
+                controller: _email,
+                keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
+                decoration: _transparentInput('Enter your email'),
+              ),
             ),
             const SizedBox(height: 16),
             _fieldLabel('비밀번호'),
-            TextField(
-              key: const Key('signup-password'),
-              controller: _password,
-              obscureText: true,
-              textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(hintText: '8자 이상 입력하세요'),
+            _glassInput(
+              TextField(
+                key: const Key('signup-password'),
+                controller: _password,
+                obscureText: true,
+                textInputAction: TextInputAction.next,
+                decoration: _transparentInput('8자 이상 입력하세요'),
+              ),
             ),
             const SizedBox(height: 16),
             _fieldLabel('비밀번호 확인'),
-            TextField(
-              key: const Key('signup-confirm-password'),
-              controller: _confirmPassword,
-              obscureText: true,
-              decoration: const InputDecoration(hintText: '비밀번호를 한 번 더 입력하세요'),
+            _glassInput(
+              TextField(
+                key: const Key('signup-confirm-password'),
+                controller: _confirmPassword,
+                obscureText: true,
+                decoration: _transparentInput('비밀번호를 한 번 더 입력하세요'),
+              ),
             ),
           ],
           onNext: _validateBasicInfo,
@@ -144,17 +151,21 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
             Row(
               children: '120521'.split('').map((digit) {
                 return Expanded(
-                  child: Container(
-                    height: 58,
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: const Color(0xFFDDE3DF)),
-                      borderRadius: BorderRadius.circular(13),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: SizedBox(
+                      height: 58,
+                      child: AppGlassSurface(
+                        surfaceOpacity: .64,
+                        blurSigma: 12,
+                        borderRadius: BorderRadius.circular(13),
+                        child: Center(
+                          child: Text(digit,
+                              style: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w800)),
+                        ),
+                      ),
                     ),
-                    alignment: Alignment.center,
-                    child: Text(digit,
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w800)),
                   ),
                 );
               }).toList(),
@@ -181,13 +192,12 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
                   Positioned(
                     right: 0,
                     bottom: 0,
-                    child: Container(
-                      width: 38,
-                      height: 38,
-                      decoration: const BoxDecoration(
-                          color: NomadTheme.brand, shape: BoxShape.circle),
-                      child: const Icon(Icons.camera_alt_rounded,
-                          color: Colors.white, size: 19),
+                    child: AppGlassIconButton(
+                      icon: Icons.camera_alt_rounded,
+                      iconColor: NomadTheme.brand,
+                      semanticLabel: '프로필 사진 변경',
+                      onPressed: () {},
+                      size: 40,
                     ),
                   ),
                 ],
@@ -195,11 +205,13 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
             ),
             const SizedBox(height: 34),
             _fieldLabel('닉네임'),
-            TextField(
-              key: const Key('signup-nickname'),
-              controller: _nickname,
-              textInputAction: TextInputAction.done,
-              decoration: const InputDecoration(hintText: '예: SarahNomad'),
+            _glassInput(
+              TextField(
+                key: const Key('signup-nickname'),
+                controller: _nickname,
+                textInputAction: TextInputAction.done,
+                decoration: _transparentInput('예: SarahNomad'),
+              ),
             ),
             const SizedBox(height: 12),
             const Text('여행자와 구매자가 서로 기억하기 쉬운 이름을 추천해요.',
@@ -235,20 +247,16 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
               runSpacing: 9,
               children: ['한국어', 'English', '日本語', 'Français'].map((language) {
                 final selected = _languages.contains(language);
-                return FilterChip(
-                  label: Text(language),
+                return AppGlassChip(
+                  label: language,
                   selected: selected,
-                  onSelected: (_) => setState(() {
+                  onTap: () => setState(() {
                     if (selected) {
                       _languages.remove(language);
                     } else {
                       _languages.add(language);
                     }
                   }),
-                  showCheckmark: false,
-                  selectedColor: NomadTheme.ink,
-                  labelStyle: TextStyle(
-                      color: selected ? Colors.white : NomadTheme.ink),
                 );
               }).toList(),
             ),
@@ -276,20 +284,16 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
               runSpacing: 9,
               children: ['KRW', 'USD', 'EUR', 'JPY'].map((currency) {
                 final selected = _currencies.contains(currency);
-                return FilterChip(
-                  label: Text(currency),
+                return AppGlassChip(
+                  label: currency,
                   selected: selected,
-                  onSelected: (_) => setState(() {
+                  onTap: () => setState(() {
                     if (selected) {
                       _currencies.remove(currency);
                     } else if (_currencies.length < 3) {
                       _currencies.add(currency);
                     }
                   }),
-                  showCheckmark: false,
-                  selectedColor: NomadTheme.ink,
-                  labelStyle: TextStyle(
-                      color: selected ? Colors.white : NomadTheme.ink),
                 );
               }).toList(),
             ),
@@ -314,17 +318,16 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
                 runSpacing: 9,
                 children: ['해외 상품 구매하기', '해외 물품전달 부탁하기'].map((type) {
                   final selected = _buyerTypes.contains(type);
-                  return FilterChip(
-                    label: Text(type),
+                  return AppGlassChip(
+                    label: type,
                     selected: selected,
-                    onSelected: (_) => setState(() {
+                    onTap: () => setState(() {
                       if (selected) {
                         _buyerTypes.remove(type);
                       } else {
                         _buyerTypes.add(type);
                       }
                     }),
-                    showCheckmark: false,
                   );
                 }).toList(),
               ),
@@ -376,8 +379,9 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(18, 0, 18, 10),
       child: AppGlassSurface(
+        surfaceOpacity: .68,
         borderRadius: BorderRadius.circular(24),
-        blurSigma: 14,
+        blurSigma: 18,
         padding: const EdgeInsets.fromLTRB(16, 10, 16, 14),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -447,8 +451,9 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
           const SizedBox(height: 30),
           AppGlassSurface(
             tint: const Color(0xFF1C2422),
+            surfaceOpacity: .72,
             borderRadius: BorderRadius.circular(20),
-            blurSigma: 12,
+            blurSigma: 16,
             padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -512,6 +517,22 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
             style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w800)),
       );
 
+  Widget _glassInput(Widget child) => AppGlassSurface(
+        surfaceOpacity: .66,
+        blurSigma: 16,
+        borderRadius: BorderRadius.circular(18),
+        padding: const EdgeInsets.symmetric(horizontal: 4),
+        child: child,
+      );
+
+  InputDecoration _transparentInput(String hint) => InputDecoration(
+        hintText: hint,
+        filled: false,
+        border: InputBorder.none,
+        enabledBorder: InputBorder.none,
+        focusedBorder: InputBorder.none,
+      );
+
   Widget _selectionTitle(String text) => Padding(
         padding: const EdgeInsets.only(bottom: 12),
         child: Text(text,
@@ -525,13 +546,10 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
       runSpacing: 9,
       children: values.map((value) {
         final active = value == selected;
-        return ChoiceChip(
-          label: Text(value),
+        return AppGlassChip(
+          label: value,
           selected: active,
-          onSelected: (_) => onSelected(value),
-          showCheckmark: false,
-          selectedColor: NomadTheme.ink,
-          labelStyle: TextStyle(color: active ? Colors.white : NomadTheme.ink),
+          onTap: () => onSelected(value),
         );
       }).toList(),
     );
@@ -539,17 +557,18 @@ class _SignupFlowScreenState extends State<SignupFlowScreen> {
 
   Widget _modeCard(String mode, IconData icon, String detail) {
     final selected = _mode == mode;
-    return InkWell(
+    return AppGlassSurface(
       onTap: () => setState(() => _mode = mode),
+      semanticLabel: mode,
+      tint: selected ? NomadTheme.ink : null,
+      surfaceOpacity: selected ? .78 : .62,
+      blurSigma: 15,
       borderRadius: BorderRadius.circular(18),
-      child: AnimatedContainer(
+      padding: const EdgeInsets.all(16),
+      child: AnimatedDefaultTextStyle(
         duration: const Duration(milliseconds: 180),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: selected ? NomadTheme.ink : const Color(0xFFF5F7F6),
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(
-              color: selected ? NomadTheme.ink : const Color(0xFFDDE3DF)),
+        style: TextStyle(
+          color: selected ? Colors.white : NomadTheme.ink,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -614,8 +633,9 @@ class _LevelCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: AppGlassSurface(
+        surfaceOpacity: .62,
         borderRadius: BorderRadius.circular(14),
-        blurSigma: 8,
+        blurSigma: 12,
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 14),
         child: Column(
           children: [

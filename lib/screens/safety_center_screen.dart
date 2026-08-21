@@ -1,6 +1,9 @@
 // screens/safety_center_screen.dart
 import 'package:flutter/material.dart';
 
+import '../theme/nomad_theme.dart';
+import '../v2/v2_glass.dart';
+
 class SafetyCenterScreen extends StatelessWidget {
   const SafetyCenterScreen({super.key});
 
@@ -8,14 +11,13 @@ class SafetyCenterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
         title: const Text(
           '안전 거래 센터',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(fontWeight: FontWeight.w800),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.help_outline, color: Colors.black),
+            icon: const Icon(Icons.help_outline),
             onPressed: () {
               // 도움말 페이지로 이동
             },
@@ -40,63 +42,64 @@ class SafetyCenterScreen extends StatelessWidget {
   }
 
   Widget _buildSafetyStatus() {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Row(
-              children: [
-                Icon(Icons.verified_user, color: Colors.green),
-                SizedBox(width: 8),
-                Text(
-                  '안전 거래 상태',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+    return AppGlassSurface(
+      surfaceOpacity: .68,
+      blurSigma: 16,
+      borderRadius: BorderRadius.circular(22),
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Row(
+            children: [
+              Icon(Icons.verified_user, color: Colors.green),
+              SizedBox(width: 8),
+              Text(
+                '안전 거래 상태',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: _buildStatusItem(
-                    icon: Icons.shopping_bag,
-                    title: '진행중 거래',
-                    value: '3건',
-                  ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: _buildStatusItem(
+                  icon: Icons.shopping_bag,
+                  title: '진행중 거래',
+                  value: '3건',
                 ),
-                Container(
-                  width: 1,
-                  height: 40,
-                  color: Colors.grey[300],
+              ),
+              Container(
+                width: 1,
+                height: 40,
+                color: Colors.grey[300],
+              ),
+              Expanded(
+                child: _buildStatusItem(
+                  icon: Icons.schedule,
+                  title: '배송중',
+                  value: '1건',
                 ),
-                Expanded(
-                  child: _buildStatusItem(
-                    icon: Icons.schedule,
-                    title: '배송중',
-                    value: '1건',
-                  ),
+              ),
+              Container(
+                width: 1,
+                height: 40,
+                color: Colors.grey[300],
+              ),
+              Expanded(
+                child: _buildStatusItem(
+                  icon: Icons.check_circle,
+                  title: '완료',
+                  value: '12건',
                 ),
-                Container(
-                  width: 1,
-                  height: 40,
-                  color: Colors.grey[300],
-                ),
-                Expanded(
-                  child: _buildStatusItem(
-                    icon: Icons.check_circle,
-                    title: '완료',
-                    value: '12건',
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -108,7 +111,7 @@ class SafetyCenterScreen extends StatelessWidget {
   }) {
     return Column(
       children: [
-        Icon(icon, color: Colors.blue),
+        Icon(icon, color: NomadTheme.brand),
         const SizedBox(height: 4),
         Text(
           title,
@@ -139,7 +142,10 @@ class SafetyCenterScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        Card(
+        AppGlassSurface(
+          surfaceOpacity: .66,
+          blurSigma: 16,
+          borderRadius: BorderRadius.circular(22),
           child: ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -198,7 +204,10 @@ class SafetyCenterScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        Card(
+        AppGlassSurface(
+          surfaceOpacity: .66,
+          blurSigma: 16,
+          borderRadius: BorderRadius.circular(22),
           child: Column(
             children: [
               _buildGuideItem(
@@ -231,7 +240,7 @@ class SafetyCenterScreen extends StatelessWidget {
     required String subtitle,
   }) {
     return ListTile(
-      leading: Icon(icon, color: Colors.blue),
+      leading: Icon(icon, color: NomadTheme.brand),
       title: Text(title),
       subtitle: Text(subtitle),
       trailing: const Icon(Icons.arrow_forward_ios),
@@ -253,53 +262,54 @@ class SafetyCenterScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: _buildDisputeButton(
-                        icon: Icons.report_problem,
-                        title: '신고하기',
-                      ),
+        AppGlassSurface(
+          surfaceOpacity: .66,
+          blurSigma: 16,
+          borderRadius: BorderRadius.circular(22),
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildDisputeButton(
+                      icon: Icons.report_problem,
+                      title: '신고하기',
                     ),
-                    const SizedBox(width: 16),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: _buildDisputeButton(
+                      icon: Icons.support_agent,
+                      title: '상담하기',
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              AppGlassSurface(
+                tint: NomadTheme.softGreen,
+                surfaceOpacity: .68,
+                blurSigma: 10,
+                borderRadius: BorderRadius.circular(14),
+                padding: const EdgeInsets.all(12),
+                child: Row(
+                  children: [
+                    const Icon(Icons.info_outline, color: NomadTheme.brand),
+                    const SizedBox(width: 8),
                     Expanded(
-                      child: _buildDisputeButton(
-                        icon: Icons.support_agent,
-                        title: '상담하기',
+                      child: Text(
+                        '구매 확정 전 발생한 문제는 24시간 이내 해결을 도와드립니다',
+                        style: const TextStyle(
+                          color: NomadTheme.ink,
+                          fontSize: 12,
+                        ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.blue[50],
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(Icons.info_outline, color: Colors.blue[700]),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          '구매 확정 전 발생한 문제는 24시간 이내 해결을 도와드립니다',
-                          style: TextStyle(
-                            color: Colors.blue[700],
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],
@@ -310,15 +320,20 @@ class SafetyCenterScreen extends StatelessWidget {
     required IconData icon,
     required String title,
   }) {
-    return ElevatedButton.icon(
-      onPressed: () {},
-      icon: Icon(icon),
-      label: Text(title),
-      style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
+    return AppGlassSurface(
+      onTap: () {},
+      semanticLabel: title,
+      surfaceOpacity: .6,
+      blurSigma: 12,
+      borderRadius: BorderRadius.circular(16),
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: NomadTheme.brand, size: 19),
+          const SizedBox(width: 7),
+          Text(title, style: const TextStyle(fontWeight: FontWeight.w800)),
+        ],
       ),
     );
   }
@@ -335,79 +350,80 @@ class SafetyCenterScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.green[50],
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.verified,
-                        color: Colors.green[700],
-                        size: 32,
-                      ),
+        AppGlassSurface(
+          surfaceOpacity: .66,
+          blurSigma: 16,
+          borderRadius: BorderRadius.circular(22),
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.green[50],
+                      shape: BoxShape.circle,
                     ),
-                    const SizedBox(width: 16),
-                    const Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '전문가 정품 인증',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
+                    child: Icon(
+                      Icons.verified,
+                      color: Colors.green[700],
+                      size: 32,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  const Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '전문가 정품 인증',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
-                          Text(
-                            '모든 상품은 전문가의 철저한 검수를 거칩니다',
-                            style: TextStyle(
-                              color: Colors.grey,
-                            ),
+                        ),
+                        Text(
+                          '모든 상품은 전문가의 철저한 검수를 거칩니다',
+                          style: TextStyle(
+                            color: Colors.grey,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              AppGlassSurface(
+                tint: NomadTheme.softGreen,
+                surfaceOpacity: .58,
+                blurSigma: 10,
+                borderRadius: BorderRadius.circular(16),
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  children: [
+                    _buildAuthStep(
+                      step: '1',
+                      title: '구매자 상품 수령',
+                      description: '상품 도착 후 개봉 영상 촬영',
+                    ),
+                    const SizedBox(height: 12),
+                    _buildAuthStep(
+                      step: '2',
+                      title: '전문가 검수',
+                      description: '브랜드별 전문가의 진품 감정',
+                    ),
+                    const SizedBox(height: 12),
+                    _buildAuthStep(
+                      step: '3',
+                      title: '인증서 발급',
+                      description: '정품 인증서 디지털 발급',
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Column(
-                    children: [
-                      _buildAuthStep(
-                        step: '1',
-                        title: '구매자 상품 수령',
-                        description: '상품 도착 후 개봉 영상 촬영',
-                      ),
-                      const SizedBox(height: 12),
-                      _buildAuthStep(
-                        step: '2',
-                        title: '전문가 검수',
-                        description: '브랜드별 전문가의 진품 감정',
-                      ),
-                      const SizedBox(height: 12),
-                      _buildAuthStep(
-                        step: '3',
-                        title: '인증서 발급',
-                        description: '정품 인증서 디지털 발급',
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],
@@ -425,7 +441,7 @@ class SafetyCenterScreen extends StatelessWidget {
           width: 24,
           height: 24,
           decoration: BoxDecoration(
-            color: Colors.blue,
+            color: NomadTheme.brand,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Center(

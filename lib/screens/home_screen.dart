@@ -273,24 +273,37 @@ class MarketplaceHomeScreen extends StatelessWidget {
         separatorBuilder: (_, __) => const SizedBox(width: 6),
         itemBuilder: (context, index) {
           final item = items[index];
-          return InkWell(
-            onTap: () => _openSearch(context, category: item.$2),
-            borderRadius: BorderRadius.circular(18),
-            child: SizedBox(
-              width: 66,
+          return SizedBox(
+            width: 76,
+            child: AppGlassSurface(
+              onTap: () => _openSearch(context, category: item.$2),
+              semanticLabel: item.$2,
+              surfaceOpacity: .58,
+              blurSigma: 14,
+              borderRadius: BorderRadius.circular(20),
+              padding: const EdgeInsets.fromLTRB(8, 9, 8, 8),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    width: 50,
-                    height: 50,
-                    decoration: const BoxDecoration(
-                        color: NomadTheme.softGreen, shape: BoxShape.circle),
-                    child: Icon(item.$1, color: NomadTheme.brand, size: 23),
+                    width: 38,
+                    height: 38,
+                    decoration: BoxDecoration(
+                      color: NomadTheme.softGreen.withValues(alpha: .72),
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: .72),
+                      ),
+                    ),
+                    child: Icon(item.$1, color: NomadTheme.brand, size: 20),
                   ),
-                  const SizedBox(height: 7),
-                  Text(item.$2,
-                      style: const TextStyle(
-                          fontSize: 11, fontWeight: FontWeight.w700)),
+                  const SizedBox(height: 6),
+                  Text(
+                    item.$2,
+                    maxLines: 1,
+                    style: const TextStyle(
+                        fontSize: 10.5, fontWeight: FontWeight.w800),
+                  ),
                 ],
               ),
             ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data/demo_marketplace_data.dart';
 import '../theme/nomad_theme.dart';
+import '../v2/v2_glass.dart';
 import '../widgets/marketplace_image.dart';
 import 'chat_screen.dart';
 
@@ -39,70 +40,66 @@ class ChatListScreen extends StatelessWidget {
       separatorBuilder: (_, __) => const SizedBox(height: 9),
       itemBuilder: (context, index) {
         final chat = chats[index];
-        return Material(
-          color: Colors.white,
+        return AppGlassSurface(
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const ChatScreen()),
+          ),
+          semanticLabel: '${chat.$2} 구매 요청 메시지',
+          surfaceOpacity: .64,
+          blurSigma: 15,
           borderRadius: BorderRadius.circular(18),
-          child: InkWell(
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const ChatScreen()),
-            ),
-            borderRadius: BorderRadius.circular(18),
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Row(
-                children: [
-                  MarketplaceImage(
-                    url: chat.$1.imageUrl,
-                    width: 62,
-                    height: 62,
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            children: [
+              MarketplaceImage(
+                url: chat.$1.imageUrl,
+                width: 62,
+                height: 62,
+                borderRadius: BorderRadius.circular(14),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
                       children: [
-                        Row(
-                          children: [
-                            Flexible(
-                              child: Text(chat.$2,
-                                  style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w800)),
-                            ),
-                            const SizedBox(width: 4),
-                            const Icon(Icons.verified_rounded,
-                                size: 15, color: NomadTheme.brand),
-                            const Spacer(),
-                            Text(chat.$5,
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.grey.shade500)),
-                          ],
+                        Flexible(
+                          child: Text(chat.$2,
+                              style: const TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w800)),
                         ),
-                        const SizedBox(height: 2),
-                        Text(chat.$3,
-                            style: const TextStyle(
-                                fontSize: 10,
-                                color: NomadTheme.brand,
-                                fontWeight: FontWeight.w700)),
-                        const SizedBox(height: 5),
-                        Text(chat.$4,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                        const SizedBox(width: 4),
+                        const Icon(Icons.verified_rounded,
+                            size: 15, color: NomadTheme.brand),
+                        const Spacer(),
+                        Text(chat.$5,
                             style: TextStyle(
-                                fontSize: 11, color: Colors.grey.shade700)),
-                        const SizedBox(height: 4),
-                        Text(chat.$1.title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontSize: 10, fontWeight: FontWeight.w700)),
+                                fontSize: 10, color: Colors.grey.shade500)),
                       ],
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 2),
+                    Text(chat.$3,
+                        style: const TextStyle(
+                            fontSize: 10,
+                            color: NomadTheme.brand,
+                            fontWeight: FontWeight.w700)),
+                    const SizedBox(height: 5),
+                    Text(chat.$4,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 11, color: Colors.grey.shade700)),
+                    const SizedBox(height: 4),
+                    Text(chat.$1.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontSize: 10, fontWeight: FontWeight.w700)),
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
         );
       },

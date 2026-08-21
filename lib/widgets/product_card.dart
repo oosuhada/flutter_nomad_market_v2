@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/marketplace_item.dart';
 import '../theme/nomad_theme.dart';
+import '../v2/v2_glass.dart';
 import 'marketplace_image.dart';
 
 class ProductCard extends StatefulWidget {
@@ -44,21 +45,12 @@ class _ProductCardState extends State<ProductCard> {
                 Positioned(
                   top: 10,
                   right: 10,
-                  child: Material(
-                    color: Colors.white.withValues(alpha: 0.92),
-                    shape: const CircleBorder(),
-                    child: InkWell(
-                      customBorder: const CircleBorder(),
-                      onTap: () => setState(() => _favorite = !_favorite),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Icon(
-                          _favorite ? Icons.favorite : Icons.favorite_border,
-                          size: 20,
-                          color: _favorite ? Colors.redAccent : NomadTheme.ink,
-                        ),
-                      ),
-                    ),
+                  child: AppGlassIconButton(
+                    size: 38,
+                    semanticLabel: '관심 상품',
+                    icon: _favorite ? Icons.favorite : Icons.favorite_border,
+                    iconColor: _favorite ? Colors.redAccent : NomadTheme.ink,
+                    onPressed: () => setState(() => _favorite = !_favorite),
                   ),
                 ),
                 if (item.isFeatured)
@@ -86,42 +78,53 @@ class _ProductCardState extends State<ProductCard> {
               ],
             ),
           ),
-          const SizedBox(height: 10),
-          Text(
-            item.location,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: NomadTheme.brand,
-              fontSize: 11,
-              fontWeight: FontWeight.w700,
+          const SizedBox(height: 8),
+          AppGlassSurface(
+            surfaceOpacity: .6,
+            blurSigma: 12,
+            borderRadius: BorderRadius.circular(17),
+            padding: const EdgeInsets.fromLTRB(10, 9, 10, 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.location,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: NomadTheme.brand,
+                    fontSize: 10.5,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  item.title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: widget.compact ? 13.5 : 14.5,
+                    height: 1.22,
+                    fontWeight: FontWeight.w800,
+                    color: NomadTheme.ink,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  item.formattedPrice,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w900,
+                    color: NomadTheme.ink,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  '${item.timeAgo} · 관심 ${item.likes}',
+                  style: TextStyle(fontSize: 10, color: Colors.grey.shade600),
+                ),
+              ],
             ),
-          ),
-          const SizedBox(height: 3),
-          Text(
-            item.title,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: widget.compact ? 14 : 15,
-              height: 1.25,
-              fontWeight: FontWeight.w700,
-              color: NomadTheme.ink,
-            ),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            item.formattedPrice,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w800,
-              color: NomadTheme.ink,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            '${item.timeAgo} · 관심 ${item.likes}',
-            style: TextStyle(fontSize: 11, color: Colors.grey.shade600),
           ),
         ],
       ),
