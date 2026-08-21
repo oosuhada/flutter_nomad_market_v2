@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../data/demo_marketplace_data.dart';
 import '../models/marketplace_item.dart';
 import '../theme/nomad_theme.dart';
+import '../v2/v2_glass.dart';
 import '../widgets/cultural_insight_card.dart';
 import '../widgets/local_trend_card.dart';
 import '../widgets/product_card.dart';
@@ -35,30 +36,30 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
 
     return Scaffold(
+      extendBody: true,
       body: IndexedStack(index: _selectedIndex, children: pages),
-      bottomNavigationBar: NavigationBar(
+      bottomNavigationBar: AppGlassNavigationBar(
         selectedIndex: _selectedIndex,
-        onDestinationSelected: (index) =>
-            setState(() => _selectedIndex = index),
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.shopping_bag_outlined),
-            selectedIcon: Icon(Icons.shopping_bag_rounded),
+        onSelected: (index) => setState(() => _selectedIndex = index),
+        items: const [
+          AppGlassNavItem(
+            icon: Icons.shopping_bag_outlined,
+            selectedIcon: Icons.shopping_bag_rounded,
             label: '쇼핑',
           ),
-          NavigationDestination(
-            icon: Icon(Icons.explore_outlined),
-            selectedIcon: Icon(Icons.explore_rounded),
+          AppGlassNavItem(
+            icon: Icons.explore_outlined,
+            selectedIcon: Icons.explore_rounded,
             label: '커뮤니티',
           ),
-          NavigationDestination(
-            icon: Icon(Icons.chat_bubble_outline_rounded),
-            selectedIcon: Icon(Icons.chat_bubble_rounded),
+          AppGlassNavItem(
+            icon: Icons.chat_bubble_outline_rounded,
+            selectedIcon: Icons.chat_bubble_rounded,
             label: '채팅',
           ),
-          NavigationDestination(
-            icon: Icon(Icons.person_outline_rounded),
-            selectedIcon: Icon(Icons.person_rounded),
+          AppGlassNavItem(
+            icon: Icons.person_outline_rounded,
+            selectedIcon: Icons.person_rounded,
             label: '마이',
           ),
         ],
@@ -117,12 +118,16 @@ class MarketplaceHomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => const CreateListingScreen()),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 82),
+        child: AppGlassActionButton(
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const CreateListingScreen()),
+          ),
+          icon: Icons.flight_takeoff_rounded,
+          label: '현지 상품 등록',
+          semanticLabel: '현지 상품 등록 화면 열기',
         ),
-        icon: const Icon(Icons.flight_takeoff_rounded),
-        label: const Text('현지 상품 등록'),
       ),
     );
   }
@@ -178,34 +183,13 @@ class MarketplaceHomeScreen extends StatelessWidget {
   Widget _search(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
-      child: Material(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(17),
-        child: InkWell(
-          onTap: () => _openSearch(context),
-          borderRadius: BorderRadius.circular(17),
-          child: Container(
-            height: 54,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(17),
-              border: Border.all(color: const Color(0xFFDDE3DF)),
-            ),
-            child: Row(
-              children: [
-                const Icon(Icons.search_rounded, color: NomadTheme.ink),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    '도시, 한정판, K-뷰티를 찾아보세요',
-                    style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
-                  ),
-                ),
-                const Icon(Icons.travel_explore_rounded,
-                    size: 21, color: NomadTheme.brand),
-              ],
-            ),
-          ),
+      child: AppGlassSearchButton(
+        hint: '도시, 한정판, K-뷰티를 찾아보세요',
+        onTap: () => _openSearch(context),
+        trailing: const Icon(
+          Icons.travel_explore_rounded,
+          size: 21,
+          color: NomadTheme.brand,
         ),
       ),
     );

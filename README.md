@@ -1,4 +1,22 @@
-# Nomad Market
+# Nomad Market v2
+
+> **2024 → 2026 UX renewal** · [`v1` original portfolio version](https://github.com/oosuhada/flutter_nomad_market_v2/tree/v1) · [`main` v2 renewal](https://github.com/oosuhada/flutter_nomad_market_v2)
+
+The original project focused on restoring and connecting a broad marketplace feature set. The 2026 renewal keeps that product DNA while revisiting **content/control hierarchy, motion, accessibility, platform conventions, and rendering cost**. Product imagery and marketplace information stay solid; search, navigation, language, onboarding actions, and compact primary actions become the floating adaptive control layer.
+
+초기 버전에서는 다양한 마켓 기능을 화면과 흐름으로 연결하는 데 집중했다면, 2026 v2에서는 기존 제품 정체성을 유지한 채 **content/control hierarchy, motion, accessibility, platform convention, rendering cost**를 기준으로 다시 설계했습니다. 상품 이미지와 거래 정보는 solid content로 유지하고 검색, navigation, 언어, onboarding action, 핵심 CTA만 떠 있는 adaptive glass control로 분리했습니다.
+
+## v1 → v2 / 성장 과정
+
+| | v1 · 2024 | v2 · 2026 |
+| --- | --- | --- |
+| Focus / 초점 | Feature-rich marketplace flow | Product UX renewal and hierarchy |
+| Marketplace content | Material card-first | Product imagery/data stay solid and foregrounded |
+| Navigation | Standard bottom NavigationBar | Floating adaptive glass 4-tab navigation |
+| Search / CTA | Opaque search + Material FAB | Glass search control + floating local-find CTA |
+| Onboarding | Illustration + fixed opaque CTA area | Content stays plain; language/action layer floats separately |
+| Accessibility | Material defaults | High-contrast opacity fallback, reduced-motion transitions, selected semantics |
+| Rendering | Visual styling first | Blur restricted to compact controls, never product grids |
 
 **Nomad Market** is a cross-border local-shopping marketplace where travelers and local experts discover city-specific products, verify them in person, and connect purchase requests with upcoming trips.
 
@@ -31,7 +49,7 @@ The preview follows the same order a first-time user would experience the servic
   </tr>
   <tr>
     <td width="50%" align="center">
-      <img src="https://raw.githubusercontent.com/oosuhada/flutter_nomad_market_v2/e880981962eca5746ec5ee20df3e0e21feb44c7b/.github/assets/portfolio/10-login.png" width="86%" alt="Nomad Market login with Google Facebook Apple" /><br />
+      <img src=".github/assets/portfolio/10-login.png" width="86%" alt="Nomad Market login with Google Facebook Apple" /><br />
       <b>3. Login / 로그인</b><br />
       <sub>Google, Facebook, and Apple are presented consistently as logo + text buttons, alongside email login and multilingual access.<br />Google · Facebook · Apple 소셜 로그인을 모두 로고 + 텍스트 버튼으로 통일하고, 이메일 로그인과 다국어 진입점도 함께 제공합니다.</sub>
     </td>
@@ -173,6 +191,7 @@ lib/
 ├── models/     # marketplace domain model
 ├── screens/    # onboarding, auth, shopping, detail, chat, community, profile
 ├── theme/      # Material 3 design tokens
+├── v2/         # adaptive glass control renderer and accessibility fallbacks
 ├── widgets/    # reusable marketplace / traveler components
 └── main.dart
 ```
@@ -183,6 +202,19 @@ lib/
   `models/`와 `data/`가 포트폴리오에서 재현 가능한 상품·상태 데이터를 제공합니다.
 - Local assets under `assets/marketplace/`, `assets/onboarding/`, and `assets/auth/` keep representative flows stable.<br>
   `assets/marketplace/`, `assets/onboarding/`, `assets/auth/`에 핵심 이미지를 로컬로 포함해 대표 화면이 외부 서비스에 의존하지 않도록 했습니다.
+
+### v2 visual system / v2 디자인 시스템
+
+- `V2GlassTheme`, `AppGlassSurface`, `AppGlassNavigationBar`, `AppGlassSearchButton`, `AppGlassActionButton` form a reusable control contract.<br>
+  공통 `AppGlass*` contract로 renderer를 화면 코드와 분리해 향후 native material/shader 실험으로 교체할 여지를 남겼습니다.
+- `MediaQuery.highContrast` removes translucency-heavy blur and raises surface opacity.<br>
+  고대비 환경에서는 blur를 제거하고 surface opacity를 높입니다.
+- `MediaQuery.disableAnimations` removes selected-navigation transition duration.<br>
+  모션 감소 설정에서는 navigation transition duration을 0으로 줄입니다.
+- Product cards, onboarding illustrations, local trends, community stories, chat messages, and profile content remain solid surfaces.<br>
+  상품 카드, onboarding illustration, local trend, community story, chat message, profile content는 가독성과 렌더링 비용을 위해 solid surface로 유지합니다.
+- Emulator QA found and fixed an initial floating-CTA/nav collision; the registration action now sits above the navigation bar with distinct tap bounds.<br>
+  Emulator QA에서 처음 발견한 등록 CTA와 navigation의 겹침을 수정해 서로 독립된 tap 영역을 확보했습니다.
 
 ## Tech Stack / 기술 스택
 
