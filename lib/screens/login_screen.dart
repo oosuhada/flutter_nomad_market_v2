@@ -213,27 +213,20 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        AppGlassPrimaryButton(
+          key: const Key('open-signup'),
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const SignupFlowScreen()),
+          ),
+          label: '회원가입',
+          tint: NomadTheme.brand,
+          minHeight: 54,
+        ),
+        const SizedBox(height: 8),
         const Text(
           '아직 계정이 없으신가요?',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 12),
-        ),
-        const SizedBox(height: 8),
-        AppGlassSurface(
-          onTap: () => Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => const SignupFlowScreen()),
-          ),
-          semanticLabel: '회원가입',
-          surfaceOpacity: .48,
-          borderRadius: BorderRadius.circular(16),
-          blurSigma: 18,
-          padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 12),
-          child: const Text(
-            '회원가입',
-            key: Key('open-signup'),
-            textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.w800),
-          ),
         ),
       ],
     );
