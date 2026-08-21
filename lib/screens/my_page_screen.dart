@@ -206,11 +206,12 @@ class MyPageScreen extends StatelessWidget {
       child: Row(
         children: items.map((item) {
           return Expanded(
-            child: Container(
+            child: AppGlassSurface(
               margin: EdgeInsets.only(right: item == items.first ? 10 : 0),
+              surfaceOpacity: .70,
+              blurSigma: 14,
+              borderRadius: BorderRadius.circular(18),
               padding: const EdgeInsets.all(9),
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(18)),
               child: Row(
                 children: [
                   MarketplaceImage(
@@ -285,34 +286,39 @@ class MyPageScreen extends StatelessWidget {
     String? badge,
     VoidCallback? onTap,
   }) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(16)),
-      child: ListTile(
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: AppGlassSurface(
+        surfaceOpacity: .72,
+        blurSigma: 14,
+        borderRadius: BorderRadius.circular(16),
         onTap: onTap ?? () {},
-        leading: Container(
-          width: 42,
-          height: 42,
-          decoration: const BoxDecoration(
-              color: NomadTheme.softGreen, shape: BoxShape.circle),
-          child: Icon(icon, color: NomadTheme.brand, size: 20),
+        child: ListTile(
+          leading: Container(
+            width: 42,
+            height: 42,
+            decoration: const BoxDecoration(
+                color: NomadTheme.softGreen, shape: BoxShape.circle),
+            child: Icon(icon, color: NomadTheme.brand, size: 20),
+          ),
+          title: Text(title,
+              style:
+                  const TextStyle(fontSize: 13, fontWeight: FontWeight.w800)),
+          subtitle: Text(subtitle,
+              style: TextStyle(fontSize: 10, color: Colors.grey.shade600)),
+          trailing: badge != null
+              ? Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                  decoration: BoxDecoration(
+                      color: NomadTheme.warm,
+                      borderRadius: BorderRadius.circular(999)),
+                  child: Text(badge,
+                      style: const TextStyle(
+                          fontSize: 10, fontWeight: FontWeight.w800)),
+                )
+              : const Icon(Icons.chevron_right_rounded, color: Colors.black38),
         ),
-        title: Text(title,
-            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800)),
-        subtitle: Text(subtitle,
-            style: TextStyle(fontSize: 10, color: Colors.grey.shade600)),
-        trailing: badge != null
-            ? Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                decoration: BoxDecoration(
-                    color: NomadTheme.warm,
-                    borderRadius: BorderRadius.circular(999)),
-                child: Text(badge,
-                    style: const TextStyle(
-                        fontSize: 10, fontWeight: FontWeight.w800)),
-              )
-            : const Icon(Icons.chevron_right_rounded, color: Colors.black38),
       ),
     );
   }

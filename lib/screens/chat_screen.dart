@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data/demo_marketplace_data.dart';
 import '../theme/nomad_theme.dart';
+import '../v2/v2_glass.dart';
 import '../widgets/marketplace_image.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -71,41 +72,46 @@ class _ChatScreenState extends State<ChatScreen> {
         top: false,
         child: Column(
           children: [
-            Container(
-              color: Colors.white,
-              padding: const EdgeInsets.fromLTRB(16, 10, 16, 12),
-              child: Row(
-                children: [
-                  MarketplaceImage(
-                    url: item.imageUrl,
-                    width: 58,
-                    height: 58,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(item.title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontSize: 13, fontWeight: FontWeight.w700)),
-                        const SizedBox(height: 4),
-                        Text(item.formattedPrice,
-                            style: const TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w900)),
-                        const SizedBox(height: 2),
-                        Text(item.location,
-                            style: TextStyle(
-                                fontSize: 10, color: Colors.grey.shade600)),
-                      ],
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
+              child: AppGlassSurface(
+                surfaceOpacity: .78,
+                blurSigma: 14,
+                borderRadius: BorderRadius.circular(20),
+                padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                child: Row(
+                  children: [
+                    MarketplaceImage(
+                      url: item.imageUrl,
+                      width: 58,
+                      height: 58,
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  TextButton(onPressed: () {}, child: const Text('거래 제안')),
-                ],
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(item.title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontSize: 13, fontWeight: FontWeight.w700)),
+                          const SizedBox(height: 4),
+                          Text(item.formattedPrice,
+                              style: const TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w900)),
+                          const SizedBox(height: 2),
+                          Text(item.location,
+                              style: TextStyle(
+                                  fontSize: 10, color: Colors.grey.shade600)),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    TextButton(onPressed: () {}, child: const Text('거래 제안')),
+                  ],
+                ),
               ),
             ),
             Expanded(
@@ -113,12 +119,12 @@ class _ChatScreenState extends State<ChatScreen> {
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
                 children: [
                   Center(
-                    child: Container(
+                    child: AppGlassSurface(
+                      surfaceOpacity: .76,
+                      blurSigma: 10,
+                      borderRadius: BorderRadius.circular(999),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 7),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(999)),
                       child: const Text('오늘 · 안전거래 채팅',
                           style:
                               TextStyle(fontSize: 10, color: Colors.black54)),
@@ -154,40 +160,42 @@ class _ChatScreenState extends State<ChatScreen> {
                 ],
               ),
             ),
-            Container(
-              padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(top: BorderSide(color: Colors.grey.shade200)),
-              ),
-              child: Row(
-                children: [
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.add_circle_outline_rounded),
-                      color: Colors.black54),
-                  Expanded(
-                    child: TextField(
-                      controller: _controller,
-                      minLines: 1,
-                      maxLines: 4,
-                      textInputAction: TextInputAction.send,
-                      onSubmitted: (_) => _send(),
-                      decoration: const InputDecoration(
-                        hintText: '메시지를 입력하세요',
-                        isDense: true,
-                        border: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        fillColor: Color(0xFFF2F4F2),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
+              child: AppGlassSurface(
+                surfaceOpacity: .82,
+                blurSigma: 16,
+                borderRadius: BorderRadius.circular(22),
+                padding: const EdgeInsets.fromLTRB(6, 6, 6, 6),
+                child: Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.add_circle_outline_rounded),
+                        color: Colors.black54),
+                    Expanded(
+                      child: TextField(
+                        controller: _controller,
+                        minLines: 1,
+                        maxLines: 4,
+                        textInputAction: TextInputAction.send,
+                        onSubmitted: (_) => _send(),
+                        decoration: const InputDecoration(
+                          hintText: '메시지를 입력하세요',
+                          isDense: true,
+                          border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          fillColor: Color(0xFFF2F4F2),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  IconButton.filled(
-                      onPressed: _send,
-                      icon: const Icon(Icons.arrow_upward_rounded)),
-                ],
+                    const SizedBox(width: 8),
+                    IconButton.filled(
+                        onPressed: _send,
+                        icon: const Icon(Icons.arrow_upward_rounded)),
+                  ],
+                ),
               ),
             ),
           ],
@@ -223,18 +231,18 @@ class _MessageBubble extends StatelessWidget {
       child: ConstrainedBox(
         constraints:
             BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width * .76),
-        child: Container(
+        child: AppGlassSurface(
           margin: const EdgeInsets.only(bottom: 11),
-          padding: const EdgeInsets.fromLTRB(13, 10, 13, 9),
-          decoration: BoxDecoration(
-            color: isMine ? NomadTheme.brand : Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: const Radius.circular(17),
-              topRight: const Radius.circular(17),
-              bottomLeft: Radius.circular(isMine ? 17 : 5),
-              bottomRight: Radius.circular(isMine ? 5 : 17),
-            ),
+          tint: isMine ? NomadTheme.brand : Colors.white,
+          surfaceOpacity: isMine ? .88 : .82,
+          blurSigma: 12,
+          borderRadius: BorderRadius.only(
+            topLeft: const Radius.circular(17),
+            topRight: const Radius.circular(17),
+            bottomLeft: Radius.circular(isMine ? 17 : 5),
+            bottomRight: Radius.circular(isMine ? 5 : 17),
           ),
+          padding: const EdgeInsets.fromLTRB(13, 10, 13, 9),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [

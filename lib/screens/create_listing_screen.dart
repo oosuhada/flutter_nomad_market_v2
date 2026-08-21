@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../data/demo_marketplace_data.dart';
 import '../theme/nomad_theme.dart';
+import '../v2/v2_glass.dart';
 import '../widgets/marketplace_image.dart';
 
 class CreateListingScreen extends StatefulWidget {
@@ -68,107 +69,125 @@ class _CreateListingScreenState extends State<CreateListingScreen> {
               const SizedBox(height: 22),
               _buildPhotoPicker(),
               const SizedBox(height: 24),
-              _label('현지에서 발견한 상품'),
-              TextFormField(
-                controller: _titleController,
-                textInputAction: TextInputAction.next,
-                validator: (value) => (value == null || value.trim().length < 4)
-                    ? '상품명을 4자 이상 입력해주세요.'
-                    : null,
-                decoration:
-                    const InputDecoration(hintText: '상품 또는 한정판 이름을 입력하세요'),
+              _GlassListingSection(
+                title: '상품 기본정보',
+                children: [
+                  _label('현지에서 발견한 상품'),
+                  TextFormField(
+                    controller: _titleController,
+                    textInputAction: TextInputAction.next,
+                    validator: (value) =>
+                        (value == null || value.trim().length < 4)
+                            ? '상품명을 4자 이상 입력해주세요.'
+                            : null,
+                    decoration:
+                        const InputDecoration(hintText: '상품 또는 한정판 이름을 입력하세요'),
+                  ),
+                ],
               ),
-              const SizedBox(height: 18),
-              _label('예상 구매가'),
-              TextFormField(
-                controller: _priceController,
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                validator: (value) => (int.tryParse(value ?? '') ?? 0) <= 0
-                    ? '가격을 입력해주세요.'
-                    : null,
-                decoration:
-                    const InputDecoration(prefixText: '₩  ', hintText: '0'),
-              ),
-              const SizedBox(height: 18),
-              _label('카테고리'),
-              DropdownButtonFormField<String>(
-                value: _category,
-                items: marketplaceCategories
-                    .where((category) => category != '전체')
-                    .map((category) => DropdownMenuItem(
-                        value: category, child: Text(category)))
-                    .toList(),
-                onChanged: (value) =>
-                    setState(() => _category = value ?? _category),
-              ),
-              const SizedBox(height: 18),
-              _label('현재 도시 / 구매 장소'),
-              DropdownButtonFormField<String>(
-                value: _location,
-                items: const [
-                  'Paris · Le Marais',
-                  'Tokyo · Shibuya',
-                  'Milano · Brera',
-                  'London · Shoreditch',
-                  'Seoul · Seongsu',
-                ]
-                    .map((location) => DropdownMenuItem(
-                        value: location, child: Text(location)))
-                    .toList(),
-                onChanged: (value) =>
-                    setState(() => _location = value ?? _location),
-                decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.location_on_outlined)),
-              ),
-              const SizedBox(height: 18),
-              _label('한국 이동 / 전달 일정'),
-              TextFormField(
-                controller: _deliveryController,
-                textInputAction: TextInputAction.next,
-                validator: (value) => (value == null || value.trim().length < 6)
-                    ? '이동 또는 전달 일정을 알려주세요.'
-                    : null,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.flight_land_rounded),
-                  hintText: '예: 9월 2일 서울 도착',
-                ),
-              ),
-              const SizedBox(height: 18),
-              _label('현지 확인 메모'),
-              TextFormField(
-                controller: _descriptionController,
-                minLines: 4,
-                maxLines: 6,
-                validator: (value) =>
-                    (value == null || value.trim().length < 10)
-                        ? '상태와 거래 방법을 조금 더 알려주세요.'
+              const SizedBox(height: 14),
+              _GlassListingSection(
+                title: '가격 · 지역',
+                children: [
+                  _label('예상 구매가'),
+                  TextFormField(
+                    controller: _priceController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    validator: (value) => (int.tryParse(value ?? '') ?? 0) <= 0
+                        ? '가격을 입력해주세요.'
                         : null,
-                decoration: const InputDecoration(
-                    hintText: '매장 재고, 한정 여부, 상태, 영수증 제공 여부 등을 알려주세요'),
+                    decoration:
+                        const InputDecoration(prefixText: '₩  ', hintText: '0'),
+                  ),
+                  const SizedBox(height: 14),
+                  _label('카테고리'),
+                  DropdownButtonFormField<String>(
+                    value: _category,
+                    items: marketplaceCategories
+                        .where((category) => category != '전체')
+                        .map((category) => DropdownMenuItem(
+                            value: category, child: Text(category)))
+                        .toList(),
+                    onChanged: (value) =>
+                        setState(() => _category = value ?? _category),
+                  ),
+                  const SizedBox(height: 14),
+                  _label('현재 도시 / 구매 장소'),
+                  DropdownButtonFormField<String>(
+                    value: _location,
+                    items: const [
+                      'Paris · Le Marais',
+                      'Tokyo · Shibuya',
+                      'Milano · Brera',
+                      'London · Shoreditch',
+                      'Seoul · Seongsu',
+                    ]
+                        .map((location) => DropdownMenuItem(
+                            value: location, child: Text(location)))
+                        .toList(),
+                    onChanged: (value) =>
+                        setState(() => _location = value ?? _location),
+                    decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.location_on_outlined)),
+                  ),
+                ],
               ),
-              const SizedBox(height: 18),
-              Container(
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  color: NomadTheme.softGreen,
-                  borderRadius: BorderRadius.circular(18),
-                ),
-                child: const Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(Icons.verified_user_outlined,
-                        color: NomadTheme.brand, size: 21),
-                    SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        '구매 요청을 받기 전 실제 매장 재고와 가격을 다시 확인해주세요. 앱 내 채팅으로 실물 사진과 영수증 정보를 공유할 수 있습니다.',
-                        style: TextStyle(
-                            fontSize: 12, height: 1.45, color: NomadTheme.ink),
-                      ),
+              const SizedBox(height: 14),
+              _GlassListingSection(
+                title: '여행 · 도착 일정',
+                tint: NomadTheme.warm,
+                children: [
+                  _label('한국 이동 / 전달 일정'),
+                  TextFormField(
+                    controller: _deliveryController,
+                    textInputAction: TextInputAction.next,
+                    validator: (value) =>
+                        (value == null || value.trim().length < 6)
+                            ? '이동 또는 전달 일정을 알려주세요.'
+                            : null,
+                    decoration: const InputDecoration(
+                      prefixIcon: Icon(Icons.flight_land_rounded),
+                      hintText: '예: 9월 2일 서울 도착',
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 14),
+              _GlassListingSection(
+                title: '설명 · 확인 메모',
+                children: [
+                  _label('현지 확인 메모'),
+                  TextFormField(
+                    controller: _descriptionController,
+                    minLines: 4,
+                    maxLines: 6,
+                    validator: (value) =>
+                        (value == null || value.trim().length < 10)
+                            ? '상태와 거래 방법을 조금 더 알려주세요.'
+                            : null,
+                    decoration: const InputDecoration(
+                        hintText: '매장 재고, 한정 여부, 상태, 영수증 제공 여부 등을 알려주세요'),
+                  ),
+                  const SizedBox(height: 14),
+                  const Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(Icons.verified_user_outlined,
+                          color: NomadTheme.brand, size: 21),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          '구매 요청을 받기 전 실제 매장 재고와 가격을 다시 확인해주세요. 앱 내 채팅으로 실물 사진과 영수증 정보를 공유할 수 있습니다.',
+                          style: TextStyle(
+                              fontSize: 12,
+                              height: 1.45,
+                              color: NomadTheme.ink),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
               const SizedBox(height: 22),
               FilledButton.icon(
@@ -292,5 +311,44 @@ class _CreateListingScreenState extends State<CreateListingScreen> {
       _category = '럭셔리';
       _location = 'Paris · Le Marais';
     });
+  }
+}
+
+class _GlassListingSection extends StatelessWidget {
+  const _GlassListingSection({
+    required this.title,
+    required this.children,
+    this.tint,
+  });
+
+  final String title;
+  final List<Widget> children;
+  final Color? tint;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppGlassSurface(
+      tint: tint,
+      surfaceOpacity: .72,
+      blurSigma: 16,
+      borderRadius: BorderRadius.circular(22),
+      padding: const EdgeInsets.fromLTRB(14, 13, 14, 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              color: NomadTheme.brand,
+              fontSize: 11,
+              fontWeight: FontWeight.w900,
+              letterSpacing: .5,
+            ),
+          ),
+          const SizedBox(height: 12),
+          ...children,
+        ],
+      ),
+    );
   }
 }
