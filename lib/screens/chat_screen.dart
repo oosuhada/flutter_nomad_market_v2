@@ -191,9 +191,13 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    IconButton.filled(
-                        onPressed: _send,
-                        icon: const Icon(Icons.arrow_upward_rounded)),
+                    AppGlassIconButton(
+                      onPressed: _send,
+                      icon: Icons.arrow_upward_rounded,
+                      iconColor: NomadTheme.brand,
+                      semanticLabel: '메시지 보내기',
+                      size: 44,
+                    ),
                   ],
                 ),
               ),

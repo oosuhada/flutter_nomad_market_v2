@@ -27,7 +27,15 @@ class CommunityScreen extends StatelessWidget {
             ],
           ),
           actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.edit_square)),
+            Padding(
+              padding: const EdgeInsets.only(right: 2),
+              child: AppGlassIconButton(
+                onPressed: () {},
+                icon: Icons.edit_outlined,
+                semanticLabel: '커뮤니티 글 작성',
+                size: 38,
+              ),
+            ),
             const SizedBox(width: 8),
           ],
           bottom: PreferredSize(
